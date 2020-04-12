@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_restless import APIManager
-from flask_cors import CORS, cross_origin
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -9,8 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 load_dotenv()
 # Create the Flask application and the Flask-SQLAlchemy object.
 application = Flask(__name__)
-cors = CORS(application)
-application.config['CORS_HEADERS'] = 'Content-Type'
 
 # application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memory'
 application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + os.environ['DB_USER'] + ':' + os.environ['DB_PASS'] + '@' + os.environ['DB_HOST'] + ':' + os.environ['DB_PORT'] + '/' + os.environ['DB_NAME']
@@ -89,12 +86,6 @@ class ParkStates(db.Model):
     park_code = db.Column(db.Unicode, db.ForeignKey('parks.code'))
     park = db.relationship(Parks, backref=db.backref("states"))
 
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = 'example.com'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-    # Set whatever other headers you like...
-    return response
-
 
 # Create the database tables.
 db.create_all()
@@ -111,20 +102,21 @@ def plant_preprocessor(search_params=None, **kw):
         # get all the keywords
         keywords = search_params['search_query'].split()
         # all the possible attributes we will search through
-        attributes = ['category', 'com_name', 'duration', 'family', 'family_com', 'growth', 'sci_name', 'status', 'toxicity']
+        attributes = ['category', 'com_name', 'des', 'duration', 'family', 'family_com', 'growth', 'sci_name', 'status', 'toxicity']
         # define our filters
         listDicts = []
 
         for keyword in keywords: # iterate through each keyword
+            states_dict = dict(name='states__name', op='any', val=keyword.upper()) # states dict
+            listDicts.append(states_dict)
             keyword = '%' + keyword + '%' # makes it so we can search anywhere in the string
             for attribute in attributes: # iterate through the columns/attributes
                 new_dict = dict(name=attribute, op='ilike', val=keyword) # make a new filter dict
                 listDicts.append(new_dict) # add it
-                print(listDicts)
-            states_dict = dict(name='states__name', op='any', val=keyword.upper()) # states dict
-            listDicts.append(states_dict)
 
-        search_params["filters"] = [{"or": listDicts}] # set the search_params
+        if("filters" not in search_params):
+            search_params["filters"] = []
+        search_params["filters"].append({"or": listDicts}) # set the search_params
 
     pass # end of function
 
@@ -135,20 +127,21 @@ def animal_preprocessor(search_params=None, **kw):
         # get all the keywords
         keywords = search_params['search_query'].split()
         # all the possible attributes we will search through
-        attributes = ['com_name', 'des', 'sci_name', 'status', 'tax_group']
+        attributes = ['com_name', 'des', 'list_date', 'plan', 'sci_name', 'status', 'tax_group']
         # define our filters
         listDicts = []
 
         for keyword in keywords: # iterate through each keyword
+            states_dict = dict(name='states__name', op='any', val=keyword.upper()) # states dict
+            listDicts.append(states_dict)
             keyword = '%' + keyword + '%' # makes it so we can search anywhere in the string
             for attribute in attributes: # iterate through the columns/attributes
                 new_dict = dict(name=attribute, op='ilike', val=keyword) # make a new filter dict
                 listDicts.append(new_dict) # add it
-                print(listDicts)
-            states_dict = dict(name='states__name', op='any', val=keyword.upper()) # states dict
-            listDicts.append(states_dict)
 
-        search_params["filters"] = [{"or": listDicts}] # set the search_params
+        if("filters" not in search_params):
+            search_params["filters"] = []
+        search_params["filters"].append({"or": listDicts}) # set the search_params
 
     pass # end of function
 
@@ -159,20 +152,21 @@ def park_preprocessor(search_params=None, **kw):
         # get all the keywords
         keywords = search_params['search_query'].split()
         # all the possible attributes we will search through
-        attributes = ['address', 'code', 'desc', 'designation', 'name', 'weather']
+        attributes = ['address', 'code', 'desc', 'designation', 'directions', 'email', 'name', 'phone', 'weather']
         # define our filters
         listDicts = []
 
         for keyword in keywords: # iterate through each keyword
+            states_dict = dict(name='states__name', op='any', val=keyword.upper()) # states dict
+            listDicts.append(states_dict)
             keyword = '%' + keyword + '%' # makes it so we can search anywhere in the string
             for attribute in attributes: # iterate through the columns/attributes
                 new_dict = dict(name=attribute, op='ilike', val=keyword) # make a new filter dict
                 listDicts.append(new_dict) # add it
-                print(listDicts)
-            states_dict = dict(name='states__name', op='any', val=keyword.upper()) # states dict
-            listDicts.append(states_dict)
 
-        search_params["filters"] = [{"or": listDicts}] # set the search_params
+        if("filters" not in search_params):
+            search_params["filters"] = []
+        search_params["filters"].append({"or": listDicts}) # set the search_params
 
     pass # end of function
 
@@ -209,10 +203,6 @@ def search_process(result=None, **kw):
         print('after')
         print(len(result['objects']))
 
-
-
-    result['FART'] = 'ASS'
-
     #print('PAGE 1 ')
     #result = {'hello':  'world'}
     #print(result)
@@ -230,34 +220,22 @@ animals_blueprint = manager.create_api(Animals, methods=['GET'],
                         preprocessors={'GET_MANY': [animal_preprocessor]},
                         #postprocessors={'GET_MANY': [search_process]} ,
                         max_results_per_page=1000,
-                        results_per_page=1000
+                        results_per_page=9
                         )
 plants_blueprint = manager.create_api(Plants, methods=['GET'],
                         preprocessors={'GET_MANY': [plant_preprocessor]},
                         #postprocessors={'GET_MANY': [search_process]} ,
                         max_results_per_page=1000,
-                        results_per_page=1000
+                        results_per_page=9
                         )
 parks_blueprint = manager.create_api(Parks, methods=['GET'],
                         preprocessors={'GET_MANY': [park_preprocessor]},
                         #postprocessors={'GET_MANY': [search_process]} ,
                         max_results_per_page=1000,
-                        results_per_page=1000
+                        results_per_page=9
                         )
 
-'''
-# add the cors header
-animals_blueprint.after_request(add_cors_headers)
-plants_blueprint.after_request(add_cors_headers)
-parks_blueprint.after_request(add_cors_headers)
-
-application.register_blueprint(animals_blueprint)
-application.register_blueprint(plants_blueprint)
-application.register_blueprint(parks_blueprint)
-'''
-
 @application.route('/')
-@cross_origin()
 def index():
     return "Available endpoints: /api/animals /api/plants /api/parks"
 
@@ -270,3 +248,4 @@ application.after_request(add_headers)
 
 # start the flask loop
 application.run()
+
