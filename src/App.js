@@ -11,14 +11,7 @@ import Animals from './Animals';
 import AnimalsSearch from './AnimalsSearch';
 import Plants from './Plants';
 import AnimalPage from './AnimalInstancePages/AnimalPage';
-import AcklinsGroundIguana from './AnimalInstancePages/AcklinsGroundIguana';
-import Akiapolaau from './AnimalInstancePages/Akiapolaau';
-import GrandCanyon from './ParkInstancePages/GrandCanyon';
-import Yellowstone from './ParkInstancePages/Yellowstone';
 import Zion from './ParkInstancePages/Zion';
-import AleutianHollyFern from './PlantInstancePages/AleutianHollyFern';
-import AmargosaNiterwort from './PlantInstancePages/AmargosaNiterwort';
-import PricklyApplecactus from './PlantInstancePages/PricklyApplecactus';
 import PlantInstance from './PlantInstancePages/PlantInstance';
 import NotFoundPage from './NotFoundPage'
 import AnimalSearch from './AnimalsSearch';
