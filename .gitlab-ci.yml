@@ -7,6 +7,3 @@ parks_protection_postman:
     image:
         name: postman/newman_alpine33
         entrypoint: [""]
-    script:
-        - cd test
-        - newman run postman.json
