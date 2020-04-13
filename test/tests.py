@@ -10,7 +10,8 @@
 
 from io import StringIO
 from unittest import main, TestCase
-
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../scraping'))
 from plants import *
 from animals import *
 from parks import *
@@ -76,13 +77,6 @@ class Tests(TestCase):
         self.assertEqual(animal["plan"], "None")
         self.assertEqual(animal["com_name"], "A C")
         self.assertEqual(animal["sci_name"], "D E")
-
-    def test_animals_fetch_images(self):
-        animalsList = [{"com_name": "Alabama beach mouse"}]
-        animals_fetch_images(animalsList)
-        self.assertIsNotNone(animalsList)
-        self.assertEqual(len(animalsList), 1)
-        self.assertIn("image", animalsList[0])
 
     # -----
     # Parks
