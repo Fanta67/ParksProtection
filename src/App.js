@@ -11,10 +11,8 @@ import Animals from './Animals';
 import AnimalsSearch from './AnimalsSearch';
 import Plants from './Plants';
 import AnimalPage from './AnimalInstancePages/AnimalPage';
-import Zion from './ParkInstancePages/Zion';
 import PlantInstance from './PlantInstancePages/PlantInstance';
 import NotFoundPage from './NotFoundPage'
-import AnimalSearch from './AnimalsSearch';
 import { Link } from 'react-router-dom';
 
 require('dotenv').config({path: ':../.env' })
@@ -36,7 +34,7 @@ class App extends Component {
           </Navbar>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/Animals/search" component={AnimalsSearch} />
+            <Route path="/AnimalsSearch/:query" component={AnimalsSearch}/>
             <Route path="/Animals/:id" component={AnimalPage} />
             <Route path="/Plants/:id" component={PlantInstance} />
             <Route path="/About" component={About} />
@@ -44,7 +42,6 @@ class App extends Component {
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
-            <Route path="/Animals/Search" component={AnimalsSearch}/>
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>
