@@ -8,6 +8,7 @@ import Home from './Home';
 import Parks from './Parks';
 import ParkInstance from './ParkInstance'
 import Animals from './Animals';
+import AnimalsSearch from './AnimalsSearch';
 import Plants from './Plants';
 import AnimalPage from './AnimalInstancePages/AnimalPage';
 import AcklinsGroundIguana from './AnimalInstancePages/AcklinsGroundIguana';
@@ -37,10 +38,12 @@ class App extends Component {
               <Nav.Link as={ Link } to="/Plants">Plants</Nav.Link>
               <Nav.Link as={ Link } to="/Animals">Animals</Nav.Link>
               <Nav.Link as={ Link } to="/About">About</Nav.Link>
+              <Nav.Link as={ Link } to="/Animals/Search">Animals Search Test</Nav.Link>
             </Nav>
           </Navbar>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/Animals/search" component={AnimalsSearch} />
             <Route path="/Animals/:id" component={AnimalPage} />
             <Route path="/Plants/AleutianHollyFern" component={AleutianHollyFern} />
             <Route path="/Plants/AmargosaNiterwort" component={AmargosaNiterwort} />
