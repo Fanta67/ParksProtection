@@ -175,40 +175,46 @@ def park_preprocessor(search_params=None, **kw):
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
 from itertools import filterfalse
-def search_process(result=None, **kw):
-    print('POST PROCESSOR CALLED')
-    #print(result)
-    #print('the size of results is')
-    #print(result)
+def search_postprocessor(result=None, search_params=None, **kw):
+    if(search_params != None and "search_query" in search_params):
+        keywords = search_params["search_query"].split()
+        if(len(keywords) == 0):
+            keywords = [" "]
+        objects = []
+        for instance in result["objects"]:
+            instanceMatched = False
+            for attribute in instance:
+                if attribute == "states":
+                    for state in instance["states"]:
+                        for keyword in keywords:
+                            keyword = keyword.upper()
+                            if(keyword == state["name"]):
+                                if("id" in instance):
+                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": "<mark>..." + keyword + "...</mark>"})
+                                else:
+                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": "<mark>..." + keyword + "...</mark>"})
+                                instanceMatched = True
+                                break
+                        if(instanceMatched):
+                            break
+                else:
+                    val = instance[attribute]
+                    if(isinstance(val, str)):
+                        for keyword in keywords:
+                            keyword = keyword.lower()
+                            if(keyword in val.lower()):
+                                if("id" in instance):
+                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": "<mark>..." + keyword + "...</mark>"})
+                                else:
+                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": "<mark>..." + keyword + "...</mark>"})
+                                instanceMatched = True
+                                break
+                        if(instanceMatched):
+                            break
+        result["objects"] = objects
 
-    print('\n\n\n\n\n\n\n')
-    print('plant search terms')
-    print(Searching.plant_search_terms)
-    if(Searching.plant_search_terms != None):
-        print('\n\n\n\n\n\n\n')
-        print('plant search terms is not null, now filtering')
-        def search_filter(plant):
-            #include_result = False
-            for attribute in list(plant):
-                for keyword in Searching.plant_search_terms:
-                    #print('attribute, keyword', attribute, keyword)
-                    if(isinstance(plant[attribute],str) and keyword in plant[attribute]):
-                        print('keeping this one')
-                        return False
-            print('not keeping this one')
-            return True
-        print('results before')
-        print(len(result['objects']))
-        result['objects'][:] = filterfalse(search_filter, result['objects'])
-        print('after')
-        print(len(result['objects']))
 
-    #print('PAGE 1 ')
-    #result = {'hello':  'world'}
-    #print(result)
-    #print(kw)
     pass
-    #return result
 
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
@@ -218,19 +224,19 @@ def search_process(result=None, **kw):
 
 animals_blueprint = manager.create_api(Animals, methods=['GET'],
                         preprocessors={'GET_MANY': [animal_preprocessor]},
-                        #postprocessors={'GET_MANY': [search_process]} ,
+                        postprocessors={'GET_MANY': [search_postprocessor]} ,
                         max_results_per_page=1000,
                         results_per_page=9
                         )
 plants_blueprint = manager.create_api(Plants, methods=['GET'],
                         preprocessors={'GET_MANY': [plant_preprocessor]},
-                        #postprocessors={'GET_MANY': [search_process]} ,
+                        postprocessors={'GET_MANY': [search_postprocessor]} ,
                         max_results_per_page=1000,
                         results_per_page=9
                         )
 parks_blueprint = manager.create_api(Parks, methods=['GET'],
                         preprocessors={'GET_MANY': [park_preprocessor]},
-                        #postprocessors={'GET_MANY': [search_process]} ,
+                        postprocessors={'GET_MANY': [search_postprocessor]} ,
                         max_results_per_page=1000,
                         results_per_page=9
                         )
