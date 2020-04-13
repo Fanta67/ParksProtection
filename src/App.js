@@ -21,6 +21,7 @@ import AmargosaNiterwort from './PlantInstancePages/AmargosaNiterwort';
 import PricklyApplecactus from './PlantInstancePages/PricklyApplecactus';
 import PlantInstance from './PlantInstancePages/PlantInstance';
 import NotFoundPage from './NotFoundPage'
+import AnimalSearch from './AnimalsSearch';
 import { Link } from 'react-router-dom';
 
 require('dotenv').config({path: ':../.env' })
@@ -38,22 +39,19 @@ class App extends Component {
               <Nav.Link as={ Link } to="/Plants">Plants</Nav.Link>
               <Nav.Link as={ Link } to="/Animals">Animals</Nav.Link>
               <Nav.Link as={ Link } to="/About">About</Nav.Link>
-              <Nav.Link as={ Link } to="/Animals/Search">Animals Search Test</Nav.Link>
             </Nav>
           </Navbar>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/Animals/search" component={AnimalsSearch} />
             <Route path="/Animals/:id" component={AnimalPage} />
-            <Route path="/Plants/AleutianHollyFern" component={AleutianHollyFern} />
-            <Route path="/Plants/AmargosaNiterwort" component={AmargosaNiterwort} />
-            <Route path="/Plants/PricklyApplecactus" component={PricklyApplecactus} />
             <Route path="/Plants/:id" component={PlantInstance} />
             <Route path="/About" component={About} />
             <Route exact path="/Parks" component={Parks} />
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
+            <Route path="/Animals/Search" component={AnimalsSearch}/>
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>

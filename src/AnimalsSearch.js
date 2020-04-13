@@ -30,7 +30,7 @@ class AnimalsSearch extends React.Component {
 	}
 
 	componentDidMount() {
-		this.fillanimalList(" ")
+		this.fillanimalList("wolf")
 	}
 
 	makeCardDeck() {
