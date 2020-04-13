@@ -2,8 +2,3 @@ before_script:
     - date
     - uname -a
     - printenv | sort
-
-parks_protection_postman:
-    image:
-        name: postman/newman_alpine33
-        entrypoint: [""]
