@@ -30,6 +30,7 @@ class AnimalsSearch extends React.Component {
 	}
 
 	componentDidMount() {
+        
 		this.fillanimalList(this.props.match.params.query)
 	}
 
