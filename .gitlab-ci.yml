@@ -16,6 +16,7 @@ parks_protection_mocha:
         name: mcgenius/pp_mocha
         entrypoint: [""]
     script:
+        - npm install
         - npm run mochatest
 
 parks_protection_python:
