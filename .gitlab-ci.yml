@@ -16,11 +16,11 @@ parks_protection_mocha:
         name: mcgenius/pp_mocha
         entrypoint: [""]
     script:
-        - ls
+        - npm run mochatest
 
 parks_protection_python:
     image:
         name: mcgenius/pp_python
         entrypoint: [""]
     script:
-        - ls
+        - python test/tests.py

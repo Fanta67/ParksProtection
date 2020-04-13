@@ -91,7 +91,14 @@ class PlantInstance extends React.Component {
   				</Constants.EndangeredBox>
 
   				<br/><br/>
-  				<InformationTable info = {this.state.plant}/>
+          <Row>
+            <Col>
+              {this.state.plant.des}
+            </Col>
+            <Col>
+  				    <InformationTable info = {this.state.plant}/>
+            </Col>
+          </Row>
 
 					<br/><br/>
 					<RelatedEntities info = {this.state}/>
