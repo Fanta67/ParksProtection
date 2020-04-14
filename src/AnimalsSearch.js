@@ -30,9 +30,9 @@ class AnimalsSearch extends React.Component {
 	}
 
 	componentDidMount() {
-        
-		//this.fillanimalList(this.props.match.params.query)
-        this.fillanimalList("wolf")
+        let url = String(window.location.href).split('/');
+		this.fillanimalList(url[url.length-1])
+       // this.fillanimalList("wolf")
     }
 
 	makeCardDeck() {

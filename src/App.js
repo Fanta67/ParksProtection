@@ -45,7 +45,6 @@ class App extends Component {
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
-            <Route path="/Animals/Search" component={AnimalsSearch}/>
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>
