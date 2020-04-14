@@ -16,7 +16,7 @@ from time import sleep
 
 # use sqlite in memory for testing and postgresql to store in RDS; BE VERY CERTAIN WHEN COMMITTING TO RDS
 # engine = create_engine('postgresql://' + os.getenv('DB_USER') + ':' + os.getenv('DB_PASS') + '@' + os.getenv('DB_HOST') + ':' + os.getenv('DB_PORT') + '/' + os.getenv('DB_NAME'), echo=True)
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('sqlite:///:memory:')
 Base = declarative_base()
 
 class Plant(Base):
@@ -101,7 +101,7 @@ def plants_ecos_request():
 	return plantsList
 
 def plants_usda_request(endpoint, plantsList, i):
-	print("trying data for i=%d" % (i), flush=True)
+	# print("trying data for i=%d" % (i), flush=True)
 	try:
 		r = requests.get(endpoint)
 	except requests.exceptions.ConnectionError:
@@ -132,7 +132,7 @@ def plants_usda_request(endpoint, plantsList, i):
 			plantsList[i]['growth'] = plantData['Growth_Habit'].title()
 			plantsList[i]['toxicity'] = plantData['Toxicity'] if plantData['Toxicity'] != "" else "None"
 			# plantsList[i]["image"] = imageData['value'][0]['contentUrl']
-	print("succeeded data for i=%d" % (i), flush=True)
+	# print("succeeded data for i=%d" % (i), flush=True)
 
 # remove invalid plants and prettify names
 def plants_pretty_parse(plantsList):

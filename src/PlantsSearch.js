@@ -82,7 +82,7 @@ class PlantsSearch extends React.Component {
               		id : data.objects[i].id,
               		image : data.objects[i].image.replace("http://", "https://"),
               		com_name : data.objects[i].com_name,
-              		match: data.objects[i].match
+              		match: "..." + data.objects[i].match.replace("<hlt>", "<span style='background-color:yellow;'>").replace("</hlt>", "</span>") + "..."
               	}
                 plantList.push(plantParsed)
               }

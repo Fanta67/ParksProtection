@@ -92,7 +92,7 @@ class ParkStates(db.Model):
 def search_postprocessor(result=None, search_params=None, **kw):
     if(search_params != None and "search_query" in search_params):
         attributes = {'category', 'com_name', 'des', 'duration', 'family', 'family_com', 'growth', 'sci_name', 'status', 'toxicity', 'list_date', 'plan', 'tax_group', 'address', 'code', 'desc', 'designation', 'directions', 'email', 'name', 'phone', 'weather'}
-        keywords = search_params["search_query"].split()
+        keywords = search_params["search_query"].lower().split()
         if(len(keywords) == 0):
             keywords = [" "]
         objects = []
@@ -102,12 +102,18 @@ def search_postprocessor(result=None, search_params=None, **kw):
                 if attribute == "states":
                     for state in instance["states"]:
                         for keyword in keywords:
-                            keyword = keyword.upper()
-                            if(keyword == state["name"]):
+                            if(keyword in state["name"].lower()):
+                                keyword = keyword.upper()
+                                matchSplit = state["name"].split()
+                                match = None
+                                for word in matchSplit:
+                                    if keyword in word:
+                                        match = word.replace(keyword, "<hlt>" + keyword + "</hlt>")
+                                        break
                                 if("id" in instance):
-                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": "<mark>..." + keyword + "...</mark>"})
+                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": match})
                                 else:
-                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": "<mark>..." + keyword + "...</mark>"})
+                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": match})
                                 instanceMatched = True
                                 break
                         if(instanceMatched):
@@ -116,12 +122,18 @@ def search_postprocessor(result=None, search_params=None, **kw):
                     val = instance[attribute]
                     if(isinstance(val, str)):
                         for keyword in keywords:
-                            keyword = keyword.lower()
-                            if(keyword in val.lower()):
+                            val = val.lower()
+                            if(keyword in val):
+                                matchSplit = val.split()
+                                match = None
+                                for word in matchSplit:
+                                    if keyword in word:
+                                        match = word.replace(keyword, "<hlt>" + keyword + "</hlt>")
+                                        break
                                 if("id" in instance):
-                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": "<mark>..." + keyword + "...</mark>"})
+                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": match})
                                 else:
-                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": "<mark>..." + keyword + "...</mark>"})
+                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": match})
                                 instanceMatched = True
                                 break
                         if(instanceMatched):
