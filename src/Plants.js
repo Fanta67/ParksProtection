@@ -14,28 +14,14 @@ import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-const common = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'desc', label: 'Descending' }
+const sorts = [
+  { value: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
+  { value: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
+  { value: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
+  { value: 'des', label: 'Scientific Name Descending', sortby: 'sci_name'},
+  { value: 'asc', label: 'Family Name Ascending', sortby: 'family'},
+  { value: 'des', label: 'Family Name Descending', sortby: 'family'}
 ]
-
-const scientific = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'des', label: 'Descending' }
-]
-
-const Scientific = () => (
-  <Select options={scientific} placeholder="Scientific Names" />
-)
-
-const families = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'des', label: 'Descending' }
-]
-
-const Families = () => (
-  <Select options={families} isMulti className="basic-multi-select" placeholder="Families" />
-)
 
 const statuses = [
   { value: 'threatened', label: 'Threatened' },
@@ -70,8 +56,10 @@ class Plants extends React.Component {
 	        page: 1,
 	        lastPageNum: 43
 		};
-        this.CommonHandler = this.CommonHandler.bind(this);
-        this.comDir = 'asc'
+        this.SortSelectHandler = this.SortSelectHandler.bind(this);
+        this.dir = 'asc';
+        this.sort_by = 'com_name';
+
 	}
 	componentDidMount() {
 		this.fillplantList(1)
@@ -165,16 +153,11 @@ class Plants extends React.Component {
 	}
 
 	fillplantList(pageNum) {
-        let dir;
-        if(this.comDir != null){
-            dir = this.comDir;
-        }
-        if(dir == null){
-            dir = 'asc';
-        }
+        let dir = this.dir;
+        let sortby = this.sort_by;
 
 		fetch(
-          'https://api.parkprotection.me/api/plants?results_per_page=9&q=%7B%22order_by%22:%5B%7B%22field%22:%22com_name%22,%22direction%22:%22'.concat(dir).concat("%22%7D%5D%7D&page=").concat(pageNum)
+          'https://api.parkprotection.me/api/plants?results_per_page=9&q=%7B%22order_by%22:%5B%7B%22field%22:%22'.concat(sortby).concat("%22,%22direction%22:%22").concat(dir).concat("%22%7D%5D%7D&page=").concat(pageNum)
       )
           .then((response) => response.json())
           .then((data) => {
@@ -205,14 +188,15 @@ class Plants extends React.Component {
           this.render();
 	}
 
-    CommonHandler(comDir){
-        this.comDir = comDir.value;
+    SortSelectHandler(Dir){
+        this.dir = Dir.value;
+        this.sort_by = Dir.sortby;
         this.fillplantList(this.state.page);
         this.forceUpdate();
     }
-    Common() {
-      return <Select options={common} ref = "comDir" placeholder="Common Names" onChange ={
-          this.CommonHandler
+    SortSelect() {
+      return <Select options={sorts} ref = "Dir" placeholder="Sort By" onChange ={
+          this.SortSelectHandler
       }/>
     }
 
@@ -233,13 +217,7 @@ class Plants extends React.Component {
 
 				<Row>
 					<Col>
-						{this.Common()}
-					</Col>
-					<Col>
-						<Scientific />
-					</Col>
-					<Col>
-						<Families />
+						{this.SortSelect()}
 					</Col>
 					<Col>
 						<Statuses />
