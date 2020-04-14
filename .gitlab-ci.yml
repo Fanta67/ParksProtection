@@ -10,3 +10,18 @@ parks_protection_postman:
     script:
         - cd test
         - newman run postman.json
+
+parks_protection_mocha:
+    image:
+        name: mcgenius/pp_mocha
+        entrypoint: [""]
+    script:
+        - npm install
+        - npm run mochatest
+
+parks_protection_python:
+    image:
+        name: mcgenius/pp_python
+        entrypoint: [""]
+    script:
+        - python test/tests.py

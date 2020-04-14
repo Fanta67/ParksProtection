@@ -145,31 +145,25 @@ def fetch_image(search):
 Session = sessionmaker(bind=engine)
 session = Session()
 
+"""
 rows = session.query(Animal).join(AnimalState).all()
 
-fails = 0
-flist = []
-for i in range(0, len(rows)):
+for i in range(len(rows) - 1, -1, -1):
 	print("trying: " + rows[i].sci_name)
-	des = wiki_search(rows[i].sci_name)
-	
+	rows[i].des = wiki_search(rows[i].sci_name)
+	# session.commit()
 	print("succeeded: " + str(i))
-
-print("fails: " + str(fails))
-print(flist)
 
 rows = session.query(Plant).join(PlantState).all()
 
-fails = 0
-flist = []
-for i in range(0, len(rows)):
+for i in range(len(rows) - 1, -1, -1):
 	print("trying: " + rows[i].sci_name)
-	des = wiki_search(rows[i].sci_name)
-	
+	rows[i].des = wiki_search(rows[i].sci_name)
+	# session.commit()
 	print("succeeded: " + str(i))
 
 print("fails: " + str(fails))
-print(flist)
+"""
 
 """
 rows = session.query(Animal).join(AnimalState).all()

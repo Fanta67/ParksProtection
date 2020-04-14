@@ -6,19 +6,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import About from './About';
 import Home from './Home';
 import Parks from './Parks';
-import ParkInstance from './ParkInstance'
+import ParkInstance from './ParkInstance';
+import ParksSearch from './ParksSearch';
 import Animals from './Animals';
-import Plants from './Plants';
 import AnimalPage from './AnimalInstancePages/AnimalPage';
-import AcklinsGroundIguana from './AnimalInstancePages/AcklinsGroundIguana';
-import Akiapolaau from './AnimalInstancePages/Akiapolaau';
-import GrandCanyon from './ParkInstancePages/GrandCanyon';
-import Yellowstone from './ParkInstancePages/Yellowstone';
-import Zion from './ParkInstancePages/Zion';
-import AleutianHollyFern from './PlantInstancePages/AleutianHollyFern';
-import AmargosaNiterwort from './PlantInstancePages/AmargosaNiterwort';
-import PricklyApplecactus from './PlantInstancePages/PricklyApplecactus';
+import AnimalsSearch from './AnimalsSearch';
+import Plants from './Plants';
 import PlantInstance from './PlantInstancePages/PlantInstance';
+import PlantsSearch from './PlantsSearch';
+import Zion from './ParkInstancePages/Zion';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
 
@@ -41,13 +37,16 @@ class App extends Component {
           </Navbar>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/Animals/search" component={AnimalsSearch} />
+            <Route path="/Animals/search/:id" component={AnimalsSearch} />
             <Route path="/Animals/:id" component={AnimalPage} />
-            <Route path="/Plants/AleutianHollyFern" component={AleutianHollyFern} />
-            <Route path="/Plants/AmargosaNiterwort" component={AmargosaNiterwort} />
-            <Route path="/Plants/PricklyApplecactus" component={PricklyApplecactus} />
+            <Route exact path="/Plants/search" component={PlantsSearch} />
+            <Route path="/Plants/search/:id" component={PlantsSearch} />
             <Route path="/Plants/:id" component={PlantInstance} />
             <Route path="/About" component={About} />
             <Route exact path="/Parks" component={Parks} />
+            <Route exact path="/Parks/search" component={ParksSearch} />
+            <Route path="/Parks/search/:id" component={ParksSearch} />
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
