@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import ListGroup from 'react-bootstrap/ListGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 const name = [
   { value: 'asc', label: 'Ascending' },
@@ -193,6 +194,13 @@ class Parks extends React.Component {
           });
 	}
 
+    handleKeyPress(key) {
+        if (key.charCode == 13) {
+            key.preventDefault();
+            window.location.href = ("Parks/search/" + String(this.state.inputNode))
+        }
+    }
+
 	render() {
 		return (
 			<Container>
@@ -201,9 +209,15 @@ class Parks extends React.Component {
 				<Col><h1 className="PageHeader">Parks</h1><br/></Col>
 				<Col xs={{span: 3}}>
 					<Form inline>
-						<Form.Group as={Row}>
-					    	<Form.Control type="text" placeholder="Search" className="mr-sm-2" /><Button>Search</Button>
-						</Form.Group>
+                        <Form.Group as={Row}>
+                            <FormControl id="searchBox" type="text" placeholder={"Search Parks"} className="mr-sm-2"
+                               onChange={node => this.setState({inputNode: node.target.value})}
+                                onKeyPress={key => {this.handleKeyPress(key)}}
+                            />
+                            <Button id="searchButton"
+                                href={("Parks/search/" + String(this.state.inputNode))}
+                            >Search</Button>
+                        </Form.Group>
 					</Form>
 				</Col>
 				</Row>
