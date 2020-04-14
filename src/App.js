@@ -6,14 +6,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import About from './About';
 import Home from './Home';
 import Parks from './Parks';
-import ParkInstance from './ParkInstance'
+import ParkInstance from './ParkInstance';
+import ParksSearch from './ParksSearch';
 import Animals from './Animals';
+import AnimalPage from './AnimalInstancePages/AnimalPage';
 import AnimalsSearch from './AnimalsSearch';
 import Plants from './Plants';
-import PlantsSearch from './PlantsSearch';
-import AnimalPage from './AnimalInstancePages/AnimalPage';
-import Zion from './ParkInstancePages/Zion';
 import PlantInstance from './PlantInstancePages/PlantInstance';
+import PlantsSearch from './PlantsSearch';
+import Zion from './ParkInstancePages/Zion';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
 
@@ -44,6 +45,8 @@ class App extends Component {
             <Route path="/Plants/:id" component={PlantInstance} />
             <Route path="/About" component={About} />
             <Route exact path="/Parks" component={Parks} />
+            <Route exact path="/Parks/search" component={ParksSearch} />
+            <Route path="/Parks/search/:id" component={ParksSearch} />
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
