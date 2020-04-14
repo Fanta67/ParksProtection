@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { Nav } from 'react-bootstrap';
+import FormControl from 'react-bootstrap/FormControl';
 
 const common = [
   { value: 'asc', label: 'Ascending' },
@@ -189,8 +190,6 @@ class Animals extends React.Component {
               	console.log(animalParsed.image)
                 animalList.push(animalParsed)
               }
-              // var assert = require('assert');
-                // assert(animalList == 9);
               this.setState({ animalList : animalList});
           })
           .catch((e) => {
@@ -200,6 +199,13 @@ class Animals extends React.Component {
           });
 	}
 
+    handleKeyPress(key) {
+        if (key.charCode == 13) {
+            key.preventDefault();
+            window.location.href = ("Animals/search/" + String(this.state.inputNode))
+        }
+    }
+
 	render() {
 		return (
 			<Container>
@@ -208,9 +214,15 @@ class Animals extends React.Component {
 				<Col><h1 className="PageHeader">Animals</h1><br/></Col>
 				<Col xs={{span: 3}}>
 					<Form inline>
-						<Form.Group as={Row}>
-					    	<Form.Control type="text" placeholder="Search" className="mr-sm-2" /><Button>Search</Button>
-						</Form.Group>
+                        <Form.Group as={Row}>
+                            <FormControl id="searchBox" type="text" placeholder={"Search Animals"} className="mr-sm-2"
+                               onChange={node => this.setState({inputNode: node.target.value})}
+                                onKeyPress={key => {this.handleKeyPress(key)}}
+                            />
+                            <Button id="searchButton"
+                                href={("Animals/search/" + String(this.state.inputNode))}
+                            >Search</Button>
+                        </Form.Group>
 					</Form>
 				</Col>
 				</Row>

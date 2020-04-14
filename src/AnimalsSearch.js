@@ -31,8 +31,9 @@ class AnimalsSearch extends React.Component {
 
 	componentDidMount() {
         
-		this.fillanimalList(this.props.match.params.query)
-	}
+		//this.fillanimalList(this.props.match.params.query)
+        this.fillanimalList("wolf")
+    }
 
 	makeCardDeck() {
 		let animalDeck = [];
