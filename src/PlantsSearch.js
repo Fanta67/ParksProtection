@@ -21,36 +21,36 @@ const Text = styled('div')`
 	color: black;
 `
 
-class AnimalsSearch extends React.Component {
+class PlantsSearch extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			animalList: [],
+			plantList: [],
 			num_results: 0
 		};
 	}
 
 	componentDidMount() {
         let url = String(window.location.href).split('/');
-		this.fillanimalList(url[url.length-1])
+		this.fillplantList(url[url.length-1])
     }
 
 	makeCardDeck() {
-		let animalDeck = [];
-		var deckSize = this.state.animalList.length;
+		let plantDeck = [];
+		var deckSize = this.state.plantList.length;
 		var i = 0;
 		var j = 0;
 
 		for(; i < Math.floor(this.state.num_results/3) + 1; ++i) {
-			let animalInstances = [];
+			let plantInstances = [];
 			for(j = 0; (j < 3); ++j) {
                 if(!((i * 3 + j) < deckSize))
                     break;
 				var index = i * 3 + j;
-                var source = this.state.animalList[index];
-				animalInstances.push (
+                var source = this.state.plantList[index];
+				plantInstances.push (
 					<Card className={"a" + source.id}>
-						<Nav.Link as={ Link } to={{pathname: "/Animals/" + source.id, state: {id: source.id}}}>
+						<Nav.Link as={ Link } to={{pathname: "/plants/" + source.id, state: {id: source.id}}}>
 						    <Text>
 							    <Card.Img variant="top" src={source.image}/>
 							    <Card.Body>
@@ -62,36 +62,36 @@ class AnimalsSearch extends React.Component {
 				    </Card>
 				)
 			}
-            animalDeck.push(<br></br>)
-			animalDeck.push(<CardDeck className="text-center">{animalInstances}</CardDeck>)
+            plantDeck.push(<br></br>)
+			plantDeck.push(<CardDeck className="text-center">{plantInstances}</CardDeck>)
 		}
 		// var assert = require('assert');
 		// assert(deckSize == 0);
-		return animalDeck;
+		return plantDeck;
 	}
 
-	fillanimalList(search_query) {
+	fillplantList(search_query) {
 		fetch(
-          'https://api.parkprotection.me/api/animals?results_per_page=1000&q={"search_query":"' + search_query + '"}')
+          'https://api.parkprotection.me/api/plants?results_per_page=1000&q={"search_query":"' + search_query + '"}')
           .then((response) => response.json())
           .then((data) => {
-              console.log('FETCHED ANIMALS');
-              let animalList = [];
+              console.log('FETCHED plantS');
+              let plantList = [];
               for (const i in data.objects) {
-              	const animalParsed = {
+              	const plantParsed = {
               		id : data.objects[i].id,
               		image : data.objects[i].image.replace("http://", "https://"),
               		com_name : data.objects[i].com_name,
               		match: data.objects[i].match
               	}
-                animalList.push(animalParsed)
+                plantList.push(plantParsed)
               }
-              this.setState({ animalList : animalList, num_results: data.num_results});
+              this.setState({ plantList : plantList, num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ animalList : [], num_results: 0});
+              this.setState({ plantList : [], num_results: 0});
           });
 	}
 
@@ -111,7 +111,7 @@ class AnimalsSearch extends React.Component {
 				<Col xs={{span: 3}}>
 					<Form inline>
                         <Form.Group as={Row}>
-                            <FormControl id="searchBox" type="text" placeholder={"Search Animals"} className="mr-sm-2"
+                            <FormControl id="searchBox" type="text" placeholder={"Search plants"} className="mr-sm-2"
                                onChange={node => this.setState({inputNode: node.target.value})}
                                 onKeyPress={key => {this.handleKeyPress(key)}}
                             />
@@ -129,4 +129,4 @@ class AnimalsSearch extends React.Component {
 	}
 }
 
-export default AnimalsSearch;
+export default PlantsSearch;
