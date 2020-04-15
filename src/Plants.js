@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import ListGroup from 'react-bootstrap/ListGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 const sorts = [
   { value: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
@@ -84,8 +85,14 @@ const states = [
 const ItalicText = styled('div')`
 	font-style: italic;
 `
-const Text = styled('div')`
-	color: black;
+const BoldText = styled('div')`
+  font-size: 21px;
+  font-weight: bold;
+`
+
+const Text = styled('span')`
+  color: black;
+  font-size: 16px;
 `
 
 class Plants extends React.Component {
@@ -126,14 +133,12 @@ class Plants extends React.Component {
 					<Card className={"p" + source.id}>
 						<Nav.Link as={ Link } to={{pathname: "/Plants/" + source.id, state: {id: source.id}}}>
 						    <Text>
-							    <Card.Img variant="top" src={source.image}/>
-							    <Card.Body>
-							    	<Card.Title>{source.com_name}</Card.Title>
-							    	<Card.Text><ItalicText>{source.sci_name}</ItalicText></Card.Text>
-							    	<Card.Text>{source.family}</Card.Text>
-							    	<Card.Text>{source.status}</Card.Text>
-							    	<Card.Text>{source.states}</Card.Text>
-							    </Card.Body>
+							    <Card.Img variant="top" src={source.image}/><br/>
+                  <BoldText>{source.com_name}</BoldText>
+                  <ItalicText>{source.sci_name}</ItalicText>
+                  {source.family}<br/>
+                  {source.status}<br/>
+                  {source.states}
 							</Text>
 				    	</Nav.Link>
 				    </Card>
@@ -261,6 +266,13 @@ class Plants extends React.Component {
               this.setState({ plantList : []});
           });
 	}
+
+  handleKeyPress(key) {
+      if (key.charCode == 13) {
+          key.preventDefault();
+          window.location.href = ("Plants/search/" + String(this.state.inputNode))
+      }
+  }
 	
 	SortSelectHandler(Dir){
         this.dir = Dir.value;
@@ -305,11 +317,17 @@ class Plants extends React.Component {
 				<Row>
 				<Col><h1 className="PageHeader">Plants</h1><br/></Col>
 				<Col xs={{span: 3}}>
-					<Form inline>
-						<Form.Group as={Row}>
-					    	<Form.Control type="text" placeholder="Search" className="mr-sm-2" /><Button>Search</Button>
-						</Form.Group>
-					</Form>
+				<Form inline>
+          <Form.Group as={Row}>
+              <FormControl id="searchBox" type="text" placeholder={"Search Plants"} className="mr-sm-2"
+                 onChange={node => this.setState({inputNode: node.target.value})}
+                  onKeyPress={key => {this.handleKeyPress(key)}}
+              />
+              <Button id="searchButton"
+                  href={("Plants/search/" + String(this.state.inputNode))}
+              >Search</Button>
+          </Form.Group>
+        </Form>
 				</Col>
 				</Row>
 ​

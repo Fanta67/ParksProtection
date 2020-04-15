@@ -99,8 +99,14 @@ const ItalicText = styled('div')`
 	font-style: italic;
 `
 
-const Text = styled('div')`
+const BoldText = styled('div')`
+	font-size: 21px;
+	font-weight: bold;
+`
+
+const Text = styled('span')`
 	color: black;
+	font-size: 16px;
 `
 
 class Animals extends React.Component {
@@ -144,14 +150,12 @@ class Animals extends React.Component {
 					<Card className={"a" + source.id}>
 						<Nav.Link as={ Link } to={{pathname: "/Animals/" + source.id, state: {id: source.id}}}>
 						    <Text>
-							    <Card.Img variant="top" src={source.image}/>
-							    <Card.Body>
-							    	<Card.Title>{source.com_name}</Card.Title>
-							    	<Card.Text><ItalicText>{source.sci_name}</ItalicText></Card.Text>
-							    	<Card.Text>{source.tax_group}</Card.Text>
-							    	<Card.Text>{source.status}</Card.Text>
-							    	<Card.Text>{source.states}</Card.Text>
-							    </Card.Body>
+							    <Card.Img variant="top" src={source.image}/><br/>
+					    		<BoldText>{source.com_name}</BoldText>
+					    		<ItalicText>{source.sci_name}</ItalicText>
+					    		{source.tax_group}<br/>
+						    	{source.status}<br/>
+						    	{source.states}
 							</Text>
 				    	</Nav.Link>
 				    </Card>

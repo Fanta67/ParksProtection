@@ -17,8 +17,14 @@ import Select from 'react-select';
 import { Nav } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
 
-const Text = styled('div')`
+const BoldText = styled('div')`
+	font-size: 21px;
+	font-weight: bold;
+`
+
+const Text = styled('span')`
 	color: black;
+	font-size: 16px;
 `
 
 class AnimalsSearch extends React.Component {
@@ -53,10 +59,8 @@ class AnimalsSearch extends React.Component {
 						<Nav.Link as={ Link } to={{pathname: "/Animals/" + source.id, state: {id: source.id}}}>
 						    <Text>
 							    <Card.Img variant="top" src={source.image}/>
-							    <Card.Body>
-							    	<Card.Title>{source.com_name}</Card.Title>
-                                    <Card.Text dangerouslySetInnerHTML={{__html: source.match}} />
-							    </Card.Body>
+						    	<BoldText>{source.com_name}</BoldText>
+                                <span dangerouslySetInnerHTML={{__html: source.match}} />
 							</Text>
 				    	</Nav.Link>
 				    </Card>

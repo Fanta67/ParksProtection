@@ -60,8 +60,14 @@ const States = () => (
   <Select options={states} isMulti className="basic-multi-select" placeholder="States" />
 )
 
-const Text = styled('div')`
+const BoldText = styled('div')`
+	font-size: 21px;
+	font-weight: bold;
+`
+
+const Text = styled('span')`
 	color: black;
+	font-size: 16px;
 `
 
 class Parks extends React.Component {
@@ -96,14 +102,12 @@ class Parks extends React.Component {
 					<Card className={source.code} key={source.code}>
 						<Nav.Link as={ Link } to={{pathname: "/Parks/" + source.code, state: {code: source.code}}}>
 						    <Text>
-							    <Card.Img variant="top" src={source.image}/>
-							    <Card.Body>
-							    	<Card.Title>{source.name}</Card.Title>
-							    	<Card.Text>{source.designation}</Card.Text>
-							    	<Card.Text>{source.email}</Card.Text>
-							    	<Card.Text>{source.phone}</Card.Text>
-							    	<Card.Text>{source.states}</Card.Text>
-							    </Card.Body>
+							    <Card.Img variant="top" src={source.image}/><br/>
+					    		<BoldText>{source.name}</BoldText>
+					    		{source.designation}<br/>
+					    		{source.email}<br/>
+						    	{source.phone}<br/>
+						    	{source.states}
 							</Text>
 				    	</Nav.Link>
 				    </Card>
