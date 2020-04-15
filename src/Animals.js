@@ -115,7 +115,7 @@ class Animals extends React.Component {
 		this.state = {
 			animalList: [],
 	        page: 1,
-	        lastPageNum: 0
+	        lastPageNum: 1
 		};
 		this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -171,7 +171,7 @@ class Animals extends React.Component {
 
 	generateNewPage(event, pageNum) {
 		this.state.page = pageNum;
-		this.fillanimalList(this.state.page)
+		this.fillanimalList(pageNum)
 		window.scrollTo(0, 0);
 	}
 
@@ -272,7 +272,7 @@ class Animals extends React.Component {
           .then((response) => response.json())
           .then((data) => {
               console.log('FETCHED ANIMALS');
-			  let p = Math.ceil(data.total_pages/9);
+			  let p = data.total_pages;
               this.setState({lastPageNum : p == 0 ? 1 : p });
               let animalList = [];
               for (const i in data.objects) {
@@ -301,27 +301,27 @@ class Animals extends React.Component {
         this.dir = Dir.val;
         this.sort_by = Dir.sortby;
 		this.setState({page : 1});
-        this.fillanimalList(this.state.page);
+        this.fillanimalList(1);
         this.forceUpdate();
 	}
 
 	FilterGroupHandler(obj){
 		this.groups = obj;
 		this.setState({page : 1});
-        this.fillanimalList(this.state.page);
+        this.fillanimalList(1);
         this.forceUpdate();
 	}
 
 	FilterStateHandler(obj){
         this.states = obj;
 		this.setState({page : 1});
-        this.fillanimalList(this.state.page);
+        this.fillanimalList(1);
         this.forceUpdate();
     }
     FilterStatusHandler(obj){
         this.statuses = obj;
 		this.setState({page : 1});
-        this.fillanimalList(this.state.page);
+        this.fillanimalList(1);
         this.forceUpdate();
 	}
 

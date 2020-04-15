@@ -101,7 +101,7 @@ class Plants extends React.Component {
 		this.state = {
 			plantList: [],
 	        page: 1,
-	        lastPageNum: 0
+	        lastPageNum: 1
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -154,7 +154,7 @@ class Plants extends React.Component {
 
 	generateNewPage(event, pageNum) {
 		this.state.page = pageNum;
-		this.fillplantList(this.state.page)
+		this.fillplantList(pageNum)
 		window.scrollTo(0, 0);
 	}
 
@@ -243,7 +243,7 @@ class Plants extends React.Component {
 		fetch(url)
           .then((response) => response.json())
           .then((data) => {
-              let p = Math.ceil(data.total_pages/9);
+              let p = data.total_pages;
               this.setState({lastPageNum : p == 0 ? 1 : p });
               let plantList = [];
               for (const i in data.objects) {
@@ -280,20 +280,20 @@ class Plants extends React.Component {
         this.dir = Dir.val;
         this.sort_by = Dir.sortby;
         this.setState({page : 1});
-        this.fillplantList(this.state.page);
+        this.fillplantList(1);
         this.forceUpdate();
 	}
 
 	FilterStateHandler(obj){
         this.states = obj;
         this.setState({page : 1});
-        this.fillplantList(this.state.page);
+        this.fillplantList(1);
         this.forceUpdate();
     }
     FilterStatusHandler(obj){
         this.statuses = obj;
         this.setState({page : 1});
-        this.fillplantList(this.state.page);
+        this.fillplantList(1);
         this.forceUpdate();
 	}
 

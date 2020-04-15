@@ -99,7 +99,7 @@ class Parks extends React.Component {
 		this.state = {
 			parkList: [],
 	        page: 1,
-	        lastPageNum: 0
+	        lastPageNum: 1
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -151,7 +151,7 @@ class Parks extends React.Component {
 
 	generateNewPage(event, pageNum) {
 		this.state.page = pageNum;
-		this.fillParkList(this.state.page)
+		this.fillParkList(pageNum)
 		window.scrollTo(0, 0);
 	}
 
@@ -226,7 +226,7 @@ class Parks extends React.Component {
           .then((response) => response.json())
           .then((data) => {
               console.log('FETCHED PARKS');
-              let p = Math.ceil(data.total_pages/9);
+              let p = data.total_pages;
               this.setState({lastPageNum : p == 0 ? 1 : p });
               let parkList = [];
               for (const i in data.objects) {
@@ -254,13 +254,13 @@ class Parks extends React.Component {
         this.dir = Dir.val;
         this.sort_by = Dir.sortby;
         this.setState({page : 1});
-        this.fillParkList(this.state.page);
+        this.fillParkList(1);
         this.forceUpdate();
 	}
     FilterStateHandler(obj){
         this.states = obj;
         this.setState({page : 1});
-        this.fillParkList(this.state.page);
+        this.fillParkList(1);
         this.forceUpdate();
     }
     SortSelect() {

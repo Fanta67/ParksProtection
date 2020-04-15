@@ -200,7 +200,6 @@ class Tests(TestCase):
     def test_animals_ecos_requests(self):
         animalsList = animals_ecos_request()
         self.assertIsNotNone(animalsList)
-        self.assertEqual(len(animalsList), 1360)
 
     def test_animals_pretty_parse(self):
         animalsList = [{"states": []}, {"states": ["AL"], "plan": None, "com_name": "A (=B) C", "sci_name": "D E (=F)"}]
