@@ -109,7 +109,7 @@ class Animals extends React.Component {
 		this.state = {
 			animalList: [],
 	        page: 1,
-	        lastPageNum: 58
+	        lastPageNum: 0
 		};
 		this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -268,6 +268,8 @@ class Animals extends React.Component {
           .then((response) => response.json())
           .then((data) => {
               console.log('FETCHED ANIMALS');
+			  let p = Math.ceil(data.total_pages/9);
+              this.setState({lastPageNum : p == 0 ? 1 : p });
               let animalList = [];
               for (const i in data.objects) {
               	const animalParsed = {
@@ -294,23 +296,27 @@ class Animals extends React.Component {
 	SortSelectHandler(Dir){
         this.dir = Dir.val;
         this.sort_by = Dir.sortby;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
 	}
 
 	FilterGroupHandler(obj){
 		this.groups = obj;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
 	}
 
 	FilterStateHandler(obj){
         this.states = obj;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
     }
     FilterStatusHandler(obj){
         this.statuses = obj;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
 	}

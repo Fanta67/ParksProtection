@@ -93,7 +93,7 @@ class Parks extends React.Component {
 		this.state = {
 			parkList: [],
 	        page: 1,
-	        lastPageNum: 44
+	        lastPageNum: 0
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -222,6 +222,8 @@ class Parks extends React.Component {
           .then((response) => response.json())
           .then((data) => {
               console.log('FETCHED PARKS');
+              let p = Math.ceil(data.total_pages/9);
+              this.setState({lastPageNum : p == 0 ? 1 : p });
               let parkList = [];
               for (const i in data.objects) {
               	const parkParsed = {
@@ -247,11 +249,13 @@ class Parks extends React.Component {
     SortSelectHandler(Dir){
         this.dir = Dir.val;
         this.sort_by = Dir.sortby;
+        this.setState({page : 1});
         this.fillParkList(this.state.page);
         this.forceUpdate();
 	}
     FilterStateHandler(obj){
         this.states = obj;
+        this.setState({page : 1});
         this.fillParkList(this.state.page);
         this.forceUpdate();
     }

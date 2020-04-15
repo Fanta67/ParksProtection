@@ -19,8 +19,8 @@ const sorts = [
   { value: 2, val: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
   { value: 3, val: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
   { value: 4, val: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'},
-  { value: 5, val: 'asc', label: 'Family Name Ascending', sortby: 'family'},
-  { value: 6, val: 'desc', label: 'Family Name Descending', sortby: 'family'}
+  { value: 5, val: 'asc', label: 'Family Name Ascending', sortby: 'family_com'},
+  { value: 6, val: 'desc', label: 'Family Name Descending', sortby: 'family_com'}
 ]
 
 const statuses = [
@@ -94,7 +94,7 @@ class Plants extends React.Component {
 		this.state = {
 			plantList: [],
 	        page: 1,
-	        lastPageNum: 43
+	        lastPageNum: 0
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -238,6 +238,8 @@ class Plants extends React.Component {
 		fetch(url)
           .then((response) => response.json())
           .then((data) => {
+              let p = Math.ceil(data.total_pages/9);
+              this.setState({lastPageNum : p == 0 ? 1 : p });
               let plantList = [];
               for (const i in data.objects) {
               	const plantParsed = {
@@ -265,17 +267,20 @@ class Plants extends React.Component {
 	SortSelectHandler(Dir){
         this.dir = Dir.val;
         this.sort_by = Dir.sortby;
+        this.setState({page : 1});
         this.fillplantList(this.state.page);
         this.forceUpdate();
 	}
 
 	FilterStateHandler(obj){
         this.states = obj;
+        this.setState({page : 1});
         this.fillplantList(this.state.page);
         this.forceUpdate();
     }
     FilterStatusHandler(obj){
         this.statuses = obj;
+        this.setState({page : 1});
         this.fillplantList(this.state.page);
         this.forceUpdate();
 	}
