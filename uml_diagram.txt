@@ -1,8 +1,11 @@
 @startuml
-object Animal {
-    id: int
+class Animal {
+    An endangered animal and properties of that animal.
+    ..
+    id: int, Primary Key
     com_name: string
     sci_name: string
+    des: string
     status: string
     list_date: string
     tax_group: string
@@ -14,10 +17,13 @@ object Animal {
     states: list
 }
 
-object Plant {
+class Plant {
+     An endangered plant and properties of that plant.
+    ..
     id: integer
     com_name: string
     sci_name: string
+    des: string
     status: string
     list_date: string
     family: string
@@ -31,7 +37,9 @@ object Plant {
     states: list
 }
 
-object Park {
+class Park {
+    A national or state park designated important by a government entity.
+    ..
     code: string
     name: string
     designation: string
@@ -48,12 +56,12 @@ object Park {
     states: list
 }
 
-Animal <|-- Plant
-Animal <|-- Park
+Animal <|-- "many" Plant
+Animal <|-- "many" Park
 
-Plant <|-- Animal
-Plant <|-- Park
+Plant <|-- "many" Animal
+Plant <|-- "many" Park
 
-Park <|-- Animal
-Park <|-- Plant
+Park <|-- "many" Animal
+Park <|-- "many" Plant
 @enduml
