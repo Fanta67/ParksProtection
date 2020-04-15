@@ -29,42 +29,46 @@ class PlantInstance extends React.Component {
     let url = "https://api.parkprotection.me/api/plants/".concat(this.props.match.params.id);
     const response = await fetch(url, {mode: 'cors'});
     const data = await response.json();
-    let state_list = data.states.map(function(e) {
-      return e.name
-    });
-    let plant = data;
-    this.setState({ plant: plant, states: state_list });
-    fetch(
-       'https://api.parkprotection.me/api/parks?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
-       )
-     .then((response) => response.json())
-     .then((parksData) => {
-       this.setState({
-           rl1_code : parksData.objects[0].code,
-           rl1_name : parksData.objects[0].name,
-           rl1_images : parksData.objects[0].images.split(" "),
+    if(typeof data.states == "undefined") {
+      window.location.href = "/error_instance_not_found"
+    } else {
+      let state_list = data.states.map(function(e) {
+        return e.name
+      });
+      let plant = data;
+      this.setState({ plant: plant, states: state_list });
+      fetch(
+         'https://api.parkprotection.me/api/parks?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
+         )
+       .then((response) => response.json())
+       .then((parksData) => {
+         this.setState({
+             rl1_code : parksData.objects[0].code,
+             rl1_name : parksData.objects[0].name,
+             rl1_images : parksData.objects[0].images.split(" "),
 
-           rl2_code : parksData.objects[1].code,
-           rl2_name : parksData.objects[1].name,
-           rl2_images : parksData.objects[1].images.split(" "),
-       })
-     });
+             rl2_code : parksData.objects[1].code,
+             rl2_name : parksData.objects[1].name,
+             rl2_images : parksData.objects[1].images.split(" "),
+         })
+       });
 
-     fetch(
-       'https://api.parkprotection.me/api/animals?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
-       )
-     .then((response) => response.json())
-     .then((animalsData) => {
-       this.setState({
-         rl3_id: animalsData.objects[0].id,
-         rl3_img: animalsData.objects[0].image.replace("http://", "https://"),
-         rl3_title: animalsData.objects[0].com_name,
+       fetch(
+         'https://api.parkprotection.me/api/animals?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
+         )
+       .then((response) => response.json())
+       .then((animalsData) => {
+         this.setState({
+           rl3_id: animalsData.objects[0].id,
+           rl3_img: animalsData.objects[0].image.replace("http://", "https://"),
+           rl3_title: animalsData.objects[0].com_name,
 
-         rl4_id: animalsData.objects[1].id,
-         rl4_img: animalsData.objects[1].image.replace("http://", "https://"),
-         rl4_title: animalsData.objects[1].com_name,
-       })
-     });
+           rl4_id: animalsData.objects[1].id,
+           rl4_img: animalsData.objects[1].image.replace("http://", "https://"),
+           rl4_title: animalsData.objects[1].com_name,
+         })
+       });
+   }
 
   }
 
@@ -91,7 +95,14 @@ class PlantInstance extends React.Component {
   				</Constants.EndangeredBox>
 
   				<br/><br/>
-  				<InformationTable info = {this.state.plant}/>
+          <Row>
+            <Col>
+              {this.state.plant.des}
+            </Col>
+            <Col>
+  				    <InformationTable info = {this.state.plant}/>
+            </Col>
+          </Row>
 
 					<br/><br/>
 					<RelatedEntities info = {this.state}/>

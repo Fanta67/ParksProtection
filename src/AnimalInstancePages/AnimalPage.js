@@ -82,18 +82,22 @@ export default class AnimalPage extends Component {
     let url = "https://api.parkprotection.me/api/animals/".concat(this.props.match.params.id);
     const response = await fetch(url, {mode: 'cors'});
     const data = await response.json();
-    this.setState({animal : data,
+    console.log(data)
+    if(typeof data.states == "undefined") {
+      window.location.href = "/error_instance_not_found"
+    } else {
+      this.setState({animal : data,
                    loading: false,
                    states: data.states.map(function(e) {
                      return e.name
                    })
                  });
      fetch(
-  			'https://api.parkprotection.me/api/parks?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
-  			)
-  		.then((response) => response.json())
-  		.then((parksData) => {
-  			this.setState({
+        'https://api.parkprotection.me/api/parks?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
+        )
+      .then((response) => response.json())
+      .then((parksData) => {
+        this.setState({
             rl1_code : parksData.objects[0].code,
             rl1_name : parksData.objects[0].name,
             rl1_images : parksData.objects[0].images.split(" "),
@@ -101,15 +105,15 @@ export default class AnimalPage extends Component {
             rl2_code : parksData.objects[1].code,
             rl2_name : parksData.objects[1].name,
             rl2_images : parksData.objects[1].images.split(" "),
-  			})
-  		});
+        })
+      });
 
       fetch(
-   			'https://api.parkprotection.me/api/plants?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
-   			)
-   		.then((response) => response.json())
-   		.then((plantsData) => {
-   			this.setState({
+        'https://api.parkprotection.me/api/plants?q={"filters":[{"name":"states__name","op":"any","val":"'.concat(data.states[0].name).concat('"}]}')
+        )
+      .then((response) => response.json())
+      .then((plantsData) => {
+        this.setState({
           rl3_id: plantsData.objects[0].id,
           rl3_img: plantsData.objects[0].image.replace("http://", "https://"),
           rl3_title: plantsData.objects[0].com_name,
@@ -117,9 +121,9 @@ export default class AnimalPage extends Component {
           rl4_id: plantsData.objects[1].id,
           rl4_img: plantsData.objects[1].image.replace("http://", "https://"),
           rl4_title: plantsData.objects[1].com_name,
-   			})
-   		});
-
+        })
+      });
+    }
   }
 
   render(){
@@ -150,19 +154,24 @@ export default class AnimalPage extends Component {
           </EndangeredBox>
 
           <br/><br/>
-          <Row><Col /><Col xs={6}>
-           <TableBox>
-            <Table striped bordered hover size="sm">
-                <tbody>
-                <tr><th>Group</th><td>{this.state.animal.tax_group}</td></tr>
-                <tr><th>Date Listed</th><td>{this.state.animal.list_date}</td></tr>
-                <tr><th><a href="https://www.fws.gov/pacific/news/grizzly/esafacts.htm">Distinct Population Segment?</a></th><td>{this.state.animal.dps ? "Yes" : "No"}</td></tr>
-                <tr><th>Aquatic?</th><td>{this.state.animal.aquatic ? "Yes" : "No"}</td></tr>
-                <tr><th><a href="https://www.fws.gov/birds/management/managed-species/birds-of-conservation-concern.php">BCC?</a></th><td>{this.state.animal.bcc ? "Yes" : "No"}</td></tr>
-                <tr><th>Conservation Plan Title</th><td>{this.state.animal.plan}</td></tr>
-                </tbody>
-            </Table>
-          </TableBox></Col><Col />
+          <Row>
+            <Col>
+              {this.state.animal.des}
+            </Col>
+
+            <Col>
+             <TableBox>
+              <Table striped bordered hover size="sm">
+                  <tbody>
+                  <tr><th>Group</th><td>{this.state.animal.tax_group}</td></tr>
+                  <tr><th>Date Listed</th><td>{this.state.animal.list_date}</td></tr>
+                  <tr><th><a href="https://www.fws.gov/pacific/news/grizzly/esafacts.htm">Distinct Population Segment?</a></th><td>{this.state.animal.dps ? "Yes" : "No"}</td></tr>
+                  <tr><th>Aquatic?</th><td>{this.state.animal.aquatic ? "Yes" : "No"}</td></tr>
+                  <tr><th><a href="https://www.fws.gov/birds/management/managed-species/birds-of-conservation-concern.php">BCC?</a></th><td>{this.state.animal.bcc ? "Yes" : "No"}</td></tr>
+                  <tr><th>Conservation Plan Title</th><td>{this.state.animal.plan}</td></tr>
+                  </tbody>
+              </Table>
+            </TableBox></Col>
           </Row>
 
           <br/><br/>

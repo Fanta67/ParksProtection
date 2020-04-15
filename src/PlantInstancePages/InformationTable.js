@@ -6,7 +6,6 @@ import {TableBox} from './Constants.js'
 
 function InformationTable(props) {
   return (
-    <Row><Col /><Col xs={6}>
      <TableBox>
       <Table striped bordered hover size="sm">
           <tbody>
@@ -18,8 +17,7 @@ function InformationTable(props) {
           <tr><th>Toxicity</th><td>{props.info.toxicity}</td></tr>
           </tbody>
       </Table>
-    </TableBox></Col><Col />
-    </Row>
+    </TableBox>
   );
 }
 

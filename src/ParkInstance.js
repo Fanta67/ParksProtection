@@ -83,6 +83,9 @@ class ParkInstance extends React.Component {
       	)
 		.then((response) => response.json())
 		.then((data) => {
+			if(typeof data.states == "undefined") {
+		      window.location.href = "/error_instance_not_found"
+		    } else {
 			console.log("FETCHED PARK INSTANCE")
 			if("code" in data) {
 				this.setState({
@@ -137,7 +140,7 @@ class ParkInstance extends React.Component {
 			} else {
 
 			}
-		});
+		}});
 
 	}
 

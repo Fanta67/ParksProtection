@@ -15,58 +15,98 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { Nav } from 'react-bootstrap';
+import FormControl from 'react-bootstrap/FormControl';
 
-const common = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'des', label: 'Descending' }
-]
-
-const Common = () => (
-  <Select options={common} placeholder="Common Names" />
-)
-
-const scientific = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'des', label: 'Descending' }
-]
-
-const Scientific = () => (
-  <Select options={scientific} placeholder="Scientific Names" />
-)
+const sorts = [
+	{ value : 1, val: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
+	{ value : 2, val: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
+	{ value : 3, val: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
+	{ value : 4, val: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'}
+  ]
 
 const groups = [
-  { value: 'birds', label: 'Birds' },
-  { value: 'reptiles', label: 'Reptiles' }
+  { value: 'Birds', label: 'Birds' },
+  { value: 'Reptiles', label: 'Reptiles' },
+  { value: 'Mammals', label: 'Mammals' },
+  { value: 'Fishes', label: 'Fishes' },
+  { value: 'Crustaceans', label: 'Crustaceans' },
+  { value: 'Clams', label: 'Clams' },
+  { value: 'Insects', label: 'Insects' },
+  { value: 'Snails', label: 'Snails' },
+  { value: 'Amphibians', label: 'Amphibians' },
+  { value: 'Arachnids', label: 'Arachnids' }
 ]
-
-const Groups = () => (
-  <Select options={groups} isMulti className="basic-multi-select" placeholder="Groups" />
-)
 
 const statuses = [
-  { value: 'threatened', label: 'Threatened' },
-  { value: 'endangered', label: 'Endangered' }
-]
+	{ value: 'Threatened', label: 'Threatened', status: true },
+	{ value: 'Endangered', label: 'Endangered', status: true },
+	{ value: 'Recovery', label: 'Recovery', status: true}
+  ]
 
-const Statuses = () => (
-  <Select options={statuses} isMulti className="basic-multi-select" placeholder="Listing Statuses" />
-)
-
-const states = [
-	{ value: 'AZ', label: 'AZ' },
-	{ value: 'TX', label: 'TX' }
-]
-
-const States = () => (
-  <Select options={states} isMulti className="basic-multi-select" placeholder="States" />
-)
+  const states = [
+	  {value : 'AL', label : 'AL'},
+	  {value : 'AR', label : 'AR'},
+	  {value : 'AZ', label : 'AZ'},
+	  {value : 'CA', label : 'CA'},
+	  {value : 'CO', label : 'CO'},
+	  {value : 'CT', label : 'CT'},
+	  {value : 'DE', label : 'DE'},
+	  {value : 'FL', label : 'FL'},
+	  {value : 'GA', label : 'GA'},
+	  {value : 'IA', label : 'IA'},
+	  {value : 'ID', label : 'ID'},
+	  {value : 'IL', label : 'IL'},
+	  {value : 'IN', label : 'IN'},
+	  {value : 'KS', label : 'KS'},
+	  {value : 'KY', label : 'KY'},
+	  {value : 'LA', label : 'LA'},
+	  {value : 'MA', label : 'MA'},
+	  {value : 'MD', label : 'MD'},
+	  {value : 'ME', label : 'MD'},
+	  {value : 'MI', label : 'MI'},
+	  {value : 'MN', label : 'MN'},
+	  {value : 'MO', label : 'MO'},
+	  {value : 'MS', label : 'MS'},
+	  {value : 'MT', label : 'MT'},
+	  {value : 'NC', label : 'NC'},
+	  {value : 'ND', label : 'ND'},
+	  {value : 'NE', label : 'NE'},
+	  {value : 'NH', label : 'NH'},
+	  {value : 'NJ', label : 'NJ'},
+	  {value : 'NM', label : 'NM'},
+	  {value : 'NV', label : 'NV'},
+	  {value : 'NY', label : 'NY'},
+	  {value : 'OH', label : 'OH'},
+	  {value : 'OK', label : 'OK'},
+	  {value : 'OR', label : 'OR'},
+	  {value : 'PA', label : 'PA'},
+	  {value : 'RI', label : 'RI'},
+	  {value : 'SC', label : 'SC'},
+	  {value : 'SD', label : 'SD'},
+	  {value : 'TN', label : 'TN'},
+	  {value : 'TX', label : 'TX'},
+	  {value : 'UT', label : 'UT'},
+	  {value : 'VA', label : 'VA'},
+	  {value : 'VI', label : 'VI'},
+	  {value : 'VT', label : 'VT'},
+	  {value : 'WA', label : 'WA'},
+	  {value : 'WI', label : 'WI'},
+	  {value : 'WV', label : 'WV'},
+	  {value : 'WY', label : 'WY'},
+  ]
 
 const ItalicText = styled('div')`
 	font-style: italic;
 `
 
-const Text = styled('div')`
+const BoldText = styled('div')`
+	font-size: 21px;
+	font-weight: bold;
+`
+
+const Text = styled('span')`
 	color: black;
+	font-size: 16px;
 `
 
 class Animals extends React.Component {
@@ -75,8 +115,17 @@ class Animals extends React.Component {
 		this.state = {
 			animalList: [],
 	        page: 1,
-	        lastPageNum: 58
+	        lastPageNum: 0
 		};
+		this.SortSelectHandler = this.SortSelectHandler.bind(this);
+        this.FilterStateHandler = this.FilterStateHandler.bind(this);
+		this.FilterStatusHandler = this.FilterStatusHandler.bind(this);
+		this.FilterGroupHandler = this.FilterGroupHandler.bind(this);
+        this.dir = 'asc';
+        this.sort_by = 'com_name';
+        this.states = [];
+		this.statuses = [];
+		this.groups = [];
 	}
 
 	componentDidMount() {
@@ -101,14 +150,12 @@ class Animals extends React.Component {
 					<Card className={"a" + source.id}>
 						<Nav.Link as={ Link } to={{pathname: "/Animals/" + source.id, state: {id: source.id}}}>
 						    <Text>
-							    <Card.Img variant="top" src={source.image}/>
-							    <Card.Body>
-							    	<Card.Title>{source.com_name}</Card.Title>
-							    	<Card.Text><ItalicText>{source.sci_name}</ItalicText></Card.Text>
-							    	<Card.Text>{source.tax_group}</Card.Text>
-							    	<Card.Text>{source.status}</Card.Text>
-							    	<Card.Text>{source.states}</Card.Text>
-							    </Card.Body>
+							    <Card.Img variant="top" src={source.image}/><br/>
+					    		<BoldText>{source.com_name}</BoldText>
+					    		<ItalicText>{source.sci_name}</ItalicText>
+					    		{source.tax_group}<br/>
+						    	{source.status}<br/>
+						    	{source.states}
 							</Text>
 				    	</Nav.Link>
 				    </Card>
@@ -169,12 +216,64 @@ class Animals extends React.Component {
 		return paginationBar;
 	}
 
+    filterString(){
+        if((this.states == null || this.states.length == 0) && (this.statuses == null || this.statuses.length == 0) && (this.groups == null || this.groups.length == null)){
+            return "";
+		}
+
+		let filter = ",%22filters%22:%5B";
+
+		if(this.states != null && this.states.length != 0){
+            filter = filter.concat("%7B%22or%22:%5B");
+            for(const s of this.states){
+                filter = filter.concat("%7B%22name%22:%22states__name%22,%22op%22:%22any%22,%22val%22:%22".concat(s.value).concat("%22%7D,"));
+            }
+            filter = filter.substring(0,filter.length - 1);
+            filter = filter.concat("%5D%7D");
+        }
+        if(this.statuses != null && this.statuses.length != 0){
+            if(this.states != null && this.states.length != 0){
+                filter = filter.concat(",%7B%22or%22:%5B");
+            }
+            else{
+                filter = filter.concat("%7B%22or%22:%5B");
+            }
+            for(const s of this.statuses){
+                filter = filter.concat("%7B%22name%22:%22status%22,%22op%22:%22eq%22,%22val%22:%22".concat(s.value).concat("%22%7D,"));
+            }
+            filter = filter.substring(0,filter.length - 1);
+            filter = filter.concat("%5D%7D");
+		}
+		if(this.groups != null && this.groups.length != 0){
+			if((this.statuses != null && this.statuses.length != 0) || (this.states != null && this.states.length != 0)){
+				filter = filter.concat(",%7B%22or%22:%5B");
+			}
+			else{
+				filter = filter.concat("%7B%22or%22:%5B");
+			}
+			for(const s of this.groups){
+				filter = filter.concat("%7B%22name%22:%22tax_group%22,%22op%22:%22eq%22,%22val%22:%22".concat(s.value).concat("%22%7D,"));
+			}
+			filter = filter.substring(0,filter.length - 1);
+			filter = filter.concat("%5D%7D");
+        }
+        filter = filter.concat("%5D");
+        return filter;
+	}
+
 	fillanimalList(pageNum) {
-		fetch(
-          "https://api.parkprotection.me/api/animals?results_per_page=9&page=".concat(this.state.page))
+        let dir = this.dir;
+        let sortby = this.sort_by;
+		let filters = this.filterString();
+        let url = 'https://api.parkprotection.me/api/animals?results_per_page=9&page='.concat(pageNum).concat('&q=%7B%22order_by%22:%5B%7B%22field%22:%22').concat(sortby).concat("%22,%22direction%22:%22").concat(dir).concat("%22%7D%5D");
+		url = url.concat(filters).concat("%7D");
+		console.log(url)
+		fetch(url)
           .then((response) => response.json())
           .then((data) => {
-              console.log('FETCHED PLANTS');
+              console.log('FETCHED ANIMALS');
+			  let p = Math.ceil(data.total_pages/9);
+              this.setState({lastPageNum : p == 0 ? 1 : p });
               let animalList = [];
               for (const i in data.objects) {
               	const animalParsed = {
@@ -189,8 +288,6 @@ class Animals extends React.Component {
               	console.log(animalParsed.image)
                 animalList.push(animalParsed)
               }
-              // var assert = require('assert');
-                // assert(animalList == 9);
               this.setState({ animalList : animalList});
           })
           .catch((e) => {
@@ -200,6 +297,65 @@ class Animals extends React.Component {
           });
 	}
 
+	SortSelectHandler(Dir){
+        this.dir = Dir.val;
+        this.sort_by = Dir.sortby;
+		this.setState({page : 1});
+        this.fillanimalList(this.state.page);
+        this.forceUpdate();
+	}
+
+	FilterGroupHandler(obj){
+		this.groups = obj;
+		this.setState({page : 1});
+        this.fillanimalList(this.state.page);
+        this.forceUpdate();
+	}
+
+	FilterStateHandler(obj){
+        this.states = obj;
+		this.setState({page : 1});
+        this.fillanimalList(this.state.page);
+        this.forceUpdate();
+    }
+    FilterStatusHandler(obj){
+        this.statuses = obj;
+		this.setState({page : 1});
+        this.fillanimalList(this.state.page);
+        this.forceUpdate();
+	}
+
+	SortSelect() {
+      return <Select options={sorts} placeholder="Sort By" onChange ={
+          this.SortSelectHandler
+      }/>
+	}
+
+	Groups(){
+	  return <Select options={groups} isMulti className="basic-multi-select" placeholder="Groups" onChange ={
+		  this.FilterGroupHandler
+	  }/>;
+	}
+
+	States(){
+      return <Select options={states} isMulti className="basic-multi-select" placeholder="States" onChange ={
+          this.FilterStateHandler
+      }/>;
+	}
+
+	Statuses(){
+      return <Select options={statuses} isMulti className="basic-multi-select" placeholder="Listing Statuses" onChange = {
+          this.FilterStatusHandler
+      }/>;
+	}
+
+    handleKeyPress(key) {
+        if (key.charCode == 13) {
+            key.preventDefault();
+            window.location.href = ("Animals/search/" + String(this.state.inputNode))
+        }
+    }
+
 	render() {
 		return (
 			<Container>
@@ -208,28 +364,31 @@ class Animals extends React.Component {
 				<Col><h1 className="PageHeader">Animals</h1><br/></Col>
 				<Col xs={{span: 3}}>
 					<Form inline>
-						<Form.Group as={Row}>
-					    	<Form.Control type="text" placeholder="Search" className="mr-sm-2" /><Button>Search</Button>
-						</Form.Group>
+                        <Form.Group as={Row}>
+                            <FormControl id="searchBox" type="text" placeholder={"Search Animals"} className="mr-sm-2"
+                               onChange={node => this.setState({inputNode: node.target.value})}
+                                onKeyPress={key => {this.handleKeyPress(key)}}
+                            />
+                            <Button id="searchButton"
+                                href={("Animals/search/" + String(this.state.inputNode))}
+                            >Search</Button>
+                        </Form.Group>
 					</Form>
 				</Col>
 				</Row>
 
 				<Row>
 					<Col>
-						<Common />
+						{this.SortSelect()}
 					</Col>
 					<Col>
-						<Scientific />
+						{this.Groups()}
 					</Col>
 					<Col>
-						<Groups />
+						{this.Statuses()}
 					</Col>
 					<Col>
-						<Statuses />
-					</Col>
-					<Col>
-						<States />
+						{this.States()}
 					</Col>
 				</Row>
 

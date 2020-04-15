@@ -14,11 +14,10 @@ from dotenv import load_dotenv
 
 TOTAL_PARKS = 498
 
-load_dotenv()
 
 # use sqlite in memory for testing and postgresql to store in RDS; BE VERY CERTAIN WHEN COMMITTING TO RDS
 # engine = create_engine('postgresql://' + os.getenv('DB_USER') + ':' + os.getenv('DB_PASS') + '@' + os.getenv('DB_HOST') + ':' + os.getenv('DB_PORT') + '/' + os.getenv('DB_NAME'), echo=True)
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('sqlite:///:memory:')
 Base = declarative_base()
 
 class Park(Base):
@@ -62,7 +61,7 @@ Base.metadata.create_all(engine)
 def parks_request(total_limit=TOTAL_PARKS, page_limit=10):
 	total_limit = TOTAL_PARKS if total_limit > TOTAL_PARKS else (0 if total_limit < 0 else total_limit)
 	page_limit = 10 if not (0 <= page_limit <= 50) else page_limit
-	endpoint = "https://developer.nps.gov/api/v1/parks?&api_key=" + os.environ['PARKS_KEY'] + "&sort=parkCode"
+	endpoint = "https://developer.nps.gov/api/v1/parks?&api_key=5F6pdXkb7h3QTKUtTdBytI9J5OU24WgvgmYUAKBa&sort=parkCode"
 	duplicates = set()
 	parksList = []
 	for start in range(1, total_limit + 1, page_limit):
