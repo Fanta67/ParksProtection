@@ -3,6 +3,7 @@ class Animal {
     An endangered animal and properties of that animal.
     ..
     id: int, Primary Key
+    --
     com_name: string
     sci_name: string
     des: string
@@ -20,7 +21,8 @@ class Animal {
 class Plant {
      An endangered plant and properties of that plant.
     ..
-    id: integer
+    id: integer, Primary Key
+    --
     com_name: string
     sci_name: string
     des: string
@@ -40,7 +42,8 @@ class Plant {
 class Park {
     A national or state park designated important by a government entity.
     ..
-    code: string
+    code: string, Primary key
+    --
     name: string
     designation: string
     latitude: float
@@ -56,12 +59,12 @@ class Park {
     states: list
 }
 
-Animal <|-- "many" Plant
-Animal <|-- "many" Park
+Animal <|-- "states 0..*" Plant
+Animal <|-- "states 0..*" Park
 
-Plant <|-- "many" Animal
-Plant <|-- "many" Park
+Plant <|-- "states 0..*" Animal
+Plant <|-- "states 0..*" Park
 
-Park <|-- "many" Animal
-Park <|-- "many" Plant
+Park <|-- "states 0..*" Animal
+Park <|-- "states 0..*" Plant
 @enduml
