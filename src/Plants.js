@@ -13,34 +13,74 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import ListGroup from 'react-bootstrap/ListGroup';
-import FormControl from 'react-bootstrap/FormControl';
 
 const sorts = [
   { value: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
   { value: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
   { value: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
-  { value: 'des', label: 'Scientific Name Descending', sortby: 'sci_name'},
+  { value: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'},
   { value: 'asc', label: 'Family Name Ascending', sortby: 'family'},
-  { value: 'des', label: 'Family Name Descending', sortby: 'family'}
+  { value: 'desc', label: 'Family Name Descending', sortby: 'family'}
 ]
 
 const statuses = [
-  { value: 'threatened', label: 'Threatened' },
-  { value: 'endangered', label: 'Endangered' }
+  { value: 'Threatened', label: 'Threatened', status: true },
+  { value: 'Endangered', label: 'Endangered', status: true },
+  { value: 'Recovery', label: 'Recovery', status: true}
 ]
-
-const Statuses = () => (
-  <Select options={statuses} isMulti className="basic-multi-select" placeholder="Listing Statuses" />
-)
 
 const states = [
-	{ value: 'AZ', label: 'AZ' },
-	{ value: 'TX', label: 'TX' }
+	{value : 'AL', label : 'AL'},
+    {value : 'AR', label : 'AR'},
+    {value : 'AZ', label : 'AZ'},
+    {value : 'CA', label : 'CA'},
+    {value : 'CO', label : 'CO'},
+    {value : 'CT', label : 'CT'},
+    {value : 'DE', label : 'DE'},
+    {value : 'FL', label : 'FL'},
+    {value : 'GA', label : 'GA'},
+    {value : 'IA', label : 'IA'},
+    {value : 'ID', label : 'ID'},
+    {value : 'IL', label : 'IL'},
+    {value : 'IN', label : 'IN'},
+    {value : 'KS', label : 'KS'},
+    {value : 'KY', label : 'KY'},
+    {value : 'LA', label : 'LA'},
+    {value : 'MA', label : 'MA'},
+    {value : 'MD', label : 'MD'},
+    {value : 'ME', label : 'MD'},
+    {value : 'MI', label : 'MI'},
+    {value : 'MN', label : 'MN'},
+    {value : 'MO', label : 'MO'},
+    {value : 'MS', label : 'MS'},
+    {value : 'MT', label : 'MT'},
+    {value : 'NC', label : 'NC'},
+    {value : 'ND', label : 'ND'},
+    {value : 'NE', label : 'NE'},
+    {value : 'NH', label : 'NH'},
+    {value : 'NJ', label : 'NJ'},
+    {value : 'NM', label : 'NM'},
+    {value : 'NV', label : 'NV'},
+    {value : 'NY', label : 'NY'},
+    {value : 'OH', label : 'OH'},
+    {value : 'OK', label : 'OK'},
+    {value : 'OR', label : 'OR'},
+    {value : 'PA', label : 'PA'},
+    {value : 'RI', label : 'RI'},
+    {value : 'SC', label : 'SC'},
+    {value : 'SD', label : 'SD'},
+    {value : 'TN', label : 'TN'},
+    {value : 'TX', label : 'TX'},
+    {value : 'UT', label : 'UT'},
+    {value : 'VA', label : 'VA'},
+    {value : 'VI', label : 'VI'},
+    {value : 'VT', label : 'VT'},
+    {value : 'WA', label : 'WA'},
+    {value : 'WI', label : 'WI'},
+    {value : 'WV', label : 'WV'},
+    {value : 'WY', label : 'WY'},
 ]
 
-const States = () => (
-  <Select options={states} isMulti className="basic-multi-select" placeholder="States" />
-)
 
 const ItalicText = styled('div')`
 	font-style: italic;
@@ -58,8 +98,12 @@ class Plants extends React.Component {
 	        lastPageNum: 43
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
+        this.FilterStateHandler = this.FilterStateHandler.bind(this);
+        this.FilterStatusHandler = this.FilterStatusHandler.bind(this);
         this.dir = 'asc';
         this.sort_by = 'com_name';
+        this.states = [];
+        this.statuses = [];
 
 	}
 	componentDidMount() {
@@ -153,16 +197,49 @@ class Plants extends React.Component {
 		return paginationBar;
 	}
 
+    //https://api.parkprotection.me/api/plants?results_per_page=1000&page=1&q={"order_by":[{"field":"com_name","direction":"desc"}],"filters":[{"or":[{"name":"states__name","op":"any","val":"FL"},{"name":"states__name","op":"any","val":"AL"}]}, {"or": [{"name":"status","op":"eq","val":"Endangered"}]}]}
+    filterString(){
+        if((this.states == null || this.states.length == 0) && (this.statuses == null || this.statuses.length == 0)){
+            return "";
+        }
+
+        //let filter = ",%22filters%22:%5B%7B%%22or%22:%5B%7B%%22name%22:%22states__name%22,%22op%22:%22any%22,%22val%22:%22FL%22%7D,%7B%22name%22:%22states__name%22,%22op%22:%22any%22,%22val%22:%22AL%22%7D%5D%7D,%20%7B%22or%22:%20%5B%7B%22name%22:%22status%22,%22op%22:%22eq%22,%22val%22:%22Endangered%22%7D%5D";
+        let filter = ",%22filters%22:%5B";
+
+        if(this.states != null && this.states.length != 0){
+            filter = filter.concat("%7B%22or%22:%5B");
+            for(const s of this.states){
+                filter = filter.concat("%7B%22name%22:%22states__name%22,%22op%22:%22any%22,%22val%22:%22".concat(s.value).concat("%22%7D,"));
+            }
+            filter = filter.substring(0,filter.length - 1);
+            filter = filter.concat("%5D%7D");
+        }
+        if(this.statuses != null && this.statuses.length != 0){
+            if(this.states != null && this.states.length != 0){
+                filter = filter.concat(",%7B%22or%22:%5B");
+            }
+            else{
+                filter = filter.concat("%7B%22or%22:%5B");
+            }
+            for(const s of this.statuses){
+                filter = filter.concat("%7B%22name%22:%22status%22,%22op%22:%22eq%22,%22val%22:%22".concat(s.value).concat("%22%7D,"));
+            }
+            filter = filter.substring(0,filter.length - 1);
+            filter = filter.concat("%5D%7D");
+        }
+        filter = filter.concat("%5D");
+        return filter;
+    }
+
 	fillplantList(pageNum) {
         let dir = this.dir;
         let sortby = this.sort_by;
-
-		fetch(
-          'https://api.parkprotection.me/api/plants?results_per_page=9&q=%7B%22order_by%22:%5B%7B%22field%22:%22'.concat(sortby).concat("%22,%22direction%22:%22").concat(dir).concat("%22%7D%5D%7D&page=").concat(pageNum)
-      )
+        let filters = this.filterString();
+        let url = 'https://api.parkprotection.me/api/plants?results_per_page=9&page='.concat(pageNum).concat('&q=%7B%22order_by%22:%5B%7B%22field%22:%22').concat(sortby).concat("%22,%22direction%22:%22").concat(dir).concat("%22%7D%5D");
+        url = url.concat(filters).concat("%7D");
+		fetch(url)
           .then((response) => response.json())
           .then((data) => {
-              console.log('FETCHED PLANTS');
               let plantList = [];
               for (const i in data.objects) {
               	const plantParsed = {
@@ -174,7 +251,6 @@ class Plants extends React.Component {
               		status : data.objects[i].status,
               		states : data.objects[i].states.map((state) => state.name).join(", "),
               	}
-              	console.log(plantParsed.image)
                 plantList.push(plantParsed)
               }
               // var assert = require('assert');
@@ -186,7 +262,6 @@ class Plants extends React.Component {
               console.log(e);
               this.setState({ plantList : []});
           });
-          this.render();
 	}
 
     SortSelectHandler(Dir){
@@ -195,17 +270,35 @@ class Plants extends React.Component {
         this.fillplantList(this.state.page);
         this.forceUpdate();
     }
+
+
+    FilterStateHandler(obj){
+        this.states = obj;
+        this.fillplantList(this.state.page);
+        this.forceUpdate();
+    }
+    FilterStatusHandler(obj){
+        this.statuses = obj;
+        this.fillplantList(this.state.page);
+        this.forceUpdate();
+    }
+
     SortSelect() {
-      return <Select options={sorts} ref = "Dir" placeholder="Sort By" onChange ={
+      return <Select options={sorts} placeholder="Sort By" onChange ={
           this.SortSelectHandler
       }/>
     }
 
-    handleKeyPress(key) {
-        if (key.charCode == 13) {
-            key.preventDefault();
-            window.location.href = ("Plants/search/" + String(this.state.inputNode))
-        }
+    States(){
+      return <Select options={states} isMulti className="basic-multi-select" placeholder="States" onChange ={
+          this.FilterStateHandler
+      }/>;
+    }
+
+    Statuses(){
+      return <Select options={statuses} isMulti className="basic-multi-select" placeholder="Listing Statuses" onChange = {
+          this.FilterStatusHandler
+      }/>;
     }
 
 	render() {
@@ -216,15 +309,9 @@ class Plants extends React.Component {
 				<Col><h1 className="PageHeader">Plants</h1><br/></Col>
 				<Col xs={{span: 3}}>
 					<Form inline>
-                        <Form.Group as={Row}>
-                            <FormControl id="searchBox" type="text" placeholder={"Search Plants"} className="mr-sm-2"
-                               onChange={node => this.setState({inputNode: node.target.value})}
-                                onKeyPress={key => {this.handleKeyPress(key)}}
-                            />
-                            <Button id="searchButton"
-                                href={("Plants/search/" + String(this.state.inputNode))}
-                            >Search</Button>
-                        </Form.Group>
+						<Form.Group as={Row}>
+					    	<Form.Control type="text" placeholder="Search" className="mr-sm-2" /><Button>Search</Button>
+						</Form.Group>
 					</Form>
 				</Col>
 				</Row>
@@ -234,10 +321,10 @@ class Plants extends React.Component {
 						{this.SortSelect()}
 					</Col>
 					<Col>
-						<Statuses />
+						{this.Statuses()}
 					</Col>
 					<Col>
-						<States />
+						{this.States()}
 					</Col>
 				</Row>
 
