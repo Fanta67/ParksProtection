@@ -16,12 +16,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
 const sorts = [
-  { value: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
-  { value: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
-  { value: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
-  { value: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'},
-  { value: 'asc', label: 'Family Name Ascending', sortby: 'family'},
-  { value: 'desc', label: 'Family Name Descending', sortby: 'family'}
+  { value: 1, val: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
+  { value: 2, val: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
+  { value: 3, val: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
+  { value: 4, val: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'},
+  { value: 5, val: 'asc', label: 'Family Name Ascending', sortby: 'family_com'},
+  { value: 6, val: 'desc', label: 'Family Name Descending', sortby: 'family_com'}
 ]
 
 const statuses = [
@@ -101,7 +101,7 @@ class Plants extends React.Component {
 		this.state = {
 			plantList: [],
 	        page: 1,
-	        lastPageNum: 43
+	        lastPageNum: 0
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -115,13 +115,13 @@ class Plants extends React.Component {
 	componentDidMount() {
 		this.fillplantList(1)
 	}
-	
+
 	makeCardDeck(){
 		let plantDeck = [];
 		var deckSize = this.state.plantList.length;
 		var i = 0;
 		var j = 0;
-		
+
 		for(; i < 3; ++i) {
 			let plantInstances = [];
 			for(j = 0; (j < 3); ++j) {
@@ -151,13 +151,13 @@ class Plants extends React.Component {
 		// assert(deckSize == 0);
 		return plantDeck;
 	}
-	
+
 	generateNewPage(event, pageNum) {
 		this.state.page = pageNum;
 		this.fillplantList(this.state.page)
 		window.scrollTo(0, 0);
 	}
-	
+
 	createPaginationBar = () => {
 		let paginationBar = [];
 		var pageNum = this.state.page;
@@ -196,7 +196,7 @@ class Plants extends React.Component {
 				<Pagination.Last onClick={(e) => {this.generateNewPage(e, this.state.lastPageNum)}}/>
 			)
 		}
-		
+
 		return paginationBar;
 	}
 
@@ -205,10 +205,10 @@ class Plants extends React.Component {
         if((this.states == null || this.states.length == 0) && (this.statuses == null || this.statuses.length == 0)){
             return "";
 		}
-		
+
 		//let filter = ",%22filters%22:%5B%7B%%22or%22:%5B%7B%%22name%22:%22states__name%22,%22op%22:%22any%22,%22val%22:%22FL%22%7D,%7B%22name%22:%22states__name%22,%22op%22:%22any%22,%22val%22:%22AL%22%7D%5D%7D,%20%7B%22or%22:%20%5B%7B%22name%22:%22status%22,%22op%22:%22eq%22,%22val%22:%22Endangered%22%7D%5D";
 		let filter = ",%22filters%22:%5B";
-		
+
 		if(this.states != null && this.states.length != 0){
             filter = filter.concat("%7B%22or%22:%5B");
             for(const s of this.states){
@@ -233,7 +233,7 @@ class Plants extends React.Component {
         filter = filter.concat("%5D");
         return filter;
 	}
-	
+
 	fillplantList(pageNum) {
         let dir = this.dir;
         let sortby = this.sort_by;
@@ -243,6 +243,8 @@ class Plants extends React.Component {
 		fetch(url)
           .then((response) => response.json())
           .then((data) => {
+              let p = Math.ceil(data.total_pages/9);
+              this.setState({lastPageNum : p == 0 ? 1 : p });
               let plantList = [];
               for (const i in data.objects) {
               	const plantParsed = {
@@ -275,41 +277,44 @@ class Plants extends React.Component {
   }
 	
 	SortSelectHandler(Dir){
-        this.dir = Dir.value;
+        this.dir = Dir.val;
         this.sort_by = Dir.sortby;
+        this.setState({page : 1});
         this.fillplantList(this.state.page);
         this.forceUpdate();
 	}
-	
+
 	FilterStateHandler(obj){
         this.states = obj;
+        this.setState({page : 1});
         this.fillplantList(this.state.page);
         this.forceUpdate();
     }
     FilterStatusHandler(obj){
         this.statuses = obj;
+        this.setState({page : 1});
         this.fillplantList(this.state.page);
         this.forceUpdate();
 	}
-	
+
 	SortSelect() {
       return <Select options={sorts} placeholder="Sort By" onChange ={
           this.SortSelectHandler
       }/>
 	}
-	
+
 	States(){
       return <Select options={states} isMulti className="basic-multi-select" placeholder="States" onChange ={
           this.FilterStateHandler
       }/>;
 	}
-	
+
 	Statuses(){
       return <Select options={statuses} isMulti className="basic-multi-select" placeholder="Listing Statuses" onChange = {
           this.FilterStatusHandler
       }/>;
 	}
-	
+
 	render() {
 		return (
 			<Container>

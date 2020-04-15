@@ -18,10 +18,10 @@ import { Nav } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
 
 const sorts = [
-	{ value: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
-	{ value: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
-	{ value: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
-	{ value: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'}
+	{ value : 1, val: 'asc', label: 'Common Name Ascending', sortby: 'com_name'},
+	{ value : 2, val: 'desc', label: 'Common Name Descending', sortby: 'com_name'},
+	{ value : 3, val: 'asc', label: 'Scientific Name Ascending', sortby: 'sci_name'},
+	{ value : 4, val: 'desc', label: 'Scientific Name Descending', sortby: 'sci_name'}
   ]
 
 const groups = [
@@ -42,7 +42,7 @@ const statuses = [
 	{ value: 'Endangered', label: 'Endangered', status: true },
 	{ value: 'Recovery', label: 'Recovery', status: true}
   ]
-  
+
   const states = [
 	  {value : 'AL', label : 'AL'},
 	  {value : 'AR', label : 'AR'},
@@ -115,7 +115,7 @@ class Animals extends React.Component {
 		this.state = {
 			animalList: [],
 	        page: 1,
-	        lastPageNum: 58
+	        lastPageNum: 0
 		};
 		this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -220,9 +220,9 @@ class Animals extends React.Component {
         if((this.states == null || this.states.length == 0) && (this.statuses == null || this.statuses.length == 0) && (this.groups == null || this.groups.length == null)){
             return "";
 		}
-		
+
 		let filter = ",%22filters%22:%5B";
-		
+
 		if(this.states != null && this.states.length != 0){
             filter = filter.concat("%7B%22or%22:%5B");
             for(const s of this.states){
@@ -260,7 +260,7 @@ class Animals extends React.Component {
         filter = filter.concat("%5D");
         return filter;
 	}
-	
+
 	fillanimalList(pageNum) {
         let dir = this.dir;
         let sortby = this.sort_by;
@@ -272,6 +272,8 @@ class Animals extends React.Component {
           .then((response) => response.json())
           .then((data) => {
               console.log('FETCHED ANIMALS');
+			  let p = Math.ceil(data.total_pages/9);
+              this.setState({lastPageNum : p == 0 ? 1 : p });
               let animalList = [];
               for (const i in data.objects) {
               	const animalParsed = {
@@ -296,29 +298,33 @@ class Animals extends React.Component {
 	}
 
 	SortSelectHandler(Dir){
-        this.dir = Dir.value;
+        this.dir = Dir.val;
         this.sort_by = Dir.sortby;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
 	}
 
 	FilterGroupHandler(obj){
 		this.groups = obj;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
 	}
-	
+
 	FilterStateHandler(obj){
         this.states = obj;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
     }
     FilterStatusHandler(obj){
         this.statuses = obj;
+		this.setState({page : 1});
         this.fillanimalList(this.state.page);
         this.forceUpdate();
 	}
-	
+
 	SortSelect() {
       return <Select options={sorts} placeholder="Sort By" onChange ={
           this.SortSelectHandler
@@ -330,13 +336,13 @@ class Animals extends React.Component {
 		  this.FilterGroupHandler
 	  }/>;
 	}
-	
+
 	States(){
       return <Select options={states} isMulti className="basic-multi-select" placeholder="States" onChange ={
           this.FilterStateHandler
       }/>;
 	}
-	
+
 	Statuses(){
       return <Select options={statuses} isMulti className="basic-multi-select" placeholder="Listing Statuses" onChange = {
           this.FilterStatusHandler
