@@ -82,7 +82,7 @@ class ParksSearch extends React.Component {
               		code : data.objects[i].code,
               		image : data.objects[i].image.replace("http://", "https://"),
               		name : data.objects[i].name,
-              		match: data.objects[i].match
+              		match: "..." + data.objects[i].match.replace("<hlt>", "<span style='background-color:yellow;'>").replace("</hlt>", "</span>") + "..."
               	}
                 parkList.push(parkParsed)
               }

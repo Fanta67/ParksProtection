@@ -14,13 +14,26 @@ import AnimalsSearch from './AnimalsSearch';
 import Plants from './Plants';
 import PlantInstance from './PlantInstancePages/PlantInstance';
 import PlantsSearch from './PlantsSearch';
-import Zion from './ParkInstancePages/Zion';
+import Search from './Search';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
 
 require('dotenv').config({path: ':../.env' })
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputNode: ""
+    };
+  }
+
+  handleKeyPress(key) {
+        if (key.charCode == 13) {
+            key.preventDefault();
+            window.location.href = ("/search/" + String(this.state.inputNode))
+        }
+    }
 
   render() {
     return (
@@ -34,9 +47,20 @@ class App extends Component {
               <Nav.Link as={ Link } to="/Animals">Animals</Nav.Link>
               <Nav.Link as={ Link } to="/About">About</Nav.Link>
             </Nav>
+            <Form inline>
+                <FormControl id="searchBox" type="text" placeholder={"Search"} className="mr-sm-2"
+                   onChange={node => this.setState({inputNode: node.target.value})}
+                    onKeyPress={key => {this.handleKeyPress(key)}}
+                />
+                <Button id="searchButton"
+                    href={("/search/" + String(this.state.inputNode))}
+                >Search</Button>
+          </Form>
           </Navbar>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/search" component={Search} />
+            <Route path="/search/:query" component={Search} />
             <Route exact path="/Animals/search" component={AnimalsSearch} />
             <Route path="/Animals/search/:id" component={AnimalsSearch} />
             <Route path="/Animals/:id" component={AnimalPage} />
