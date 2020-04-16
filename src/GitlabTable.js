@@ -25,12 +25,14 @@ class GitlabTable extends React.Component{
       this.team = [{
         name: 'Roman Kuhn',
         commits: 0,
+        title: 'Searching, About Page, Instance Pages, Technical Report, User Stories, UML Diagram',
         issues: 0,
         tests: 0,
         desc: 'Rumored to have never lost a match in Super Smash Brothers Melee.'
         },
         {
           name: 'Ameya Joshi',
+          title: 'Model Pages, Instance Pages, Searching, Scraping, API, Postman, SQL, Python tests, AWS, Docker, Technical Report',
           commits: 0,
           issues: 0,
           tests: 17,
@@ -38,6 +40,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Dylan Kan',
+          title: 'Docker, Wiki Parsing, Filtering/Sorting, Mocha',
           commits: 0,
           issues: 0,
           tests: 10,
@@ -45,6 +48,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Skylore Evans',
+          title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generatino, Postman Parsing, Pagination, CI File',
           commits: 0,
           issues: 0,
           tests: 5,
@@ -52,6 +56,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Jordan Bogaards',
+          title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generatino, Postman Parsing, Pagination',
           commits: 0,
           issues: 0,
           tests: 5,
@@ -59,6 +64,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Pedro Silva',
+          title: 'Managing Data on Instance Pages, Filtering/Sorting for Model Pages',
           commits: 0,
           issues: 0,
           tests: 0,
@@ -142,7 +148,7 @@ class GitlabTable extends React.Component{
                     <Card.Img variant="top" src={roman} />
                     <Card.Body>
                         <Card.Title> {this.team[0].name} </Card.Title>
-                        <Card.Text>Fullstack Developer</Card.Text>
+                        <Card.Text>{this.team[0].title}</Card.Text>
                         <Card.Text>
                             {this.team[0].desc}
                         </Card.Text>
@@ -157,7 +163,7 @@ class GitlabTable extends React.Component{
                     <Card.Img variant="top" src={ameya} />
                     <Card.Body>
                         <Card.Title> {this.team[1].name} </Card.Title>
-                        <Card.Text>Fullstack Developer</Card.Text>
+                        <Card.Text>{this.team[1].title}</Card.Text>
                         <Card.Text>
                             {this.team[1].desc}
                         </Card.Text>
@@ -170,7 +176,7 @@ class GitlabTable extends React.Component{
                   <Card.Img variant="top" src={dylan} />
                   <Card.Body>
                     <Card.Title> {this.team[2].name} </Card.Title>
-                    <Card.Text>Fullstack Developer</Card.Text>
+                    <Card.Text>{this.team[2].title}</Card.Text>
                     <Card.Text>
                       {this.team[2].desc}
                     </Card.Text>
@@ -187,7 +193,7 @@ class GitlabTable extends React.Component{
                         <Card.Img variant="top" src={skylore} />
                         <Card.Body>
                             <Card.Title> {this.team[3].name} </Card.Title>
-                            <Card.Text>Frontend Developer</Card.Text>
+                            <Card.Text>{this.team[3].title}</Card.Text>
                             <Card.Text>
                                 {this.team[3].desc}
                             </Card.Text>
@@ -200,7 +206,7 @@ class GitlabTable extends React.Component{
                         <Card.Img variant="top" src={jordan} />
                         <Card.Body>
                             <Card.Title> {this.team[4].name} </Card.Title>
-                            <Card.Text>Frontend Developer</Card.Text>
+                            <Card.Text>{this.team[4].title}</Card.Text>
                             <Card.Text>
                                 {this.team[4].desc}
                             </Card.Text>
@@ -213,7 +219,7 @@ class GitlabTable extends React.Component{
                         <Card.Img variant="top" src={pedro} />
                         <Card.Body>
                             <Card.Title> {this.team[5].name} </Card.Title>
-                            <Card.Text>Frontend Developer</Card.Text>
+                            <Card.Text>{this.team[5].title}</Card.Text>
                             <Card.Text>
                                 {this.team[5].desc}
                             </Card.Text>
