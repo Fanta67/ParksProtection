@@ -139,6 +139,8 @@ class About extends React.Component{
 					natively support multi-select in dropdowns.</p>
 					<p><a href="https://github.com/fullstackreact/google-maps-react">Google Maps React</a> - Used for Google maps for park locations.</p>
 					<p><a href="https://styled-components.com/">Styled Components</a> - Used for simple styling in components, like centering text inside a column.</p>
+					<p><a href="https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/">Bing Images API</a> - Used for scraping images for plants and animals.</p>
+					<p><a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipeida API</a> - Used for scraping descriptions for each plant and animal.</p>
 
 					<br/>
 					<h1>Documentation</h1>
