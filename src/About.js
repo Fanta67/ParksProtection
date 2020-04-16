@@ -60,10 +60,12 @@ class About extends React.Component{
 			            <br/><br/>
 			            <Container>
 			                <h1> Data Sources </h1>
-			                <p> Data was collected from the <a href="https://www.nps.gov/subjects/digital/nps-data-api.htm">National Park Services</a>,
-			                the <a href="https://ecos.fws.gov/ecp/report/ad-hoc-documentation?catalogId=species&reportId=species">Environmental
+			                <p> Data was collected for parks from the <a href="https://www.nps.gov/subjects/digital/nps-data-api.htm">National Park Services</a>,
+			                for animals from the <a href="https://ecos.fws.gov/ecp/report/ad-hoc-documentation?catalogId=species&reportId=species">Environmental
 			                Conservation Online System</a>,
-			                and the <a href="https://data.nal.usda.gov/dataset/usda-plants-database-api-r">United States Department of Agriculture</a>.
+			                and for plants from the <a href="https://data.nal.usda.gov/dataset/usda-plants-database-api-r">United States Department of Agriculture</a>. Images
+			                and descriptions for plants and animals were collected using the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/">
+			                Bing Image Search API</a> and the <a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipedia API</a>.
 			                </p>
 			            </Container>
 
@@ -139,8 +141,6 @@ class About extends React.Component{
 					natively support multi-select in dropdowns.</p>
 					<p><a href="https://github.com/fullstackreact/google-maps-react">Google Maps React</a> - Used for Google maps for park locations.</p>
 					<p><a href="https://styled-components.com/">Styled Components</a> - Used for simple styling in components, like centering text inside a column.</p>
-					<p><a href="https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/">Bing Images API</a> - Used for scraping images for plants and animals.</p>
-					<p><a href="https://www.mediawiki.org/wiki/API:Main_page">Wikipeida API</a> - Used for scraping descriptions for each plant and animal.</p>
 
 					<br/>
 					<h1>Documentation</h1>

@@ -35,7 +35,7 @@ class GitlabTable extends React.Component{
           title: 'Model Pages, Instance Pages, Searching, Scraping, API, Postman, SQL, Python tests, AWS, Docker, Technical Report',
           commits: 0,
           issues: 0,
-          tests: 17,
+          tests: 62,
           desc: 'A hardcore FPS and Minecraft G A M E R who came to UT to be a game dev, realized how bad the hours were, and is now apparently doing web dev.'
         },
         {
@@ -43,7 +43,7 @@ class GitlabTable extends React.Component{
           title: 'Docker, Wiki Parsing, Filtering/Sorting, Mocha',
           commits: 0,
           issues: 0,
-          tests: 10,
+          tests: 12,
           desc: 'I can\'t remember the last time I woke up early enough to eat breakfast.'
         },
         {
@@ -51,7 +51,7 @@ class GitlabTable extends React.Component{
           title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generatino, Postman Parsing, Pagination, CI File',
           commits: 0,
           issues: 0,
-          tests: 5,
+          tests: 11,
           desc: 'Third year CS major. President of Anime Club. Weeb. Chronically tired. Code janitor.'
         },
         {
@@ -59,7 +59,7 @@ class GitlabTable extends React.Component{
           title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generatino, Postman Parsing, Pagination',
           commits: 0,
           issues: 0,
-          tests: 5,
+          tests: 11,
           desc: 'Junior in the CS major and just on the edge of being a competitive smash player. Incineroar and Cloud main, unfortunately. Wanted to be a wrestling Heel.'
         },
         {
