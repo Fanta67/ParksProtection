@@ -115,11 +115,11 @@ class PlantsSearch extends React.Component {
 				<Col xs={{span: 3}}>
 					<Form inline>
                         <Form.Group as={Row}>
-                            <FormControl id="searchBox" type="text" placeholder={"Search plants"} className="mr-sm-2"
+                            <FormControl className="searchBox" id="searchBox" type="text" placeholder={"Search plants"} className="mr-sm-2"
                                onChange={node => this.setState({inputNode: node.target.value})}
                                 onKeyPress={key => {this.handleKeyPress(key)}}
                             />
-                            <Button id="searchButton"
+                            <Button className="searchButton" id="searchButton"
                                 href={(String(this.state.inputNode))}
                             >Search</Button>
                         </Form.Group>
