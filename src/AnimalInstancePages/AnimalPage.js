@@ -165,10 +165,10 @@ export default class AnimalPage extends Component {
                   <tbody>
                   <tr><th>Group</th><td>{this.state.animal.tax_group}</td></tr>
                   <tr><th>Date Listed</th><td>{this.state.animal.list_date}</td></tr>
-                  <tr><th><a href="https://www.fws.gov/pacific/news/grizzly/esafacts.htm">Distinct Population Segment?</a></th><td>{this.state.animal.dps ? "Yes" : "No"}</td></tr>
+                  <tr><th><a href="https://www.fws.gov/pacific/news/grizzly/esafacts.htm">DPS?</a></th><td>{this.state.animal.dps ? "Yes" : "No"}</td></tr>
                   <tr><th>Aquatic?</th><td>{this.state.animal.aquatic ? "Yes" : "No"}</td></tr>
                   <tr><th><a href="https://www.fws.gov/birds/management/managed-species/birds-of-conservation-concern.php">BCC?</a></th><td>{this.state.animal.bcc ? "Yes" : "No"}</td></tr>
-                  <tr><th>Conservation Plan Title</th><td>{this.state.animal.plan}</td></tr>
+                  <tr><th>Conservation Plan</th><td>{this.state.animal.plan}</td></tr>
                   </tbody>
               </Table>
             </TableBox></Col>

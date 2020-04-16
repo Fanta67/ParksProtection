@@ -9,8 +9,8 @@ function InformationTable(props) {
      <TableBox>
       <Table striped bordered hover size="sm">
           <tbody>
-          <tr><th>Family</th><td>{props.info.family}</td></tr>
-          <tr><th>Family Common Name</th><td>{props.info.family_com}</td></tr>
+          <tr><th>Family Scientific</th><td>{props.info.family}</td></tr>
+          <tr><th>Family Common</th><td>{props.info.family_com}</td></tr>
           <tr><th>Category</th><td>{props.info.category}</td></tr>
           <tr><th>Duration</th><td>{props.info.duration}</td></tr>
           <tr><th>Growth Habit</th><td>{props.info.growth}</td></tr>
