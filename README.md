@@ -87,5 +87,15 @@ Git SHA:
 
 GitLab Pipelines: https://gitlab.com/thekuhninator/parks_protection/pipelines
 
-Comments:	
+Comments:	As requested, we added new images and Wikipedia descriptions for plants and animals.
+			Most work as intended, but parsing for the Wikipedia descriptions isn't standardized 
+			while some species just have a 1-line description, which is why some
+			are short. We truly don't know why some of the new images aren't there and why some aren't
+			https, because we checked status codes and urls while scraping. In fact, opening images
+			that are fetched in http or show up as missing on the frontend in a new tab reveals that
+			they both exist and still have https, so we're assuming this is just related to the
+			third-party servers purosefully blocking requests and sending data over http themselves,
+			but we'd still like to aplogise for not having them down perfectly. They do work for most
+			of the website though, so we hope that's good enough and that there's no need for us to
+			go back and mess around with more than 5 APIs.
 

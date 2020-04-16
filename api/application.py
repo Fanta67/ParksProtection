@@ -10,7 +10,18 @@ load_dotenv()
 application = Flask(__name__)
 
 # application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memory'
-application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + os.environ['DB_USER'] + ':' + os.environ['DB_PASS'] + '@' + os.environ['DB_HOST'] + ':' + os.environ['DB_PORT'] + '/' + os.environ['DB_NAME']
+application.config["SQLALCHEMY_DATABASE_URI"] = (
+    "postgresql://"
+    + os.environ["DB_USER"]
+    + ":"
+    + os.environ["DB_PASS"]
+    + "@"
+    + os.environ["DB_HOST"]
+    + ":"
+    + os.environ["DB_PORT"]
+    + "/"
+    + os.environ["DB_NAME"]
+)
 
 db = SQLAlchemy(application)
 
@@ -35,12 +46,14 @@ class Animals(db.Model):
     image = db.Column(db.Unicode)
     des = db.Column(db.Unicode)
 
+
 class AnimalStates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
-    animal_id = db.Column(db.Integer, db.ForeignKey('animals.id'))
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.id"))
 
     animal = db.relationship(Animals, backref=db.backref("states"))
+
 
 class Plants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,12 +71,14 @@ class Plants(db.Model):
     image = db.Column(db.Unicode)
     des = db.Column(db.Unicode)
 
+
 class PlantStates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
-    plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'))
+    plant_id = db.Column(db.Integer, db.ForeignKey("plants.id"))
 
     plant = db.relationship(Plants, backref=db.backref("states"))
+
 
 class Parks(db.Model):
     code = db.Column(db.Unicode, primary_key=True)
@@ -80,20 +95,44 @@ class Parks(db.Model):
     email = db.Column(db.Unicode)
     images = db.Column(db.Unicode)
 
+
 class ParkStates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
-    park_code = db.Column(db.Unicode, db.ForeignKey('parks.code'))
-    
+    park_code = db.Column(db.Unicode, db.ForeignKey("parks.code"))
+
     park = db.relationship(Parks, backref=db.backref("states"))
 
 
 # Search in results
 def search_postprocessor(result=None, search_params=None, **kw):
-    if(search_params != None and "search_query" in search_params):
-        attributes = {'category', 'com_name', 'des', 'duration', 'family', 'family_com', 'growth', 'sci_name', 'status', 'toxicity', 'list_date', 'plan', 'tax_group', 'address', 'code', 'desc', 'designation', 'directions', 'email', 'name', 'phone', 'weather'}
+    if search_params != None and "search_query" in search_params:
+        attributes = {
+            "category",
+            "com_name",
+            "des",
+            "duration",
+            "family",
+            "family_com",
+            "growth",
+            "sci_name",
+            "status",
+            "toxicity",
+            "list_date",
+            "plan",
+            "tax_group",
+            "address",
+            "code",
+            "desc",
+            "designation",
+            "directions",
+            "email",
+            "name",
+            "phone",
+            "weather",
+        }
         keywords = search_params["search_query"].lower().split()
-        if(len(keywords) == 0):
+        if len(keywords) == 0:
             keywords = [" "]
         objects = []
         for instance in result["objects"]:
@@ -102,46 +141,79 @@ def search_postprocessor(result=None, search_params=None, **kw):
                 if attribute == "states":
                     for state in instance["states"]:
                         for keyword in keywords:
-                            if(keyword in state["name"].lower()):
+                            if keyword in state["name"].lower():
                                 keyword = keyword.upper()
                                 matchSplit = state["name"].split()
                                 match = None
                                 for word in matchSplit:
                                     if keyword in word:
-                                        match = word.replace(keyword, "<hlt>" + keyword + "</hlt>")
+                                        match = word.replace(
+                                            keyword, "<hlt>" + keyword + "</hlt>"
+                                        )
                                         break
-                                if("id" in instance):
-                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": match})
+                                if "id" in instance:
+                                    objects.append(
+                                        {
+                                            "id": instance["id"],
+                                            "com_name": instance["com_name"],
+                                            "image": instance["image"],
+                                            "match": match,
+                                        }
+                                    )
                                 else:
-                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": match})
+                                    objects.append(
+                                        {
+                                            "code": instance["code"],
+                                            "name": instance["name"],
+                                            "image": instance["images"].split()[0],
+                                            "match": match,
+                                        }
+                                    )
                                 instanceMatched = True
                                 break
-                        if(instanceMatched):
+                        if instanceMatched:
                             break
-                elif(attribute in attributes):
+                elif attribute in attributes:
                     val = instance[attribute]
-                    if(isinstance(val, str)):
+                    if isinstance(val, str):
                         for keyword in keywords:
                             val = val.lower()
-                            if(keyword in val):
+                            if keyword in val:
                                 matchSplit = val.split()
                                 match = None
                                 for word in matchSplit:
                                     if keyword in word:
-                                        match = word.replace(keyword, "<hlt>" + keyword + "</hlt>")
+                                        match = word.replace(
+                                            keyword, "<hlt>" + keyword + "</hlt>"
+                                        )
                                         break
-                                if("id" in instance):
-                                    objects.append({"id": instance["id"], "com_name": instance["com_name"], "image": instance["image"], "match": match})
+                                if "id" in instance:
+                                    objects.append(
+                                        {
+                                            "id": instance["id"],
+                                            "com_name": instance["com_name"],
+                                            "image": instance["image"],
+                                            "match": match,
+                                        }
+                                    )
                                 else:
-                                    objects.append({"code": instance["code"], "name": instance["name"], "image": instance["images"].split()[0], "match": match})
+                                    objects.append(
+                                        {
+                                            "code": instance["code"],
+                                            "name": instance["name"],
+                                            "image": instance["images"].split()[0],
+                                            "match": match,
+                                        }
+                                    )
                                 instanceMatched = True
                                 break
-                        if(instanceMatched):
+                        if instanceMatched:
                             break
         result["objects"] = objects
         result["num_results"] = len(objects)
         del result["page"]
         del result["total_pages"]
+
 
 # Create the Flask-Restless API manager.
 manager = APIManager(application, flask_sqlalchemy_db=db)
@@ -151,33 +223,41 @@ manager = APIManager(application, flask_sqlalchemy_db=db)
 # manager.create_api(Person, methods=['GET', 'POST', 'DELETE'])
 # manager.create_api(Article, methods=['GET'])
 
-animals_blueprint = manager.create_api(Animals, methods=['GET'],
-                        postprocessors={'GET_MANY': [search_postprocessor]} ,
-                        max_results_per_page=1000,
-                        results_per_page=9
-                        )
-plants_blueprint = manager.create_api(Plants, methods=['GET'],
-                        postprocessors={'GET_MANY': [search_postprocessor]} ,
-                        max_results_per_page=1000,
-                        results_per_page=9
-                        )
-parks_blueprint = manager.create_api(Parks, methods=['GET'],
-                        postprocessors={'GET_MANY': [search_postprocessor]} ,
-                        max_results_per_page=1000,
-                        results_per_page=9
-                        )
+animals_blueprint = manager.create_api(
+    Animals,
+    methods=["GET"],
+    postprocessors={"GET_MANY": [search_postprocessor]},
+    max_results_per_page=1000,
+    results_per_page=9,
+)
+plants_blueprint = manager.create_api(
+    Plants,
+    methods=["GET"],
+    postprocessors={"GET_MANY": [search_postprocessor]},
+    max_results_per_page=1000,
+    results_per_page=9,
+)
+parks_blueprint = manager.create_api(
+    Parks,
+    methods=["GET"],
+    postprocessors={"GET_MANY": [search_postprocessor]},
+    max_results_per_page=1000,
+    results_per_page=9,
+)
 
-@application.route('/')
+
+@application.route("/")
 def index():
     return "Available endpoints: /api/animals /api/plants /api/parks"
 
+
 def add_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
     return response
+
 
 application.after_request(add_headers)
 
 # start the flask loop
 application.run()
-
