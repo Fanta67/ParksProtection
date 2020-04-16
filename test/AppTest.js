@@ -28,56 +28,147 @@ describe("Website", function() {
     });
 
   });
+  
+  describe("Search", function() {
 
-  // describe("Parks", function() {
+    var url = "https://parkprotection.me/search/bird";
 
-  //   var url = "https://parkprotection.me/Parks";
+    it("verify that search is loading properly", function(done) {
+      request(url, function(error, response, body) {
+        expect(body).to.not.equal(null);
+        done();
+      });
+    });
 
-  //   it("returns status 200", function(done) {
-  //     request(url, function(error, response, body) {
-  //       expect(response.statusCode).to.equal(200);
-  //       done();
-  //     });
-  //   });
+  });
 
-  // });
+  describe("Parks", function() {
+    describe("model", function() {
 
-  // describe("Plants", function() {
+      var url = "https://parkprotection.me/Parks";
+  
+      it("verify that parks model page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+    describe("model search", function() {
 
-  //   var url = "https://parkprotection.me/Plants";
+      var url = "https://parkprotection.me/Parks/search/yellowstone";
+  
+      it("verify that parks model search page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+    describe("instance", function() {
 
-  //   it("returns status 200", function(done) {
-  //     request(url, function(error, response, body) {
-  //       expect(response.statusCode).to.equal(200);
-  //       done();
-  //     });
-  //   });
+      var url = "https://parkprotection.me/Parks/abli";
+  
+      it("verify that parks instance page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+  });
 
-  // });
+  describe("Plants", function() {
+    describe("model", function() {
 
-  // describe("Animals", function() {
+      var url = "https://parkprotection.me/Plants";
+  
+      it("verify that plants model page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+    describe("model search", function() {
 
-  //   var url = "https://parkprotection.me/Animals";
+      var url = "https://parkprotection.me/Plants/search/fern";
+  
+      it("verify that plants model search page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+    describe("instance", function() {
 
-  //   it("returns status 200", function(done) {
-  //     request(url, function(error, response, body) {
-  //       expect(response.statusCode).to.equal(200);
-  //       done();
-  //     });
-  //   });
+      var url = "https://parkprotection.me/Plants/1846";
+  
+      it("verify that plants instance page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+  });
 
-  // });
+  describe("Animals", function() {
+    describe("model", function() {
 
-  // describe("About", function() {
+      var url = "https://parkprotection.me/Animals";
+  
+      it("verify that animals model page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+    describe("model search", function() {
 
-  //   var url = "https://parkprotection.me/About";
+      var url = "https://parkprotection.me/Animals/search/fish";
+  
+      it("verify that animals model search page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+    describe("instance", function() {
 
-  //   it("returns status 200", function(done) {
-  //     request(url, function(error, response, body) {
-  //       expect(response.statusCode).to.equal(200);
-  //       done();
-  //     });
-  //   });
+      var url = "https://parkprotection.me/Animals/50";
+  
+      it("verify that animals instance page is loading properly", function(done) {
+        request(url, function(error, response, body) {
+          expect(body).to.not.equal(null);
+          done();
+        });
+      });
+  
+    });
+  });
 
-  // });
+  describe("About", function() {
+
+    var url = "https://parkprotection.me/About";
+
+    it("verify that homepage is loading properly", function(done) {
+      request(url, function(error, response, body) {
+        expect(body).to.not.equal(null);
+        done();
+      });
+    });
+
+  });
 });
