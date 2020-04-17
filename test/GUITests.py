@@ -323,7 +323,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
         search_bar.send_keys('thistle')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
