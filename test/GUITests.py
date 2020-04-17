@@ -9,7 +9,7 @@ class GUITests(unittest.TestCase):
     def setUp(self) :
         self.driver = webdriver.Chrome(executable_path='./chromedriver')
         time.sleep(3)
-
+    
     def test_get_started(self): #1
         self.driver.get("https://www.parkprotection.me")
         button_name = self.driver.find_element_by_link_text('Get Started')
@@ -87,7 +87,7 @@ class GUITests(unittest.TestCase):
     def test_plants_card(self): #7
         self.driver.get("https://www.parkprotection.me/Plants")
         time.sleep(3)
-        button_name = self.driver.find_element_by_class_name('1583')
+        button_name = self.driver.find_element_by_class_name('p1583')
 
         button_name.click()
         time.sleep(3)
@@ -100,7 +100,7 @@ class GUITests(unittest.TestCase):
     def test_animals_card(self): #8
         self.driver.get("https://www.parkprotection.me/Animals")
         time.sleep(3)
-        button_name = self.driver.find_element_by_class_name('6956')
+        button_name = self.driver.find_element_by_class_name('a6956')
 
         button_name.click()
         time.sleep(3)
@@ -159,18 +159,18 @@ class GUITests(unittest.TestCase):
         actual_result = self.driver.find_element_by_class_name('PageHeader').text
         
         self.assertEqual(expected_result, actual_result)
-        
+
     def test_parks_search_results_1(self): #14
-        self.driver.get("https://www.parkprotection.me/Parks/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
         
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('zion')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('zion')
+        button_name = self.driver.find_element_by_class_name('azion')
         button_name.click()
         time.sleep(3)
         
@@ -180,16 +180,16 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_parks_search_results_2(self): #15
-        self.driver.get("https://www.parkprotection.me/Parks/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
         
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('river')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('biso')
+        button_name = self.driver.find_element_by_class_name('abiso')
         button_name.click()
         time.sleep(3)
 
@@ -200,16 +200,16 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_parks_search_results_3(self): #16
-        self.driver.get("https://www.parkprotection.me/Parks/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('texas')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('bibe')
+        button_name = self.driver.find_element_by_class_name('abibe')
         button_name.click()
         time.sleep(3)
 
@@ -220,16 +220,16 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_animals_search_results_1(self): #17
-        self.driver.get("https://www.parkprotection.me/Animals/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
         
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('wolf')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('37')
+        button_name = self.driver.find_element_by_class_name('a37')
         button_name.click()
         time.sleep(3)
 
@@ -240,18 +240,18 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_animals_search_results_2(self): #18
-        self.driver.get("https://www.parkprotection.me/Animals/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('eagle')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('1626')
+        button_name = self.driver.find_element_by_class_name('a1626')
         button_name.click()
-        time.sleep(3)
+        time.sleep(5)
 
         
         expected_result = 'Bald eagle'
@@ -260,16 +260,16 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_animals_search_results_3(self): #19
-        self.driver.get("https://www.parkprotection.me/Animals/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('turtle')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('451')
+        button_name = self.driver.find_element_by_class_name('a451')
         button_name.click()
         time.sleep(3)
 
@@ -280,16 +280,16 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_plants_search_results_1(self): #20
-        self.driver.get("https://www.parkprotection.me/Parks/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('blazing')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('4582')
+        button_name = self.driver.find_element_by_class_name('a4582')
         button_name.click()
         time.sleep(3)
 
@@ -300,16 +300,16 @@ class GUITests(unittest.TestCase):
         self.assertEqual(expected_result, actual_result)
         
     def test_plants_search_results_2(self): #21
-        self.driver.get("https://www.parkprotection.me/Parks/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('primrose')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('5970')
+        button_name = self.driver.find_element_by_class_name('a5970')
         button_name.click()
         time.sleep(3)
 
@@ -318,18 +318,18 @@ class GUITests(unittest.TestCase):
         actual_result = self.driver.find_element_by_class_name('PageHeader').text
 
         self.assertEqual(expected_result, actual_result)
-        
+    
     def test_plants_search_results_3(self): #22
-        self.driver.get("https://www.parkprotection.me/Parks/search/")
+        self.driver.get("https://www.parkprotection.me")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('mr-sm-2 form-control')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('thistle')
-        search_button = self.driver.find_element_by_class_name('btn btn-primary')
+        search_button = self.driver.find_element_by_class_name('btn-primary')
         search_button.click()
         time.sleep(3)
         
-        button_name = self.driver.find_element_by_class_name('2369')
+        button_name = self.driver.find_element_by_class_name('a2369')
         button_name.click()
         time.sleep(3)
 
@@ -338,7 +338,7 @@ class GUITests(unittest.TestCase):
         actual_result = self.driver.find_element_by_class_name('PageHeader').text
 
         self.assertEqual(expected_result, actual_result)
-
+    
     def tearDown(self) :
         self.driver.close()
 

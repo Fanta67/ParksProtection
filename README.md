@@ -71,8 +71,8 @@
 	- EID: phs524
 	- Gitlab ID: Pedro_Silva0111
 	- Phase 3
-		- Estimated Completion Time: 10
-		- Actual Completion Time: 13
+		- Estimated Completion Time: 10 hours
+		- Actual Completion Time: 13 hours
 	- Phase 2
 		- Estimated Completion Time: 10 hours
 		- Actual Completion Time: 12 hours
