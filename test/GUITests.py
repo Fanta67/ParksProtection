@@ -164,7 +164,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
         
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('zion')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -183,7 +183,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
         
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('river')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -203,7 +203,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('texas')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -223,7 +223,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Animals/search/")
         time.sleep(3)
         
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('wolf')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -243,7 +243,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Animals/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('eagle')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -263,7 +263,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Animals/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('turtle')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -283,7 +283,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('blazing')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -303,7 +303,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('primrose')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
@@ -323,7 +323,7 @@ class GUITests(unittest.TestCase):
         self.driver.get("https://www.parkprotection.me/Parks/search/")
         time.sleep(3)
                 
-        search_bar = self.driver.find_element_by_class_name('searchBox')
+        search_bar = self.driver.find_element_by_class_name('mr-sm-2')
         search_bar.send_keys('thistle')
         search_button = self.driver.find_element_by_class_name('searchButton')
         search_button.click()
