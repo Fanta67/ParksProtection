@@ -17,6 +17,10 @@ import PlantsSearch from './PlantsSearch';
 import Search from './Search';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
+import {withFauxDOM} from 'react-faux-dom';
+import Bar from './Bar';
+import Bar2 from './Bar2';
+import Bubble from './Bubble';
 
 require('dotenv').config({path: ':../.env' })
 
@@ -60,6 +64,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/search" component={Search} />
+            <Route path="/bar" component={Bar} />
+            <Route path="/bar2" component={Bar2} />
+            <Route path="/bubble" component={Bubble} />
             <Route path="/search/:query" component={Search} />
             <Route exact path="/Animals/search" component={AnimalsSearch} />
             <Route path="/Animals/search/:id" component={AnimalsSearch} />
