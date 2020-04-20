@@ -145,8 +145,8 @@ var data = [{Calories: 10, "Protein (g)": 10, Manufacturer: "Kellogs", "Cereal N
     render() {
         return (
         	<Container>
-        	Bar
-        	<Div className="bar-container" >{this.props.chart}</Div>
+        	Scatterplot
+        	<Div className="scatterplot-container" >{this.props.chart}</Div>
         </Container>
         );
     }
