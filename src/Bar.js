@@ -45,8 +45,7 @@ class Bar extends React.Component {
 
 
 		// replace creation of svg with selection and appending to faux
-	    const svg = d3.select(faux)
-            .append('svg')
+	    const svg = d3.select(faux).append('svg')
       		.attr("viewBox", [0, 0, width, height]);
 
       	svg.append("g")

@@ -21,6 +21,7 @@ import {withFauxDOM} from 'react-faux-dom';
 import Bar from './Bar';
 import Bar2 from './Bar2';
 import Bubble from './Bubble';
+import Scatterplot from './Scatterplot';
 
 require('dotenv').config({path: ':../.env' })
 
@@ -67,6 +68,7 @@ class App extends Component {
             <Route path="/bar" component={Bar} />
             <Route path="/bar2" component={Bar2} />
             <Route path="/bubble" component={Bubble} />
+            <Route path="/scatter" component={Scatterplot} />
             <Route path="/search/:query" component={Search} />
             <Route exact path="/Animals/search" component={AnimalsSearch} />
             <Route path="/Animals/search/:id" component={AnimalsSearch} />
