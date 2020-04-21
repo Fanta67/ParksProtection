@@ -21,6 +21,7 @@ import {withFauxDOM} from 'react-faux-dom';
 import Bar from './Bar';
 import Bar2 from './Bar2';
 import Bubble from './Bubble';
+import roman_chart from './roman_chart';
 
 require('dotenv').config({path: ':../.env' })
 
@@ -81,6 +82,7 @@ class App extends Component {
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
+            <Route path="/roman_chart" component={roman_chart} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>
