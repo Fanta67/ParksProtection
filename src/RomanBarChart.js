@@ -81,7 +81,6 @@ class RomanBarChart extends React.Component
   render() {
       return (
       	<Container>
-      	 <h1>Bar</h1>
       	 <BarChart className="bar-container" >{this.props.bar_chart}</BarChart>
         </Container>
       );

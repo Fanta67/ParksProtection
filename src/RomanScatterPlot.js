@@ -28,7 +28,7 @@ class RomanScatterPlot extends React.Component
 
       this.createBarChart(faux, this.props.bar_data);
   }
-  createBarChart(faux, data){
+  createBarChart(faux, f){
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -45,17 +45,17 @@ class RomanScatterPlot extends React.Component
     var xValue = function(d) { return d.Calories;}, // data -> value
         xScale = d3.scaleLinear().range([0, width]), // value -> display
         xMap = function(d) { return xScale(xValue(d));}, // data -> display
-        xAxis = d3.svg.axisBottom(xScale).orient("bottom");
+        xAxis = d3.axisBottom(xScale);
 
     // setup y
     var yValue = function(d) { return d["Protein (g)"];}, // data -> value
         yScale = d3.scaleLinear().range([height, 0]), // value -> display
         yMap = function(d) { return yScale(yValue(d));}, // data -> display
-        yAxis = d3.svg.axisLeft(yScale).orient("left");
+        yAxis = d3.axisLeft(yScale);
 
     // setup fill color
     var cValue = function(d) { return d.Manufacturer;},
-        color = d3.scale.category10();
+        color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // add the graph canvas to the body of the webpage
     var svg = d3.select("body").append("svg")
@@ -69,15 +69,13 @@ class RomanScatterPlot extends React.Component
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    // load data
-    d3.csv("cereal.csv", function(error, data) {
 
+    var data = [{Calories: 10, "Protein (g)": 10, Manufacturer: "Kellogs", "Cereal Name": "Kellogs Cereal"},{Calories: 5, "Protein (g)": 5, Manufacturer: "Quaker", "Cereal Name": "Quaker Cereal"}];
+
+      console.log('CEREAL ehreasd fase;kjfA')
+      console.log(data)
       // change string (from CSV) into number format
-      data.forEach(function(d) {
-        d.Calories = +d.Calories;
-        d["Protein (g)"] = +d["Protein (g)"];
-    //    console.log(d);
-      });
+
 
       // don't want dots overlapping axis, so add in buffer to data domain
       xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
@@ -93,7 +91,7 @@ class RomanScatterPlot extends React.Component
           .attr("x", width)
           .attr("y", -6)
           .style("text-anchor", "end")
-          .text("Calories");
+          .text("Fart");
 
       // y-axis
       svg.append("g")
@@ -152,16 +150,12 @@ class RomanScatterPlot extends React.Component
           .attr("dy", ".35em")
           .style("text-anchor", "end")
           .text(function(d) { return d;})
-      });
-
-
 
   }
 
   render() {
       return (
       	<Container>
-      	 <h1>Line</h1>
       	 <Div className="scatter-container" >{this.props.chart} > </Div>
         </Container>
       );
