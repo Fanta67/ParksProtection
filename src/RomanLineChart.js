@@ -30,9 +30,8 @@ class RomanLineChart extends React.Component
       // faux DOM
       const faux = this.props.connectFauxDOM('LineChart', 'line_chart'); // args are HTML tags A and B
       // data
-      var data = [{date: "1-May-12", close: 58.13}, {date: "30-Apr-12", close: 63}, {date: "27-Apr-12", close: 30}];
 
-      this.createBarChart(faux, data);
+      this.createBarChart(faux, this.props.data);
   }
   createBarChart(faux, data){
 

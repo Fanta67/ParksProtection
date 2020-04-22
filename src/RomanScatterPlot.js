@@ -26,9 +26,9 @@ class RomanScatterPlot extends React.Component
       // data
       //var data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
 
-      this.createBarChart(faux, this.props.bar_data);
+      this.createBarChart(faux, this.props.scatter_data);
   }
-  createBarChart(faux, f){
+  createBarChart(faux, data){
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -68,9 +68,6 @@ class RomanScatterPlot extends React.Component
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
-
-
-    var data = [{Calories: 10, "Protein (g)": 10, Manufacturer: "Kellogs", "Cereal Name": "Kellogs Cereal"},{Calories: 5, "Protein (g)": 5, Manufacturer: "Quaker", "Cereal Name": "Quaker Cereal"}];
 
       console.log('CEREAL ehreasd fase;kjfA')
       console.log(data)
