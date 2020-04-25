@@ -17,13 +17,8 @@ import PlantsSearch from './PlantsSearch';
 import Search from './Search';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
+import Charts from './Charts/Charts';
 import {withFauxDOM} from 'react-faux-dom';
-import Bar from './Bar';
-import Bar2 from './Bar2';
-import Bubble from './Bubble';
-import roman_chart from './roman_chart';
-import Scatterplot from './Scatterplot';
-import Pie from './Pie';
 
 require('dotenv').config({path: ':../.env' })
 
@@ -67,11 +62,6 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/search" component={Search} />
-            <Route path="/bar" component={Bar} />
-            <Route path="/bar2" component={Bar2} />
-            <Route path="/bubble" component={Bubble} />
-            <Route path="/scatter" component={Scatterplot} />
-            <Route path="/pie" component={Pie} />
             <Route path="/search/:query" component={Search} />
             <Route exact path="/Animals/search" component={AnimalsSearch} />
             <Route path="/Animals/search/:id" component={AnimalsSearch} />
@@ -86,7 +76,7 @@ class App extends Component {
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
-            <Route path="/roman_chart" component={roman_chart} />
+            <Route path="/Charts" component={Charts} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>

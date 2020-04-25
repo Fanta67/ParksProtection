@@ -13,6 +13,7 @@ class Bubble extends React.Component {
     componentDidMount() {
         const faux = this.props.connectFauxDOM('Div', 'chart');
 
+
         var dataset = {
             "children": [{"Name":"Olives","Count":4319},
                 {"Name":"Tea","Count":4159},
@@ -36,6 +37,7 @@ class Bubble extends React.Component {
                 {"Name":"Roquefort","Count":1273},
                 {"Name":"Stewed Prunes","Count":1268}]
         };
+        dataset = this.props.bubble_data;
 
         var diameter = 600;
 

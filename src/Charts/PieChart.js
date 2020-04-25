@@ -16,7 +16,7 @@ class Pie extends React.Component {
         var d3 = require("d3");
 
         var data = [{name: "Reptiles", value: 5}, {name: "Birds", value: 10}];
-        data = this.props.pie_data;
+
         var color = d3.scaleOrdinal()
     .domain(data.map(d => d.name))
     .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse());
@@ -85,3 +85,4 @@ class Pie extends React.Component {
 
 // wrap in withFauxDom
 export default withFauxDOM(Pie);
+
