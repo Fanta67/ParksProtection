@@ -127,7 +127,7 @@ class RomanScatterPlot extends React.Component
         num_animals = animal_data[state]
 
 
-      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': 'red' })
+      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': '','state': state })
 
 
     }
@@ -246,6 +246,24 @@ class RomanScatterPlot extends React.Component
                    .duration(500)
                    .style("opacity", 0);
           });
+
+          // Add Text Labels
+          svg.selectAll("text")
+              .data(data)
+              .enter()
+              .append("text")
+              .text(function(d) {
+                  return d['state'];
+              })
+              .attr("x", function(d) {
+                  return xScale(d['x']);  // Returns scaled location of x
+              })
+              .attr("y", function(d) {
+                  return yScale(d['y']);  // Returns scaled circle y
+              })
+              .attr("font_family", "sans-serif")  // Font type
+              .attr("font-size", "11px")  // Font size
+              .attr("fill", "darkgreen");   // Font color
 
       // draw legend
       var legend = svg.selectAll(".legend")
