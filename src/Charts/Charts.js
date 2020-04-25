@@ -38,11 +38,8 @@ class Charts extends React.Component
     // # of players vs age # - line chart - Roman - api/Players - RomanLineChart.js and roman_chart.js
     var line_data = this.getLineChartData();
 
-    var scatter_data = this.getScatteplotData();
+    //var scatter_data = this.getScatteplotData();
     // # of plants vs # of animals (per state) - scatterplot - Roman - api/animals AND api/plants - Scatterplot.js OR RomanScatterPlot.js and roman_chart.js
-
-https://api.parkprotection.me/api/animals
-
 
     this.setState({
       bar_data: bar_data,
@@ -210,11 +207,11 @@ https://api.parkprotection.me/api/animals
   }
 
   render() {
-    console.log('this.props.state_line_data')
     console.log(this.state.line_data)
       return (
       	<Container>
          <LineChart line_data={this.state.line_data} />
+         <ScatterPlot scatter_data={this.state.line_data} />
         </Container>
       );
     }

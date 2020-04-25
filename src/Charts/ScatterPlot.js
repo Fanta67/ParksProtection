@@ -16,8 +16,7 @@ class RomanScatterPlot extends React.Component
   constructor(props)
   {
     super(props)
-    //this.createBarChart  = this.createBarChart.bind(this)
-
+    this.createScatterplot  = this.createScatterplot.bind(this)
   }
   componentDidMount()
   {
@@ -26,9 +25,125 @@ class RomanScatterPlot extends React.Component
       // data
       //var data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
 
-      this.createBarChart(faux, this.props.scatter_data);
+      this.createScatterplot(faux, {});
   }
-  createBarChart(faux, data){
+  get_plant_data()
+  {
+
+  }
+  get_animal_data()
+  {
+
+  }
+  get_plants_and_animal_data()
+  {
+    return Promise.all([this.get_animal_data(), this.get_plant_data()]);
+  }
+  getScatteplotData()
+  {
+
+  }
+  createScatterplot(faux, data) {
+
+    var plants_per_state = {};
+    console.log('HELLOOOOOOOOOOOO')
+    // GET THE ANIAMLS ASSOCIATED WITH EACH STATE
+    fetch('https://api.parkprotection.me/api/plants?results_per_page=10000')
+      .then((response) => response.json())
+      .then((plants_data) => {
+        console.log('PLANTS DATA YO');
+        console.log(plants_data);
+        for (var plant of plants_data['objects'])
+        {
+          var states_list = plant['states'];
+          for (var state of states_list)
+          {
+            var state_name = state['name'];
+            if(state_name in plants_per_state)
+              plants_per_state[state_name] += 1
+            else
+              plants_per_state[state_name] = 1
+          }
+
+          //animal[]
+        }
+      console.log('PLATNS PER STATE')
+      console.log(plants_per_state)
+
+      var animals_per_state = {};
+
+      // GET THE ANIAMLS ASSOCIATED WITH EACH STATE
+      fetch('https://api.parkprotection.me/api/animals?results_per_page=10000')
+        .then((response) => response.json())
+        .then((animals_data) => {
+          console.log('animals DATA YO');
+          console.log(animals_data);
+          for (var animal of animals_data['objects'])
+          {
+            var states_list = animal['states'];
+            for (var state of states_list)
+            {
+              var state_name = state['name'];
+              if(state_name in animals_per_state)
+                animals_per_state[state_name] += 1
+              else
+                animals_per_state[state_name] = 1
+            }
+
+            //animal[]
+          }
+        console.log('ANIMALS PER STATE')
+        console.log(animals_per_state)
+
+    var per_state_data = {};
+
+    var state_set = Set();
+    var animal_data = animals_per_state;
+    var plant_data = plants_per_state;
+
+    console.log(this.state.animal_data)
+    console.log(animal_data)
+    console.log('FARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASS')
+    console.log(animal_data['TX'])
+    for (var animal_state in animal_data)
+    {
+      console.log('INSIDE AIMAL LOOOOOOP');
+      state_set.add(animal_state);
+    }
+
+    var scatter_data = []
+
+    for (var plant_state in plant_data)
+    {
+      state_set.add(plant_state)
+    }
+    for (var state in state_set)
+    {
+      var num_plants = 0
+      var num_animals = 0
+      if(state in plant_data)
+        num_plants = plant_data[state]
+      if(state in animal_data)
+        num_animals = animal_data[state]
+
+      scatter_data.push({'x': num_animals, 'y': num_plants })
+
+
+    }
+    console.log('FARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT')
+    console.log(scatter_data)
+
+
+    state_set.add('FART ASS')
+
+    console.log('THE STATE SET')
+    console.log(state_set)
+
+
+    console.log('FART ASS ANIMAL STATES')
+    console.log(animal_data)
+    console.log('FART ASS PLANT STATES')
+    console.log(plant_data)
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -147,6 +262,8 @@ class RomanScatterPlot extends React.Component
           .attr("dy", ".35em")
           .style("text-anchor", "end")
           .text(function(d) { return d;})
+    });
+  });
 
   }
 
