@@ -1,21 +1,19 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 import {withFauxDOM} from 'react-faux-dom';
 import * as d3 from "d3";
 import './chart_styles.css';
 
 
-//const Div = styled('div')`
-const LineChart = styled('div')``
 const line = styled('div')`
   fill: none;
-  stroke: steelblue;
+  stroke: yellow;
   stroke-width: 1.5px;
 `
 
 
-class RomanLineChart extends React.Component
+class LineChart extends React.Component
 {
 
 
@@ -28,15 +26,35 @@ class RomanLineChart extends React.Component
   componentDidMount()
   {
       // faux DOM
-      const faux = this.props.connectFauxDOM('LineChart', 'line_chart'); // args are HTML tags A and B
+      const faux = this.props.connectFauxDOM('div', 'line_chart'); // args are HTML tags A and B
       // data
-      console.log('this.props.line_data INSIDE DID MOUNT')
-      console.log(this.props.line_data)
-      this.createChart(faux, this.props.line_data);
-  }
-  createChart(faux, data){
 
-    // set the dimensions and margins of the graph
+      var players_data = null;
+    var data = []
+    var line_data_temp = {}
+    fetch('https://api.90mininone.me/Players')
+      .then((response) => response.json())
+      .then((playersData) => {
+        // iterate over the players data
+        for (var player of playersData['players'])
+        {
+          var player_age = player['age']
+
+          if(player_age in line_data_temp)
+            line_data_temp[player_age] += 1
+          else
+            line_data_temp[player_age] = 1
+
+        }
+
+        // now let's take line data temp and convert it into a list of dicts instead
+        for (var age in line_data_temp)
+        {
+          var num_players = line_data_temp[age]
+          data.push({'age': parseInt(age), 'num_players': num_players})
+        }
+
+         // set the dimensions and margins of the graph
     var margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -72,7 +90,6 @@ class RomanLineChart extends React.Component
       });
       */
 
-      console.log(data)
       // Scale the range of the data
       x.domain(d3.extent(data, function(d) { return d.age; }));
       y.domain([0, d3.max(data, function(d) { return d.num_players; })]);
@@ -91,19 +108,17 @@ class RomanLineChart extends React.Component
       // Add the Y Axis
       svg.append("g")
           .call(d3.axisLeft(y));
-
-
+      });
   }
 
   render() {
-
       return (
       	<Container>
-      	 <LineChart className="line-container" >{this.props.line_chart} > </LineChart>
+      	 <div className="line-container"> {this.props.line_chart} </div>
         </Container>
       );
     }
   }
 
   // wrap in withFauxDom
-  export default withFauxDOM(RomanLineChart);
+  export default withFauxDOM(LineChart);
