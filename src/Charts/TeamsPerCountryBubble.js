@@ -8,64 +8,42 @@ import {withFauxDOM} from 'react-faux-dom';
 const Div = styled('div')`
 `
 
-class Bubble extends React.Component {
+class TeamsPerCountryBubble extends React.Component {
 
     componentDidMount() {
         const faux = this.props.connectFauxDOM('Div', 'chart');
 
         var dataset = {
-            "children": [{"Name":"AL","Count":9},
-                {"Name":"AR","Count":7},
-                {"Name":"AZ","Count":23},
-                {"Name":"CA","Count":27},
-                {"Name":"CO","Count":12},
-                {"Name":"CT","Count":4},
-                {"Name":"DE","Count":1},
-                {"Name":"FL","Count":11},
-                {"Name":"GA","Count":13},
-                {"Name":"IA","Count":3},
-                {"Name":"ID","Count":7},
-                {"Name":"IL","Count":3},
-                {"Name":"IN","Count":4},
-                {"Name":"KS","Count":6},
-                {"Name":"KY","Count":6},
-                {"Name":"LA","Count":7},
-                {"Name":"MA","Count":18},
-                {"Name":"MD","Count":19},
-                {"Name":"ME","Count":4},
-                {"Name":"MI","Count":6},
-                {"Name":"MN","Count":5},
-                {"Name":"MO","Count":7},
-                {"Name":"MS","Count":10},
-                {"Name":"MT","Count":9},
-                {"Name":"NC","Count":13},
-                {"Name":"ND","Count":4},
-                {"Name":"NE","Count":6},
-                {"Name":"NH","Count":2},
-                {"Name":"NJ","Count":8},
-                {"Name":"NM","Count":14},
-                {"Name":"NV","Count":4},
-                {"Name":"NY","Count":29},
-                {"Name":"OH","Count":12},
-                {"Name":"OK","Count":4},
-                {"Name":"OR","Count":7},
-                {"Name":"PA","Count":23},
-                {"Name":"RI","Count":3},
-                {"Name":"SC","Count":9},
-                {"Name":"SD","Count":7},
-                {"Name":"TN","Count":14},
-                {"Name":"TX","Count":14},
-                {"Name":"UT","Count":13},
-                {"Name":"VA","Count":24},
-                {"Name":"VI","Count":5},
-                {"Name":"VT","Count":2},
-                {"Name":"WA","Count":13},
-                {"Name":"WI","Count":2},
-                {"Name":"WV","Count":8},
-                {"Name":"WY","Count":6}]
+            "children": [{"Name":"Austria","Count":25},
+                {"Name":"Belgium","Count":23},
+                {"Name":"Brazil","Count":40},
+                {"Name":"Bulgaria","Count":23},
+                {"Name":"Canada","Count":9},
+                {"Name":"China","Count":8},
+                {"Name":"Costa-Rica","Count":9},
+                {"Name":"Croatia","Count":10},
+                {"Name":"Denmark","Count":24},
+                {"Name":"England","Count":113},
+                {"Name":"France","Count":33},
+                {"Name":"Germany","Count":71},
+                {"Name":"Kenya","Count":13},
+                {"Name":"Liechtenstein","Count":1},
+                {"Name":"Luxembourg","Count":12},
+                {"Name":"Mexico","Count":33},
+                {"Name":"Netherlands","Count":33},
+                {"Name":"Paraguay","Count":12},
+                {"Name":"Portugal","Count":30},
+                {"Name":"Russia","Count":15},
+                {"Name":"Scotland","Count":22},
+                {"Name":"South-Africa","Count":12},
+                {"Name":"Spain","Count":41},
+                {"Name":"Switzerland","Count":16},
+                {"Name":"Ukraine","Count":10},
+                {"Name":"Wales","Count":13}]
         };
 
         var diameter = 600;
+        var colors = d3.scaleOrdinal(d3.schemeCategory10);
 
         var bubble = d3.pack(dataset)
             .size([diameter, diameter])
@@ -102,7 +80,7 @@ class Bubble extends React.Component {
                 return d.r;
             })
             .style("fill", function(d,i) {
-                return "grey";
+                return colors(i);
             });
 
         node.append("text")
@@ -134,11 +112,10 @@ class Bubble extends React.Component {
     render() {
         return (
         	<Container>
-        	Bubble
         	<Div className="bubble-container" >{this.props.chart}</Div>
         </Container>
         );
     }
 }
 
-export default withFauxDOM(Bubble);
+export default withFauxDOM(TeamsPerCountryBubble);

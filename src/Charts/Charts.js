@@ -6,7 +6,8 @@ import ScatterPlot from './ScatterPlot';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 import PieChart from './PieChart';
-import Bubble from './Bubble';
+import ParksPerStateBubble from './ParksPerStateBubble';
+import TeamsPerCountryBubble from './TeamsPerCountryBubble';
 
 
 class Charts extends React.Component
@@ -102,6 +103,13 @@ class Charts extends React.Component
         <h1>Number of Players vs Age</h1>
         <br />
          <LineChart />
+         <br />
+         <h1>Number of Parks Per State</h1>
+        <br />
+         <ParksPerStateBubble />
+         <h1>Number of Teams Per Country</h1>
+        <br />
+         <TeamsPerCountryBubble />
         </Container>
       );
     }
