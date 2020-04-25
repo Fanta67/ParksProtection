@@ -5,11 +5,11 @@ import {withFauxDOM} from 'react-faux-dom';
 
 
 //const Div = styled('div')`
-const BarChart = styled('div')``
+const Chart = styled('div')``
 const d3 = require("d3");
 
 
-class RomanBarChart extends React.Component
+class BarChart extends React.Component
 {
 
 
@@ -81,11 +81,11 @@ class RomanBarChart extends React.Component
   render() {
       return (
       	<Container>
-      	 <BarChart className="bar-container" >{this.props.bar_chart}</BarChart>
+      	 <Chart className="bar-container" >{this.props.bar_chart}</Chart>
         </Container>
       );
     }
   }
 
   // wrap in withFauxDom
-  export default withFauxDOM(RomanBarChart);
+  export default withFauxDOM(BarChart);

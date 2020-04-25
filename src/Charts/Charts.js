@@ -2,11 +2,14 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import {withFauxDOM} from 'react-faux-dom';
-import RomanBarChart from './RomanBarChart';
-import RomanScatterPlot from './RomanScatterPlot';
-import RomanLineChart from './RomanLineChart';
+import ScatterPlot from './ScatterPlot';
+import LineChart from './LineChart';
+import BarChart from './BarChart';
+import PieChart from './PieChart';
+import Bubble from './Bubble';
 
-class roman_chart extends React.Component
+
+class Charts extends React.Component
 {
 
   constructor(props)
@@ -21,7 +24,7 @@ class roman_chart extends React.Component
     var bar_data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
     // TODO:
     // ROMAN DO LINE CHART
-    var line_data = [ {date: "30-Jan-12", close: 30.3}, {date: "15-Feb-12", close: 70}, {date: "30-Apr-12", close: 63}, {date: "27-Apr-12", close: 30}, {date: "1-May-12", close: 58.13}];
+    // var line_data = [ {date: "30-Jan-12", close: 30.3}, {date: "15-Feb-12", close: 70}, {date: "30-Apr-12", close: 63}, {date: "27-Apr-12", close: 30}, {date: "1-May-12", close: 58.13}];
     var scatter_data = [{Calories: 10, "Protein (g)": 10, Manufacturer: "Kellogs", "Cereal Name": "Kellogs Cereal"},{Calories: 5, "Protein (g)": 5, Manufacturer: "Quaker", "Cereal Name": "Quaker Cereal"}];
     var pie_data = []
     var bubble_data = []
@@ -29,6 +32,13 @@ class roman_chart extends React.Component
 
     // roman do parks per state, animals per group
     // dict: {name: "group", number: val}
+
+    // # of players vs age # - line chart - Roman - api/Players - RomanLineChart.js and roman_chart.js
+    var line_data = this.getLineChartData();
+    // # of plants vs # of animals (per state) - scatterplot - Roman - api/animals AND api/plants - Scatterplot.js OR RomanScatterPlot.js and roman_chart.js
+
+
+
 
     this.setState({
       bar_data: bar_data,
@@ -41,20 +51,33 @@ class roman_chart extends React.Component
     //
   }
 
+
+  getLineChartData()
+  {
+    var players_data = null;
+    fetch('https://api.90mininone.me/Players')
+      .then((response) => response.json())
+      .then((playersData) => {
+        players_data = playersData;
+      });
+    console.log(players_data);
+
+  }
+
   render() {
     console.log(this.state.bar_data)
       return (
       	<Container>
          <h1>Bar Chart</h1>
-      	 <RomanBarChart bar_data={this.state.bar_data}/>
+      	 <BarChart bar_data={this.state.bar_data}/>
          <h1>Scatterplot</h1>
-         <RomanScatterPlot scatter_data={this.state.scatter_data} />
+         <ScatterPlot scatter_data={this.state.scatter_data} />
          <h1>Line Chart</h1>
-         <RomanLineChart line_data={this.state.line_data} />
+         <LineChart line_data={this.state.line_data} />
         </Container>
       );
     }
   }
 
   // wrap in withFauxDom
-  export default withFauxDOM(roman_chart);
+  export default withFauxDOM(Charts);
