@@ -14,11 +14,13 @@ class Charts extends React.Component
 
   constructor(props)
   {
-    //
     super(props)
+    this.state = {
+    }
+
   }
 
-  componentDidMount()
+  componentWillMount()
   {
     // fetch data here...
     var bar_data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
@@ -55,24 +57,50 @@ class Charts extends React.Component
   getLineChartData()
   {
     var players_data = null;
+    var line_data = []
+    var line_data_temp = {}
     fetch('https://api.90mininone.me/Players')
       .then((response) => response.json())
       .then((playersData) => {
-        players_data = playersData;
-      });
-    console.log(players_data);
+        console.log(playersData)
+        // iterate over the players data
+        for (var player of playersData['players'])
+        {
+          var player_age = player['age']
 
+          if(player_age in line_data_temp)
+            line_data_temp[player_age] += 1
+          else
+            line_data_temp[player_age] = 1
+
+        }
+        console.log('line data temp')
+        console.log(line_data_temp)
+
+        // now let's take line data temp and convert it into a list of dicts instead
+        for (var age in line_data_temp)
+        {
+          var num_players = line_data_temp[age]
+          line_data.push({'age': parseInt(age), 'num_players': num_players})
+        }
+
+        console.log('LINE DATA')
+        console.log(line_data)
+        this.setState({
+          line_data: line_data
+        })
+
+        console.log(playersData)
+      });
+
+    return line_data
   }
 
   render() {
-    console.log(this.state.bar_data)
+    console.log('this.props.state_line_data')
+    console.log(this.state.line_data)
       return (
       	<Container>
-         <h1>Bar Chart</h1>
-      	 <BarChart bar_data={this.state.bar_data}/>
-         <h1>Scatterplot</h1>
-         <ScatterPlot scatter_data={this.state.scatter_data} />
-         <h1>Line Chart</h1>
          <LineChart line_data={this.state.line_data} />
         </Container>
       );
