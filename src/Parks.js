@@ -46,7 +46,7 @@ const states = [
     {value : 'LA', label : 'LA'},
     {value : 'MA', label : 'MA'},
     {value : 'MD', label : 'MD'},
-    {value : 'ME', label : 'MD'},
+    {value : 'ME', label : 'ME'},
     {value : 'MI', label : 'MI'},
     {value : 'MN', label : 'MN'},
     {value : 'MO', label : 'MO'},
