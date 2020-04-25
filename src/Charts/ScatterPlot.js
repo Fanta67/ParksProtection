@@ -97,11 +97,10 @@ class RomanScatterPlot extends React.Component
 
     var per_state_data = {};
 
-    var state_set = Set();
+    var state_set = new Set();
     var animal_data = animals_per_state;
     var plant_data = plants_per_state;
 
-    console.log(this.state.animal_data)
     console.log(animal_data)
     console.log('FARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASS')
     console.log(animal_data['TX'])
@@ -117,8 +116,9 @@ class RomanScatterPlot extends React.Component
     {
       state_set.add(plant_state)
     }
-    for (var state in state_set)
+    for (var state of state_set)
     {
+      console.log(state)
       var num_plants = 0
       var num_animals = 0
       if(state in plant_data)
@@ -126,7 +126,8 @@ class RomanScatterPlot extends React.Component
       if(state in animal_data)
         num_animals = animal_data[state]
 
-      scatter_data.push({'x': num_animals, 'y': num_plants })
+
+      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': 'red' })
 
 
     }
@@ -149,6 +150,11 @@ class RomanScatterPlot extends React.Component
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
+
+    var data = scatter_data;
+
+
+
     /*
      * value accessor - returns the value to encode for a given data object.
      * scale - maps value to a visual display encoding, such as a pixel position.
@@ -157,19 +163,19 @@ class RomanScatterPlot extends React.Component
      */
 
     // setup x
-    var xValue = function(d) { return d.Calories;}, // data -> value
+    var xValue = function(d) { return d['x'];}, // data -> value
         xScale = d3.scaleLinear().range([0, width]), // value -> display
         xMap = function(d) { return xScale(xValue(d));}, // data -> display
         xAxis = d3.axisBottom(xScale);
 
     // setup y
-    var yValue = function(d) { return d["Protein (g)"];}, // data -> value
+    var yValue = function(d) { return d["y"];}, // data -> value
         yScale = d3.scaleLinear().range([height, 0]), // value -> display
         yMap = function(d) { return yScale(yValue(d));}, // data -> display
         yAxis = d3.axisLeft(yScale);
 
     // setup fill color
-    var cValue = function(d) { return d.Manufacturer;},
+    var cValue = function(d) { return d['red'];},
         color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // add the graph canvas to the body of the webpage
