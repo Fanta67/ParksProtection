@@ -38,7 +38,7 @@ class Charts extends React.Component
     // # of players vs age # - line chart - Roman - api/Players - RomanLineChart.js and roman_chart.js
     var line_data = this.getLineChartData();
 
-    var scatter_data = this.getScatteplotrData();
+    var scatter_data = this.getScatteplotData();
     // # of plants vs # of animals (per state) - scatterplot - Roman - api/animals AND api/plants - Scatterplot.js OR RomanScatterPlot.js and roman_chart.js
 
 https://api.parkprotection.me/api/animals
@@ -82,6 +82,9 @@ https://api.parkprotection.me/api/animals
       console.log('PLATNS PER STATE')
       console.log(plants_per_state)
       });
+      this.setState({
+        plant_data: plants_per_state
+      });
       return plants_per_state;
   }
   get_animal_data()
@@ -111,6 +114,9 @@ https://api.parkprotection.me/api/animals
       console.log('ANIMALS PER STATE')
       console.log(animals_per_state)
       });
+      this.setState({
+        animal_data: animals_per_state
+      });
 
       return animals_per_state;
   }
@@ -118,7 +124,7 @@ https://api.parkprotection.me/api/animals
   {
     return Promise.all([this.get_animal_data(), this.get_plant_data()]);
   }
-  getScatteplotrData()
+  getScatteplotData()
   {
 
     var per_state_data = {};
@@ -129,14 +135,10 @@ https://api.parkprotection.me/api/animals
 
         var state_set = new Set();
 
-        var keys = []
-        for(var key in animal_data) keys.push( key );
-        console.log('DID I GET ALL THE KEYS');
-        console.log(keys);
-
-        console.log('about to loooOOOOp')
-        console.log(Object.keys('plant_data'))
+        console.log(this.state.animal_data)
         console.log(animal_data)
+        console.log('FARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASS')
+        console.log(animal_data['TX'])
         for (var animal_state in animal_data)
         {
           console.log('INSIDE AIMAL LOOOOOOP');
