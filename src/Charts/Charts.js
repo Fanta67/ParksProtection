@@ -37,9 +37,11 @@ class Charts extends React.Component
 
     // # of players vs age # - line chart - Roman - api/Players - RomanLineChart.js and roman_chart.js
     var line_data = this.getLineChartData();
+
+    var scatter_data = this.getScatteplotrData();
     // # of plants vs # of animals (per state) - scatterplot - Roman - api/animals AND api/plants - Scatterplot.js OR RomanScatterPlot.js and roman_chart.js
 
-
+https://api.parkprotection.me/api/animals
 
 
     this.setState({
@@ -53,6 +55,115 @@ class Charts extends React.Component
     //
   }
 
+  get_plant_data()
+  {
+    var plants_per_state = {};
+
+    // GET THE ANIAMLS ASSOCIATED WITH EACH STATE
+    fetch('https://api.parkprotection.me/api/plants?results_per_page=10000')
+      .then((response) => response.json())
+      .then((plants_data) => {
+        console.log('PLANTS DATA YO');
+        console.log(plants_data);
+        for (var plant of plants_data['objects'])
+        {
+          var states_list = plant['states'];
+          for (var state of states_list)
+          {
+            var state_name = state['name'];
+            if(state_name in plants_per_state)
+              plants_per_state[state_name] += 1
+            else
+              plants_per_state[state_name] = 1
+          }
+
+          //animal[]
+        }
+      console.log('PLATNS PER STATE')
+      console.log(plants_per_state)
+      });
+      return plants_per_state;
+  }
+  get_animal_data()
+  {
+    var animals_per_state = {};
+
+    // GET THE ANIAMLS ASSOCIATED WITH EACH STATE
+    fetch('https://api.parkprotection.me/api/animals?results_per_page=10000')
+      .then((response) => response.json())
+      .then((animals_data) => {
+        console.log('animals DATA YO');
+        console.log(animals_data);
+        for (var animal of animals_data['objects'])
+        {
+          var states_list = animal['states'];
+          for (var state of states_list)
+          {
+            var state_name = state['name'];
+            if(state_name in animals_per_state)
+              animals_per_state[state_name] += 1
+            else
+              animals_per_state[state_name] = 1
+          }
+
+          //animal[]
+        }
+      console.log('ANIMALS PER STATE')
+      console.log(animals_per_state)
+      });
+
+      return animals_per_state;
+  }
+  get_plants_and_animal_data()
+  {
+    return Promise.all([this.get_animal_data(), this.get_plant_data()]);
+  }
+  getScatteplotrData()
+  {
+
+    var per_state_data = {};
+    this.get_plants_and_animal_data()
+      .then(([animal_data, plant_data]) => {
+        console.log('ANIMAL AND PLANT DATA')
+        // now let's combine the two data into one dictionary
+
+        var state_set = new Set();
+
+        var keys = []
+        for(var key in animal_data) keys.push( key );
+        console.log('DID I GET ALL THE KEYS');
+        console.log(keys);
+
+        console.log('about to loooOOOOp')
+        console.log(Object.keys('plant_data'))
+        console.log(animal_data)
+        for (var animal_state in animal_data)
+        {
+          console.log('INSIDE AIMAL LOOOOOOP');
+          state_set.add(animal_state);
+        }
+
+        for (var plant_state in plant_data)
+        {
+          state_set.add(plant_state)
+        }
+
+
+        state_set.add('FART ASS')
+
+        console.log('THE STATE SET')
+        console.log(state_set)
+
+
+        console.log('FART ASS ANIMAL STATES')
+        console.log(animal_data)
+        console.log('FART ASS PLANT STATES')
+        console.log(plant_data)
+
+      });
+
+      return per_state_data;
+  }
 
   getLineChartData()
   {
