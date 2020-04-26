@@ -78,6 +78,7 @@ class GitlabTable extends React.Component{
   componentDidMount() {
       let nameDict = {
         'Roman Kuhn': 0,
+        'thekuhninator': 0,
         'Ameya Joshi': 1,
         'Dylan Kan': 2,
         'Poisonthorns': 3,
@@ -98,7 +99,7 @@ class GitlabTable extends React.Component{
               for (const i in data) {
                   const commit_data = data[i];
                   var name = commit_data.name;
-                  // console.log("Commit Author name:" + nameDict[name]);
+                  console.log("Commit Author name:" + name + " " + nameDict[name]);
                   this.team[nameDict[name]].commits += commit_data.commits;
                   this.total_commits += commit_data.commits;
               }
