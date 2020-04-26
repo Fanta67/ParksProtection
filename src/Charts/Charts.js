@@ -8,6 +8,7 @@ import BarChart from './BarChart';
 import PieChart from './PieChart';
 import ParksPerStateBubble from './ParksPerStateBubble';
 import TeamsPerCountryBubble from './TeamsPerCountryBubble';
+import LeaguePie from './LeaguesPCountryPie';
 
 
 class Charts extends React.Component
@@ -216,6 +217,7 @@ class Charts extends React.Component
           <ScatterPlot scatter_data={this.state.line_data} />
           <TeamsPerCountryBubble />
           <LineChart />
+          <LeaguePie/>
         </Container>
       );
     }
