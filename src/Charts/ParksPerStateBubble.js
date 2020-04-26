@@ -11,8 +11,6 @@ const Div = styled('div')`
 class ParksPerStateBubble extends React.Component {
 
     async componentDidMount() {
-        const faux = this.props.connectFauxDOM('div', 'chart');
-
         const states = ['AL',
               'AR',
               'AZ',
@@ -134,13 +132,14 @@ class ParksPerStateBubble extends React.Component {
         //         {"Name":"WY","Count":6}]
         // };
 
-        var diameter = 600;
+        var diameter = 1000;
         var colors = d3.scaleOrdinal(d3.schemeCategory10);
 
         var bubble = d3.pack(dataset)
             .size([diameter, diameter])
             .padding(1.5);
 
+        const faux = this.props.connectFauxDOM('div', 'chart');
         var svg = d3.select(faux)
             .append("svg")
             .attr("width", diameter)
@@ -164,7 +163,7 @@ class ParksPerStateBubble extends React.Component {
 
         node.append("title")
             .text(function(d) {
-                return d.Name + ": " + d.Count;
+                return d.data.Name + ": " + d.data.Count;
             });
 
         node.append("circle")
@@ -205,7 +204,6 @@ class ParksPerStateBubble extends React.Component {
         return (
         <Container>
             <h1>Number of Parks per State</h1>
-            <br />
             <div className="bubble-container" >{this.props.chart}</div>
             <br />
         </Container>

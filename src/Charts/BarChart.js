@@ -45,13 +45,13 @@ class BarChart extends React.Component
             data.push(obj);
         }
 
-      var margin = ({top: 30, right: 0, bottom: 110, left: 40});
+      var margin = ({top: 10, right: 0, bottom: 110, left: 40});
 
     var height = 300;
     var width = 500;
 
     var yAxis = g => g.attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y).ticks(null, data.format))
+    .call(d3.axisLeft(y).ticks(d3.max(data, d => d.value)).tickFormat(d3.format(".0f")))
     .call(g => g.select(".domain").remove())
     .call(g => g.append("text")
         .attr("x", -margin.left)

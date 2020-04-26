@@ -11,8 +11,6 @@ const Div = styled('div')`
 class TeamsPerCountryBubble extends React.Component {
 
     async componentDidMount() {
-        const faux = this.props.connectFauxDOM('div', 'chart');
-
         let url = "https://api.90mininone.me/Teams";
         const response = await fetch(url);
         const data_obj = await response.json();
@@ -69,13 +67,14 @@ class TeamsPerCountryBubble extends React.Component {
         // console.log("another datashet");
         // console.log(dataset);
 
-        var diameter = 600;
+        var diameter = 1000;
         var colors = d3.scaleOrdinal(d3.schemeCategory10);
 
         var bubble = d3.pack(dataset)
             .size([diameter, diameter])
             .padding(1.5);
 
+        const faux = this.props.connectFauxDOM('div', 'chart');
         var svg = d3.select(faux)
             .append("svg")
             .attr("width", diameter)
@@ -99,7 +98,7 @@ class TeamsPerCountryBubble extends React.Component {
 
         node.append("title")
             .text(function(d) {
-                return d.Name + ": " + d.Count;
+                return d.data.Name + ": " + d.data.Count;
             });
 
         node.append("circle")
@@ -140,7 +139,6 @@ class TeamsPerCountryBubble extends React.Component {
         return (
         	<Container>
             <h1>Number of Teams per Country</h1>
-            <br />
         	<div className="bubble-container" >{this.props.chart}</div>
             <br />
         </Container>

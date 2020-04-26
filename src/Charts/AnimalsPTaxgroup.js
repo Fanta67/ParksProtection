@@ -6,6 +6,7 @@ import * as d3 from "d3";
 import {withFauxDOM} from 'react-faux-dom';
 
 const Div = styled('div')`
+  max-height: 100;
 `
 
 class APTGPie extends React.Component {
@@ -13,7 +14,7 @@ class APTGPie extends React.Component {
     async componentDidMount() {
         var d3 = require("d3");
 
-        let url = "https://api.parkprotection.me/api/animals";
+        let url = "https://api.parkprotection.me/api/animals?results_per_page=1000";
         const response = await fetch(url);
         const data_obj = await response.json();
         const data_array = data_obj.objects;
@@ -42,7 +43,7 @@ class APTGPie extends React.Component {
     .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse());
 
     var width = 500;
-    var height = Math.min(width, 500)
+    var height = 500;
 
     var arc = d3.arc()
     .innerRadius(0)
@@ -59,7 +60,7 @@ class APTGPie extends React.Component {
 
   const faux = this.props.connectFauxDOM('Div', 'chart'); // args are HTML tags A and B
   const svg = d3.select(faux).append('svg')
-      .attr("viewBox", [-width / 2, -height / 2, width, height]);
+      .attr("viewBox", [-width / 2, -height / 2, width * 1.3, height * 1.3]);
 
   svg.append("g")
       .attr("stroke", "white")
@@ -97,8 +98,10 @@ class APTGPie extends React.Component {
     render() {
         return (
         	<Container>
-        	Pie
+        	<h1>Animals by Species</h1>
+          <br />
         	<Div className="pie-container" >{this.props.chart}</Div>
+          <br />
         </Container>
         );
     }

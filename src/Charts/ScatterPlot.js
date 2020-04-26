@@ -127,7 +127,7 @@ class RomanScatterPlot extends React.Component
         num_animals = animal_data[state]
 
 
-      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': 'red' })
+      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': 'red', 'state': state })
 
 
     }
@@ -238,7 +238,7 @@ class RomanScatterPlot extends React.Component
               tooltip.transition()
                    .duration(200)
                    .style("opacity", .9);
-              tooltip.html(d["Cereal Name"] + "<br/> (" + xValue(d)
+              tooltip.html(d["state"] + "<br/> (" + xValue(d)
     	        + ", " + yValue(d) + ")")
                    .style("left", (d3.event.pageX + 5) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
@@ -248,28 +248,6 @@ class RomanScatterPlot extends React.Component
                    .duration(500)
                    .style("opacity", 0);
           });
-
-      // draw legend
-      var legend = svg.selectAll(".legend")
-          .data(color.domain())
-        .enter().append("g")
-          .attr("class", "legend")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-      // draw legend colored rectangles
-      legend.append("rect")
-          .attr("x", width - 18)
-          .attr("width", 18)
-          .attr("height", 18)
-          .style("fill", color);
-
-      // draw legend text
-      legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9)
-          .attr("dy", ".35em")
-          .style("text-anchor", "end")
-          .text(function(d) { return d;})
     });
   });
 

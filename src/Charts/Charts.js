@@ -215,10 +215,10 @@ class Charts extends React.Component
           <br />
           <ParksPerStateBubble />
           <ScatterPlot scatter_data={this.state.line_data} />
+          <APTGPie />
           <BarChart />
           <TeamsPerCountryBubble />
           <LineChart />
-          <APTGPie />
         </Container>
       );
     }
