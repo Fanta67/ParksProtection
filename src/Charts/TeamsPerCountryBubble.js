@@ -10,37 +10,64 @@ const Div = styled('div')`
 
 class TeamsPerCountryBubble extends React.Component {
 
-    componentDidMount() {
+    async componentDidMount() {
         const faux = this.props.connectFauxDOM('div', 'chart');
 
-        var dataset = {
-            "children": [{"Name":"Austria","Count":25},
-                {"Name":"Belgium","Count":23},
-                {"Name":"Brazil","Count":40},
-                {"Name":"Bulgaria","Count":23},
-                {"Name":"Canada","Count":9},
-                {"Name":"China","Count":8},
-                {"Name":"Costa-Rica","Count":9},
-                {"Name":"Croatia","Count":10},
-                {"Name":"Denmark","Count":24},
-                {"Name":"England","Count":113},
-                {"Name":"France","Count":33},
-                {"Name":"Germany","Count":71},
-                {"Name":"Kenya","Count":13},
-                {"Name":"Liechtenstein","Count":1},
-                {"Name":"Luxembourg","Count":12},
-                {"Name":"Mexico","Count":33},
-                {"Name":"Netherlands","Count":33},
-                {"Name":"Paraguay","Count":12},
-                {"Name":"Portugal","Count":30},
-                {"Name":"Russia","Count":15},
-                {"Name":"Scotland","Count":22},
-                {"Name":"South-Africa","Count":12},
-                {"Name":"Spain","Count":41},
-                {"Name":"Switzerland","Count":16},
-                {"Name":"Ukraine","Count":10},
-                {"Name":"Wales","Count":13}]
-        };
+        let url = "https://api.90mininone.me/Teams";
+        const response = await fetch(url);
+        const data_obj = await response.json();
+        const data_array = data_obj.teams;
+
+        var data = new Map();
+        
+        for(var team in data_array){
+            const currteam  = data_array[team];
+            if(!data.has(currteam.country)){
+                data.set(currteam.country, 1);
+            }
+            else{
+                data.set(currteam.country, data.get(currteam.country) + 1);
+            }
+        }
+
+        var datamap = [];
+        for (const [key, value] of data.entries()) {
+            const obj = { Name : key, Count: value};
+            datamap.push(obj);
+        }
+
+        var dataset = {"children": datamap}
+
+        // var dataset = {
+        //     "children": [{"Name":"Austria","Count":25},
+        //         {"Name":"Belgium","Count":23},
+        //         {"Name":"Brazil","Count":40},
+        //         {"Name":"Bulgaria","Count":23},
+        //         {"Name":"Canada","Count":9},
+        //         {"Name":"China","Count":8},
+        //         {"Name":"Costa-Rica","Count":9},
+        //         {"Name":"Croatia","Count":10},
+        //         {"Name":"Denmark","Count":24},
+        //         {"Name":"England","Count":113},
+        //         {"Name":"France","Count":33},
+        //         {"Name":"Germany","Count":71},
+        //         {"Name":"Kenya","Count":13},
+        //         {"Name":"Liechtenstein","Count":1},
+        //         {"Name":"Luxembourg","Count":12},
+        //         {"Name":"Mexico","Count":33},
+        //         {"Name":"Netherlands","Count":33},
+        //         {"Name":"Paraguay","Count":12},
+        //         {"Name":"Portugal","Count":30},
+        //         {"Name":"Russia","Count":15},
+        //         {"Name":"Scotland","Count":22},
+        //         {"Name":"South-Africa","Count":12},
+        //         {"Name":"Spain","Count":41},
+        //         {"Name":"Switzerland","Count":16},
+        //         {"Name":"Ukraine","Count":10},
+        //         {"Name":"Wales","Count":13}]
+        // };
+        // console.log("another datashet");
+        // console.log(dataset);
 
         var diameter = 600;
         var colors = d3.scaleOrdinal(d3.schemeCategory10);
