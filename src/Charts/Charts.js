@@ -8,6 +8,7 @@ import BarChart from './BarChart';
 import PieChart from './PieChart';
 import ParksPerStateBubble from './ParksPerStateBubble';
 import TeamsPerCountryBubble from './TeamsPerCountryBubble';
+import APTGPie from './AnimalsPTaxgroup'
 
 
 class Charts extends React.Component
@@ -217,6 +218,7 @@ class Charts extends React.Component
           <BarChart />
           <TeamsPerCountryBubble />
           <LineChart />
+          <APTGPie />
         </Container>
       );
     }
