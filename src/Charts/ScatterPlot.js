@@ -21,11 +21,11 @@ class RomanScatterPlot extends React.Component
   componentDidMount()
   {
       // faux DOM
-      const faux = this.props.connectFauxDOM('Div', 'chart'); // args are HTML tags A and B
+      
       // data
       //var data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
 
-      this.createScatterplot(faux, {});
+      this.createScatterplot({});
   }
   get_plant_data()
   {
@@ -43,7 +43,7 @@ class RomanScatterPlot extends React.Component
   {
 
   }
-  createScatterplot(faux, data) {
+  createScatterplot(data) {
 
     var plants_per_state = {};
     console.log('HELLOOOOOOOOOOOO')
@@ -179,7 +179,9 @@ class RomanScatterPlot extends React.Component
         color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // add the graph canvas to the body of the webpage
-    var svg = d3.select("body").append("svg")
+    const faux = this.props.connectFauxDOM('div', 'chart'); // args are HTML tags A and B
+
+    var svg = d3.select(faux).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -275,8 +277,11 @@ class RomanScatterPlot extends React.Component
 
   render() {
       return (
-      	<Container>
-      	 <Div className="scatter-container" >{this.props.chart} > </Div>
+        <Container>
+          <h1>Plants vs Animals by State</h1>
+          <br />
+          <div className="scatter-container" >{this.props.chart} </div>
+          <br />
         </Container>
       );
     }

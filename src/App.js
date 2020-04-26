@@ -18,7 +18,7 @@ import Search from './Search';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
 import Charts from './Charts/Charts';
-import {withFauxDOM} from 'react-faux-dom';
+import LineChart from './Charts/LineChart';
 
 require('dotenv').config({path: ':../.env' })
 
@@ -77,6 +77,7 @@ class App extends Component {
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
             <Route path="/Charts" component={Charts} />
+            <Route path="/Line" component={LineChart} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>

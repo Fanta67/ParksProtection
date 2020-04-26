@@ -5,13 +5,10 @@ import styled from 'styled-components';
 import * as d3 from "d3";
 import {withFauxDOM} from 'react-faux-dom';
 
-const Div = styled('div')`
-`
-
 class ParksPerStateBubble extends React.Component {
 
     componentDidMount() {
-        const faux = this.props.connectFauxDOM('Div', 'chart');
+        const faux = this.props.connectFauxDOM('div', 'chart');
 
         var dataset = {
             "children": [{"Name":"AL","Count":9},
@@ -135,7 +132,10 @@ class ParksPerStateBubble extends React.Component {
     render() {
         return (
         <Container>
-        	<Div className="bubble-container" >{this.props.chart}</Div>
+            <h1>Number of Parks per State</h1>
+            <br />
+            <div className="bubble-container" >{this.props.chart}</div>
+            <br />
         </Container>
         );
     }

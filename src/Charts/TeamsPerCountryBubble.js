@@ -11,7 +11,7 @@ const Div = styled('div')`
 class TeamsPerCountryBubble extends React.Component {
 
     componentDidMount() {
-        const faux = this.props.connectFauxDOM('Div', 'chart');
+        const faux = this.props.connectFauxDOM('div', 'chart');
 
         var dataset = {
             "children": [{"Name":"Austria","Count":25},
@@ -112,7 +112,10 @@ class TeamsPerCountryBubble extends React.Component {
     render() {
         return (
         	<Container>
-        	<Div className="bubble-container" >{this.props.chart}</Div>
+            <h1>Number of Teams per Country</h1>
+            <br />
+        	<div className="bubble-container" >{this.props.chart}</div>
+            <br />
         </Container>
         );
     }

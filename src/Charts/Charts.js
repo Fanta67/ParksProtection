@@ -210,18 +210,12 @@ class Charts extends React.Component
   render() {
     console.log(this.state.line_data)
       return (
-      	<Container>
-        <h1>Number of Players vs Age</h1>
-        <br />
-         <LineChart />
-         <br />
-         <h1>Number of Parks Per State</h1>
-        <br />
-         <ParksPerStateBubble />
-         <h1>Number of Teams Per Country</h1>
-        <br />
-         <TeamsPerCountryBubble />
-         <ScatterPlot scatter_data={this.state.line_data} />
+        <Container>
+          <br />
+          <ParksPerStateBubble />
+          <ScatterPlot scatter_data={this.state.line_data} />
+          <TeamsPerCountryBubble />
+          <LineChart />
         </Container>
       );
     }
