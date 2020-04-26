@@ -11,8 +11,6 @@ const Div = styled('div')`
 class LeaguePie extends React.Component {
 
     async componentDidMount() {
-        const faux = this.props.connectFauxDOM('Div', 'chart'); // args are HTML tags A and B
-
         var d3 = require("d3");
 
         let url = "https://api.90mininone.me/Leagues";
@@ -62,6 +60,7 @@ class LeaguePie extends React.Component {
 
     const arcs = pie(data);
 
+  const faux = this.props.connectFauxDOM('Div', 'chart'); // args are HTML tags A and B
   const svg = d3.select(faux).append('svg')
       .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
