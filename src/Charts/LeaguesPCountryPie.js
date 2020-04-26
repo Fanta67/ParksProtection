@@ -34,13 +34,10 @@ class LeaguePie extends React.Component {
         }
 
         var data = [];
-        console.log(pie_data.keys());
         for (const [key, value] of pie_data.entries()) {
             const obj = { name : key, value: value};
             data.push(obj);
         }
-
-        console.log(data);
 
         var color = d3.scaleOrdinal()
     .domain(data.map(d => d.name))
