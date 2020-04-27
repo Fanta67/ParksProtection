@@ -32,6 +32,7 @@ class PlantsSearch extends React.Component {
 		super(props);
 		this.state = {
 			plantList: [],
+			fetched: false,
 			num_results: 0
 		};
 	}
@@ -90,12 +91,12 @@ class PlantsSearch extends React.Component {
               	}
                 plantList.push(plantParsed)
               }
-              this.setState({ plantList : plantList, num_results: data.num_results});
+              this.setState({ fetched: true, plantList : plantList, num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ plantList : [], num_results: 0});
+              this.setState({ fetched: true, plantList : [], num_results: 0});
           });
 	}
 
@@ -127,6 +128,9 @@ class PlantsSearch extends React.Component {
 				</Col>
                 </Row>
 
+                {(this.state.fetched && this.state.num_results == 0) &&
+					<h4>No Results</h4>
+				}
 				{this.makeCardDeck()}
 			</Container>
 		);

@@ -32,6 +32,7 @@ class ParksSearch extends React.Component {
 		super(props);
 		this.state = {
 			parkList: [],
+			fetched: false,
 			num_results: 0
 		};
 	}
@@ -90,12 +91,12 @@ class ParksSearch extends React.Component {
               	}
                 parkList.push(parkParsed)
               }
-              this.setState({ parkList : parkList, num_results: data.num_results});
+              this.setState({ fetched: true, parkList : parkList, num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ parkList : [], num_results: 0});
+              this.setState({ fetched: true, parkList : [], num_results: 0});
           });
 	}
 
@@ -127,6 +128,9 @@ class ParksSearch extends React.Component {
 				</Col>
                 </Row>
 
+                {(this.state.fetched && this.state.num_results == 0) &&
+					<h4>No Results</h4>
+				}
 				{this.makeCardDeck()}
 			</Container>
 		);

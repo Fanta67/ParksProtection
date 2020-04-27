@@ -100,6 +100,7 @@ class Plants extends React.Component {
 		super(props);
 		this.state = {
 			plantList: [],
+      fetched: false,
 	        page: 1,
 	        lastPageNum: 1
 		};
@@ -260,12 +261,12 @@ class Plants extends React.Component {
               }
               // var assert = require('assert');
                 // assert(plantList == 9);
-              this.setState({ plantList : plantList});
+              this.setState({ fetched: true, plantList : plantList});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ plantList : []});
+              this.setState({ fetched: true, plantList : []});
           });
 	}
 
@@ -316,6 +317,46 @@ class Plants extends React.Component {
 	}
 
 	render() {
+    if(this.state.fetched && this.state.plantList.length == 0) {
+      return (
+        <Container>
+          <br/>
+          <Row>
+          <Col><h1 className="PageHeader">Plants</h1><br/></Col>
+          <Col xs={{span: 3}}>
+          <Form inline>
+            <Form.Group as={Row}>
+                <FormControl id="searchBox" type="text" placeholder={"Search Plants"} className="mr-sm-2"
+                   onChange={node => this.setState({inputNode: node.target.value})}
+                    onKeyPress={key => {this.handleKeyPress(key)}}
+                />
+                <Button id="searchButton"
+                    href={("Plants/search/" + String(this.state.inputNode))}
+                >Search</Button>
+            </Form.Group>
+          </Form>
+          </Col>
+          </Row>
+  ​
+          <Row>
+            <Col>
+              {this.SortSelect()}
+            </Col>
+            <Col>
+              {this.Statuses()}
+            </Col>
+            <Col>
+              {this.States()}
+            </Col>
+          </Row>
+
+          <br /><br />
+          <h4>No Results</h4>
+
+        </Container>
+      );
+    }
+
 		return (
 			<Container>
 				<br/>

@@ -114,6 +114,7 @@ class Animals extends React.Component {
 		super(props);
 		this.state = {
 			animalList: [],
+			fetched: false,
 	        page: 1,
 	        lastPageNum: 1
 		};
@@ -288,12 +289,12 @@ class Animals extends React.Component {
               	console.log(animalParsed.image)
                 animalList.push(animalParsed)
               }
-              this.setState({ animalList : animalList});
+              this.setState({ fetched: true, animalList : animalList});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ animalList : []});
+              this.setState({ fetched: true, animalList : []});
           });
 	}
 
@@ -357,6 +358,49 @@ class Animals extends React.Component {
     }
 
 	render() {
+		if(this.state.fetched && this.state.animalList.length == 0) {
+			return (
+				<Container>
+					<br/>
+					<Row>
+					<Col><h1 className="PageHeader">Animals</h1><br/></Col>
+					<Col xs={{span: 3}}>
+						<Form inline>
+	                        <Form.Group as={Row}>
+	                            <FormControl id="searchBox" type="text" placeholder={"Search Animals"} className="mr-sm-2"
+	                               onChange={node => this.setState({inputNode: node.target.value})}
+	                                onKeyPress={key => {this.handleKeyPress(key)}}
+	                            />
+	                            <Button id="searchButton"
+	                                href={("Animals/search/" + String(this.state.inputNode))}
+	                            >Search</Button>
+	                        </Form.Group>
+						</Form>
+					</Col>
+					</Row>
+
+					<Row>
+						<Col>
+							{this.SortSelect()}
+						</Col>
+						<Col>
+							{this.Groups()}
+						</Col>
+						<Col>
+							{this.Statuses()}
+						</Col>
+						<Col>
+							{this.States()}
+						</Col>
+					</Row>
+
+					<br /><br />
+					<h4>No Results</h4>
+
+				</Container>
+			);
+		}
+
 		return (
 			<Container>
 				<br/>

@@ -32,6 +32,7 @@ class AnimalsSearch extends React.Component {
 		super(props);
 		this.state = {
 			animalList: [],
+			fetched: false,
 			num_results: 0
 		};
 	}
@@ -90,12 +91,12 @@ class AnimalsSearch extends React.Component {
               	}
                 animalList.push(animalParsed)
               }
-              this.setState({ animalList : animalList, num_results: data.num_results});
+              this.setState({ fetched: true, animalList : animalList, num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ animalList : [], num_results: 0});
+              this.setState({ fetched: true, animalList : [], num_results: 0});
           });
 	}
 
@@ -127,6 +128,9 @@ class AnimalsSearch extends React.Component {
 				</Col>
                 </Row>
 
+                {(this.state.fetched && this.state.num_results == 0) &&
+					<h4>No Results</h4>
+				}
 				{this.makeCardDeck()}
 			</Container>
 		);
