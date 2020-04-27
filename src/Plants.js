@@ -331,7 +331,7 @@ class Plants extends React.Component {
                     onKeyPress={key => {this.handleKeyPress(key)}}
                 />
                 <Button id="searchButton"
-                    href={("Plants/search/" + String(this.state.inputNode))}
+                    href={("/Plants/search/" + String(this.state.inputNode))}
                 >Search</Button>
             </Form.Group>
           </Form>

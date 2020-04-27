@@ -16,6 +16,9 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import { Nav } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
+import ParksSearch from './ParksSearch'
+import PlantsSearch from './PlantsSearch'
+import AnimalsSearch from './AnimalsSearch'
 
 const BoldText = styled('div')`
 	font-size: 21px;
@@ -229,25 +232,11 @@ class Search extends React.Component {
 			<Container>
 
 				<br/>
-				<Row><Col><h1 className="PageHeader">Parks</h1><br/></Col><Col xs={{span: 3}}></Col></Row>
-				{(this.state.parksFetched && this.state.parks_num_results == 0) &&
-					<h4>No Results</h4>
-				}
-				{this.makeParkCardDeck()}
+				<ParksSearch />
 
-				<br/><br/><br/><br/>
-				<Row><Col><h1 className="PageHeader">Plants</h1><br/></Col><Col xs={{span: 3}}></Col></Row>
-				{(this.state.plantsFetched && this.state.plants_num_results == 0) &&
-					<h4>No Results</h4>
-				}
-				{this.makePlantCardDeck()}
+				<PlantsSearch />
 
-				<br/><br/><br/><br/>
-				<Row><Col><h1 className="PageHeader">Animals</h1><br/></Col><Col xs={{span: 3}}></Col></Row>
-				{(this.state.animalsFetched && this.state.animals_num_results == 0) &&
-					<h4>No Results</h4>
-				}
-				{this.makeAnimalCardDeck()}
+				<AnimalsSearch />
 			</Container>
 		);
 	}

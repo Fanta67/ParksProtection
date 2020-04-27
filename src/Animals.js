@@ -353,7 +353,7 @@ class Animals extends React.Component {
     handleKeyPress(key) {
         if (key.charCode == 13) {
             key.preventDefault();
-            window.location.href = ("Animals/search/" + String(this.state.inputNode))
+            window.location.href = ("/Animals/search/" + String(this.state.inputNode))
         }
     }
 
