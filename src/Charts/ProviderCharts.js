@@ -11,7 +11,7 @@ import TeamsPerCountryBubble from './TeamsPerCountryBubble';
 import APTGPie from './AnimalsPTaxgroup'
 
 
-class Charts extends React.Component
+class ProviderCharts extends React.Component
 {
 
   constructor(props)
@@ -180,9 +180,6 @@ class Charts extends React.Component
       return (
         <Container>
           <br />
-          <ParksPerStateBubble />
-          <ScatterPlot scatter_data={this.state.line_data} />
-          <APTGPie />
           <BarChart />
           <TeamsPerCountryBubble />
           <LineChart />
@@ -192,4 +189,4 @@ class Charts extends React.Component
   }
 
   // wrap in withFauxDom
-  export default withFauxDOM(Charts);
+  export default withFauxDOM(ProviderCharts);

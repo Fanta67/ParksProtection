@@ -25,14 +25,14 @@ class GitlabTable extends React.Component{
       this.team = [{
         name: 'Roman Kuhn',
         commits: 0,
-        title: 'Searching, About Page, Instance Pages, Technical Report, User Stories, UML Diagram',
+        title: 'Searching, About Page, Instance Pages, Technical Report, User Stories, UML Diagram, D3 Fetching and Visuals',
         issues: 0,
         tests: 0,
         desc: 'Rumored to have never lost a match in Super Smash Brothers Melee.'
         },
         {
           name: 'Ameya Joshi',
-          title: 'Model Pages, Instance Pages, Searching, Scraping, API, Postman, SQL, Python tests, AWS, Docker, Technical Report',
+          title: 'Model Pages, Instance Pages, Searching, Scraping, API, D3 Visuals, Postman, SQL, Python tests, AWS, Docker, Technical Report, User Stories',
           commits: 0,
           issues: 0,
           tests: 62,
@@ -40,7 +40,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Dylan Kan',
-          title: 'Docker, Wiki Parsing, Filtering/Sorting, Mocha',
+          title: 'Docker, Wiki Parsing, Filtering/Sorting, Mocha, D3 Fetching',
           commits: 0,
           issues: 0,
           tests: 12,
@@ -48,7 +48,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Skylore Evans',
-          title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generatino, Postman Parsing, Pagination, CI File',
+          title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generation, Postman Parsing, Pagination, CI File',
           commits: 0,
           issues: 0,
           tests: 11,
@@ -56,7 +56,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Jordan Bogaards',
-          title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generatino, Postman Parsing, Pagination',
+          title: 'Searching, Instance Pages Design, Models Pages, Selenium Tests, Card Generation, Postman Parsing, Pagination',
           commits: 0,
           issues: 0,
           tests: 11,
@@ -64,7 +64,7 @@ class GitlabTable extends React.Component{
         },
         {
           name: 'Pedro Silva',
-          title: 'Managing Data on Instance Pages, Filtering/Sorting for Model Pages',
+          title: 'Managing Data on Instance Pages, Filtering/Sorting for Model Pages, D3 Fetching',
           commits: 0,
           issues: 0,
           tests: 0,

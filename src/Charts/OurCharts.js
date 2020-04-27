@@ -11,7 +11,7 @@ import TeamsPerCountryBubble from './TeamsPerCountryBubble';
 import APTGPie from './AnimalsPTaxgroup'
 
 
-class Charts extends React.Component
+class OurCharts extends React.Component
 {
 
   constructor(props)
@@ -183,13 +183,10 @@ class Charts extends React.Component
           <ParksPerStateBubble />
           <ScatterPlot scatter_data={this.state.line_data} />
           <APTGPie />
-          <BarChart />
-          <TeamsPerCountryBubble />
-          <LineChart />
         </Container>
       );
     }
   }
 
   // wrap in withFauxDom
-  export default withFauxDOM(Charts);
+  export default withFauxDOM(OurCharts);
