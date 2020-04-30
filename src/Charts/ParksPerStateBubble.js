@@ -11,65 +11,24 @@ const Div = styled('div')`
 class ParksPerStateBubble extends React.Component {
 
     async componentDidMount() {
-        const states = ['AL',
-              'AR',
-              'AZ',
-              'CA',
-              'CO',
-              'CT',
-              'DE',
-              'FL',
-              'GA',
-              'IA',
-              'ID',
-              'IL',
-              'IN',
-              'KS',
-              'KY',
-              'LA',
-              'MA',
-              'MD',
-              'ME',
-              'MI',
-              'MN',
-              'MO',
-              'MS',
-              'MT',
-              'NC',
-              'ND',
-              'NE',
-              'NH',
-              'NJ',
-              'NM',
-              'NV',
-              'NY',
-              'OH',
-              'OK',
-              'OR',
-              'PA',
-              'RI',
-              'SC',
-              'SD',
-              'TN',
-              'TX',
-              'UT',
-              'VA',
-              'VI',
-              'VT',
-              'WA',
-              'WI',
-              'WV',
-              'WY'
-        ]
-
-        let url = "https://api.parkprotection.me/api/parks?results_per_page=3&q={\"filters\":[{\"name\":\"states__name\",\"op\":\"any\",\"val\":\"";
+        let url = "https://api.parkprotection.me/api/parks?results_per_page=388";
+        const response = await fetch(url);
+        const data_obj = await response.json();
+        const data_array = data_obj.objects;
 
         var data = new Map();
-        for(const state of states) {
-            const currurl = url + state + "\"}]}";
-            const response = await fetch(currurl);
-            const data_obj = await response.json();
-            data.set(state, data_obj.num_results);
+        
+        for(var park in data_array){
+            const currpark  = data_array[park];
+            for(var state in currpark.states) {
+                const currstate = currpark.states[state];
+                if(!data.has(currstate.name)){
+                    data.set(currstate.name, 1);
+                }
+                else{
+                    data.set(currstate.name, data.get(currstate.name) + 1);
+                }
+            }
         }
 
         var datamap = [];
