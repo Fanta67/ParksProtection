@@ -38,7 +38,7 @@ class OurCharts extends React.Component
     // dict: {name: "group", number: val}
 
     // # of players vs age # - line chart - Roman - api/Players - RomanLineChart.js and roman_chart.js
-    var line_data = this.getLineChartData();
+    var line_data = [];
 
     //var scatter_data = this.getScatteplotData();
     // # of plants vs # of animals (per state) - scatterplot - Roman - api/animals AND api/plants - Scatterplot.js OR RomanScatterPlot.js and roman_chart.js
