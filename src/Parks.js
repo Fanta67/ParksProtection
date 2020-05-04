@@ -98,8 +98,9 @@ class Parks extends React.Component {
 		super(props);
 		this.state = {
 			parkList: [],
-	        page: 1,
-	        lastPageNum: 1
+      fetched: false,
+	    page: 1,
+	    lastPageNum: 1
 		};
         this.SortSelectHandler = this.SortSelectHandler.bind(this);
         this.FilterStateHandler = this.FilterStateHandler.bind(this);
@@ -241,12 +242,12 @@ class Parks extends React.Component {
               	}
                 parkList.push(parkParsed)
               }
-              this.setState({ parkList : parkList});
+              this.setState({ fetched: true, parkList : parkList});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ parkList : []});
+              this.setState({ fetched: true, parkList : []});
           });
 	}
 
@@ -283,6 +284,43 @@ class Parks extends React.Component {
     }
 
 	render() {
+    if(this.state.fetched && this.state.parkList.length == 0) {
+      return (
+        <Container>
+          <br/>
+          <Row>
+          <Col><h1 className="PageHeader">Parks</h1><br/></Col>
+          <Col xs={{span: 3}}>
+            <Form inline>
+                          <Form.Group as={Row}>
+                              <FormControl id="searchBox" type="text" placeholder={"Search Parks"} className="mr-sm-2"
+                                 onChange={node => this.setState({inputNode: node.target.value})}
+                                  onKeyPress={key => {this.handleKeyPress(key)}}
+                              />
+                              <Button id="searchButton"
+                                  href={("Parks/search/" + String(this.state.inputNode))}
+                              >Search</Button>
+                          </Form.Group>
+            </Form>
+          </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              {this.SortSelect()}
+            </Col>
+            <Col>
+              {this.States()}
+            </Col>
+          </Row>
+
+          <br /><br />
+          <h4>No Results</h4>
+
+        </Container>
+      );
+    }
+
 		return (
 			<Container>
 				<br/>
@@ -296,7 +334,7 @@ class Parks extends React.Component {
                                 onKeyPress={key => {this.handleKeyPress(key)}}
                             />
                             <Button id="searchButton"
-                                href={("Parks/search/" + String(this.state.inputNode))}
+                                href={("/Parks/search/" + String(this.state.inputNode))}
                             >Search</Button>
                         </Form.Group>
 					</Form>

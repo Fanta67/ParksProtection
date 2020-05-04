@@ -16,6 +16,9 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import { Nav } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
+import ParksSearch from './ParksSearch'
+import PlantsSearch from './PlantsSearch'
+import AnimalsSearch from './AnimalsSearch'
 
 const BoldText = styled('div')`
 	font-size: 21px;
@@ -33,10 +36,13 @@ class Search extends React.Component {
 		this.state = {
 			animalList: [],
 			animals_num_results: 0,
+			animalsFetched: false,
 			parkList: [],
 			parks_num_results: 0,
+			parksFetched: false,
 			plantList: [],
-			plants_num_results: 0
+			plants_num_results: 0,
+			plantsFetched: false
 		};
 	}
 
@@ -96,12 +102,12 @@ class Search extends React.Component {
               	}
                 parkList.push(parkParsed)
               }
-              this.setState({ parkList : parkList, parks_num_results: data.num_results});
+              this.setState({ parksFetched: true, parkList : parkList, parks_num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ parkList : [], parks_num_results: 0});
+              this.setState({ parksFetched: true, parkList : [], parks_num_results: 0});
           });
 	}
 
@@ -154,12 +160,12 @@ class Search extends React.Component {
               	}
                 plantList.push(plantParsed)
               }
-              this.setState({ plantList : plantList, plants_num_results: data.num_results});
+              this.setState({ plantsFetched: true, plantList : plantList, plants_num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ plantList : [], plants_num_results: 0});
+              this.setState({ plantsFetched: true, plantList : [], plants_num_results: 0});
           });
 	}
 
@@ -212,12 +218,12 @@ class Search extends React.Component {
               	}
                 animalList.push(animalParsed)
               }
-              this.setState({ animalList : animalList, animals_num_results: data.num_results});
+              this.setState({ animalsFetched: true, animalList : animalList, animals_num_results: data.num_results});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ animalList : [], animals_num_results: 0});
+              this.setState({ animalsFetched: true, animalList : [], animals_num_results: 0});
           });
 	}
 
@@ -226,16 +232,11 @@ class Search extends React.Component {
 			<Container>
 
 				<br/>
-				<Row><Col><h1 className="PageHeader">Parks</h1><br/></Col><Col xs={{span: 3}}></Col></Row>
-				{this.makeParkCardDeck()}
+				<ParksSearch />
 
-				<br/><br/><br/><br/>
-				<Row><Col><h1 className="PageHeader">Plants</h1><br/></Col><Col xs={{span: 3}}></Col></Row>
-				{this.makePlantCardDeck()}
+				<PlantsSearch />
 
-				<br/><br/><br/><br/>
-				<Row><Col><h1 className="PageHeader">Animals</h1><br/></Col><Col xs={{span: 3}}></Col></Row>
-				{this.makeAnimalCardDeck()}
+				<AnimalsSearch />
 			</Container>
 		);
 	}

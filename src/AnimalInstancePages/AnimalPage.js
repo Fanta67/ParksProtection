@@ -128,7 +128,7 @@ export default class AnimalPage extends Component {
 
   render(){
     return (
-      this.state.loading ? (<div> unavailable </div>) :
+      this.state.loading ? (<div />) :
       (<div>
         <Jumbotron>
             <Container>

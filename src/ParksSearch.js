@@ -32,7 +32,10 @@ class ParksSearch extends React.Component {
 		super(props);
 		this.state = {
 			parkList: [],
-			num_results: 0
+			fetched: false,
+			num_results: 0,
+			page: 1,
+			lastPageNum: 1
 		};
 	}
 
@@ -46,14 +49,15 @@ class ParksSearch extends React.Component {
 		var deckSize = this.state.parkList.length;
 		var i = 0;
 		var j = 0;
+		var offset = (this.state.page - 1) * 9;
 
-		for(; i < Math.floor(this.state.num_results/3) + 1; ++i) {
+		for(; i < 3; ++i) {
 			let parkInstances = [];
 			for(j = 0; (j < 3); ++j) {
-                if(!((i * 3 + j) < deckSize))
+                if(!((offset + i * 3 + j) < deckSize))
                     break;
 				var index = i * 3 + j;
-                var source = this.state.parkList[index];
+                var source = this.state.parkList[offset + index];
 				parkInstances.push (
 					<Card className={"a" + source.code}>
 						<Nav.Link as={ Link } to={{pathname: "/parks/" + source.code, state: {code: source.code}}}>
@@ -74,6 +78,51 @@ class ParksSearch extends React.Component {
 		return parkDeck;
 	}
 
+	generateNewPage(event, pageNum) {
+		this.setState({page: pageNum})
+	}
+
+	createPaginationBar = () => {
+		let paginationBar = [];
+		var pageNum = this.state.page;
+		if(pageNum != 1) {
+			paginationBar.push(
+				<Pagination.First onClick={(e) => {this.generateNewPage(e, 1)}}/>
+			)
+			// paginationBar.push(
+				// <Pagination.Prev onClick={(e) => {this.generateNewPage(e, pageNum - 1)}}/>
+			// )
+            if(pageNum != 2){
+                paginationBar.push(
+                    <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum-2)}}>{pageNum-2}</Pagination.Item>
+                )
+            }
+            paginationBar.push(
+            <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum-1)}}>{pageNum-1}</Pagination.Item>
+            )
+		}
+		paginationBar.push(
+			<Pagination.Item active onClick={(e) => {this.generateNewPage(e, pageNum)}}>{pageNum}</Pagination.Item>
+		)
+		if(pageNum != this.state.lastPageNum) {
+            paginationBar.push(
+                <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum+1)}}>{pageNum+1}</Pagination.Item>
+            )
+			if(pageNum != this.state.lastPageNum - 1){
+                paginationBar.push(
+                    <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum+2)}}>{pageNum+2}</Pagination.Item>
+                )
+            }
+            // paginationBar.push(
+				// <Pagination.Next onClick={(e) => {this.generateNewPage(e, pageNum + 1)}}/>
+			// )
+			paginationBar.push(
+				<Pagination.Last onClick={(e) => {this.generateNewPage(e, this.state.lastPageNum)}}/>
+			)
+		}
+		return paginationBar;
+	}
+
 	fillparkList(search_query) {
 		fetch(
           'https://api.parkprotection.me/api/parks?results_per_page=1000&q={"search_query":"' + search_query + '"}')
@@ -90,19 +139,19 @@ class ParksSearch extends React.Component {
               	}
                 parkList.push(parkParsed)
               }
-              this.setState({ parkList : parkList, num_results: data.num_results});
+              this.setState({ fetched: true, parkList : parkList, num_results: data.num_results, lastPageNum: data.num_results == 0 ? 1 : Math.floor(data.num_results/9) + (data.num_results % 9 == 0 ? 0 : 1)});
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ parkList : [], num_results: 0});
+              this.setState({ fetched: true, parkList : [], num_results: 0});
           });
 	}
 
     handleKeyPress(key) {
         if (key.charCode == 13) {
             key.preventDefault();
-            window.location.href = (String(this.state.inputNode))
+            window.location.href = ("/Parks/search/" + String(this.state.inputNode))
         }
     }
 
@@ -115,7 +164,7 @@ class ParksSearch extends React.Component {
 				<Col xs={{span: 3}}>
 					<Form inline>
                         <Form.Group as={Row}>
-                            <FormControl className="searchBox" id="searchBox" type="text" placeholder={"Search parks"} className="mr-sm-2"
+                            <FormControl className="searchBox" id="searchBox" type="text" placeholder={"Search Parks"} className="mr-sm-2"
                                onChange={node => this.setState({inputNode: node.target.value})}
                                 onKeyPress={key => {this.handleKeyPress(key)}}
                             />
@@ -127,7 +176,17 @@ class ParksSearch extends React.Component {
 				</Col>
                 </Row>
 
+                {(this.state.fetched && this.state.num_results == 0) &&
+					<h4>No Results</h4>
+				}
 				{this.makeCardDeck()}
+
+				<br></br>
+				{(this.state.fetched && this.state.num_results != 0) &&
+				<Pagination className = 'justify-content-center'>
+					{this.createPaginationBar()}
+				</Pagination>
+				}
 			</Container>
 		);
 	}

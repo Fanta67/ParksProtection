@@ -21,11 +21,11 @@ class RomanScatterPlot extends React.Component
   componentDidMount()
   {
       // faux DOM
-      const faux = this.props.connectFauxDOM('Div', 'chart'); // args are HTML tags A and B
+
       // data
       //var data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
 
-      this.createScatterplot(faux, {});
+      this.createScatterplot({});
   }
   get_plant_data()
   {
@@ -43,16 +43,13 @@ class RomanScatterPlot extends React.Component
   {
 
   }
-  createScatterplot(faux, data) {
+  createScatterplot(data) {
 
     var plants_per_state = {};
-    console.log('HELLOOOOOOOOOOOO')
     // GET THE ANIAMLS ASSOCIATED WITH EACH STATE
     fetch('https://api.parkprotection.me/api/plants?results_per_page=10000')
       .then((response) => response.json())
       .then((plants_data) => {
-        console.log('PLANTS DATA YO');
-        console.log(plants_data);
         for (var plant of plants_data['objects'])
         {
           var states_list = plant['states'];
@@ -67,8 +64,6 @@ class RomanScatterPlot extends React.Component
 
           //animal[]
         }
-      console.log('PLATNS PER STATE')
-      console.log(plants_per_state)
 
       var animals_per_state = {};
 
@@ -76,8 +71,6 @@ class RomanScatterPlot extends React.Component
       fetch('https://api.parkprotection.me/api/animals?results_per_page=10000')
         .then((response) => response.json())
         .then((animals_data) => {
-          console.log('animals DATA YO');
-          console.log(animals_data);
           for (var animal of animals_data['objects'])
           {
             var states_list = animal['states'];
@@ -92,8 +85,6 @@ class RomanScatterPlot extends React.Component
 
             //animal[]
           }
-        console.log('ANIMALS PER STATE')
-        console.log(animals_per_state)
 
     var per_state_data = {};
 
@@ -101,12 +92,8 @@ class RomanScatterPlot extends React.Component
     var animal_data = animals_per_state;
     var plant_data = plants_per_state;
 
-    console.log(animal_data)
-    console.log('FARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASSFARTASS')
-    console.log(animal_data['TX'])
     for (var animal_state in animal_data)
     {
-      console.log('INSIDE AIMAL LOOOOOOP');
       state_set.add(animal_state);
     }
 
@@ -118,7 +105,6 @@ class RomanScatterPlot extends React.Component
     }
     for (var state of state_set)
     {
-      console.log(state)
       var num_plants = 0
       var num_animals = 0
       if(state in plant_data)
@@ -127,24 +113,10 @@ class RomanScatterPlot extends React.Component
         num_animals = animal_data[state]
 
 
-      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': '','state': state })
+      scatter_data.push({'x': num_animals, 'y': num_plants, 'red': 'red', 'state': state })
 
 
     }
-    console.log('FARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT')
-    console.log(scatter_data)
-
-
-    state_set.add('FART ASS')
-
-    console.log('THE STATE SET')
-    console.log(state_set)
-
-
-    console.log('FART ASS ANIMAL STATES')
-    console.log(animal_data)
-    console.log('FART ASS PLANT STATES')
-    console.log(plant_data)
 
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -179,7 +151,9 @@ class RomanScatterPlot extends React.Component
         color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // add the graph canvas to the body of the webpage
-    var svg = d3.select("body").append("svg")
+    const faux = this.props.connectFauxDOM('div', 'chart'); // args are HTML tags A and B
+
+    var svg = d3.select(faux).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -190,8 +164,6 @@ class RomanScatterPlot extends React.Component
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-      console.log('CEREAL ehreasd fase;kjfA')
-      console.log(data)
       // change string (from CSV) into number format
 
 
@@ -209,7 +181,6 @@ class RomanScatterPlot extends React.Component
           .attr("x", width)
           .attr("y", -6)
           .style("text-anchor", "end")
-          .text("Fart");
 
       // y-axis
       svg.append("g")
@@ -236,7 +207,7 @@ class RomanScatterPlot extends React.Component
               tooltip.transition()
                    .duration(200)
                    .style("opacity", .9);
-              tooltip.html(d["Cereal Name"] + "<br/> (" + xValue(d)
+              tooltip.html(d["state"] + "<br/> (" + xValue(d)
     	        + ", " + yValue(d) + ")")
                    .style("left", (d3.event.pageX + 5) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
@@ -293,8 +264,11 @@ class RomanScatterPlot extends React.Component
 
   render() {
       return (
-      	<Container>
-      	 <Div className="scatter-container" >{this.props.chart} > </Div>
+        <Container>
+          <h1>Plants vs Animals by State</h1>
+          <br />
+          <div className="scatter-container" >{this.props.chart} </div>
+          <br />
         </Container>
       );
     }

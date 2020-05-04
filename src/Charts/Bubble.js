@@ -40,6 +40,7 @@ class Bubble extends React.Component {
         dataset = this.props.bubble_data;
 
         var diameter = 600;
+        var colors = d3.scaleOrdinal(d3.schemeCategory10);
 
         var bubble = d3.pack(dataset)
             .size([diameter, diameter])
@@ -76,7 +77,7 @@ class Bubble extends React.Component {
                 return d.r;
             })
             .style("fill", function(d,i) {
-                return "grey";
+                return colors(i);
             });
 
         node.append("text")

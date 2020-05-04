@@ -26,7 +26,7 @@ class LineChart extends React.Component
   componentDidMount()
   {
       // faux DOM
-      const faux = this.props.connectFauxDOM('div', 'line_chart'); // args are HTML tags A and B
+       // args are HTML tags A and B
       // data
 
       var players_data = null;
@@ -35,6 +35,7 @@ class LineChart extends React.Component
     fetch('https://api.90mininone.me/Players')
       .then((response) => response.json())
       .then((playersData) => {
+        const faux = this.props.connectFauxDOM('div', 'line_chart');
         // iterate over the players data
         for (var player of playersData['players'])
         {
@@ -74,7 +75,7 @@ class LineChart extends React.Component
     // append the svg obgect to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select(faux).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -114,7 +115,10 @@ class LineChart extends React.Component
   render() {
       return (
       	<Container>
-      	 <div className="line-container"> {this.props.line_chart} </div>
+          <h1>Number of Players vs Player Age</h1>
+          <br />
+          <div className="line-container"> {this.props.line_chart} </div>
+          <br />
         </Container>
       );
     }

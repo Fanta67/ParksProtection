@@ -32,7 +32,10 @@ class AnimalsSearch extends React.Component {
 		super(props);
 		this.state = {
 			animalList: [],
-			num_results: 0
+			fetched: false,
+			num_results: 0,
+			page: 1,
+			lastPageNum: 1
 		};
 	}
 
@@ -46,14 +49,15 @@ class AnimalsSearch extends React.Component {
 		var deckSize = this.state.animalList.length;
 		var i = 0;
 		var j = 0;
+		var offset = (this.state.page - 1) * 9;
 
-		for(; i < Math.floor(this.state.num_results/3) + 1; ++i) {
+		for(; i < 3; ++i) {
 			let animalInstances = [];
 			for(j = 0; (j < 3); ++j) {
-                if(!((i * 3 + j) < deckSize))
+                if(!((offset + i * 3 + j) < deckSize))
                     break;
 				var index = i * 3 + j;
-                var source = this.state.animalList[index];
+                var source = this.state.animalList[offset + index];
 				animalInstances.push (
 					<Card className={"a" + source.id}>
 						<Nav.Link as={ Link } to={{pathname: "/Animals/" + source.id, state: {id: source.id}}}>
@@ -74,6 +78,51 @@ class AnimalsSearch extends React.Component {
 		return animalDeck;
 	}
 
+	generateNewPage(event, pageNum) {
+		this.setState({page: pageNum})
+	}
+
+	createPaginationBar = () => {
+		let paginationBar = [];
+		var pageNum = this.state.page;
+		if(pageNum != 1) {
+			paginationBar.push(
+				<Pagination.First onClick={(e) => {this.generateNewPage(e, 1)}}/>
+			)
+			// paginationBar.push(
+				// <Pagination.Prev onClick={(e) => {this.generateNewPage(e, pageNum - 1)}}/>
+			// )
+            if(pageNum != 2){
+                paginationBar.push(
+                    <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum-2)}}>{pageNum-2}</Pagination.Item>
+                )
+            }
+            paginationBar.push(
+            <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum-1)}}>{pageNum-1}</Pagination.Item>
+            )
+		}
+		paginationBar.push(
+			<Pagination.Item active onClick={(e) => {this.generateNewPage(e, pageNum)}}>{pageNum}</Pagination.Item>
+		)
+		if(pageNum != this.state.lastPageNum) {
+            paginationBar.push(
+                <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum+1)}}>{pageNum+1}</Pagination.Item>
+            )
+			if(pageNum != this.state.lastPageNum - 1){
+                paginationBar.push(
+                    <Pagination.Item onClick={(e) => {this.generateNewPage(e, pageNum+2)}}>{pageNum+2}</Pagination.Item>
+                )
+            }
+            // paginationBar.push(
+				// <Pagination.Next onClick={(e) => {this.generateNewPage(e, pageNum + 1)}}/>
+			// )
+			paginationBar.push(
+				<Pagination.Last onClick={(e) => {this.generateNewPage(e, this.state.lastPageNum)}}/>
+			)
+		}
+		return paginationBar;
+	}
+
 	fillanimalList(search_query) {
 		fetch(
           'https://api.parkprotection.me/api/animals?results_per_page=1000&q={"search_query":"' + search_query + '"}')
@@ -90,19 +139,19 @@ class AnimalsSearch extends React.Component {
               	}
                 animalList.push(animalParsed)
               }
-              this.setState({ animalList : animalList, num_results: data.num_results});
+              this.setState({ fetched: true, animalList : animalList, num_results: data.num_results, lastPageNum: data.num_results == 0 ? 1 : Math.floor(data.num_results/9) + (data.num_results % 9 == 0 ? 0 : 1) });
           })
           .catch((e) => {
               console.log('Error');
               console.log(e);
-              this.setState({ animalList : [], num_results: 0});
+              this.setState({ fetched: true, animalList : [], num_results: 0});
           });
 	}
 
     handleKeyPress(key) {
         if (key.charCode == 13) {
             key.preventDefault();
-            window.location.href = (String(this.state.inputNode))
+            window.location.href = ("/Animals/search/" + String(this.state.inputNode))
         }
     }
 
@@ -127,7 +176,17 @@ class AnimalsSearch extends React.Component {
 				</Col>
                 </Row>
 
+                {(this.state.fetched && this.state.num_results == 0) &&
+					<h4>No Results</h4>
+				}
 				{this.makeCardDeck()}
+
+				<br></br>
+				{(this.state.fetched && this.state.num_results != 0) &&
+				<Pagination className = 'justify-content-center'>
+					{this.createPaginationBar()}
+				</Pagination>
+				}
 			</Container>
 		);
 	}

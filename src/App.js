@@ -17,8 +17,8 @@ import PlantsSearch from './PlantsSearch';
 import Search from './Search';
 import NotFoundPage from './NotFoundPage'
 import { Link } from 'react-router-dom';
-import Charts from './Charts/Charts';
-import {withFauxDOM} from 'react-faux-dom';
+import OurCharts from './Charts/OurCharts';
+import ProviderCharts from './Charts/ProviderCharts';
 
 require('dotenv').config({path: ':../.env' })
 
@@ -47,6 +47,8 @@ class App extends Component {
               <Nav.Link as={ Link } to="/Parks">Parks</Nav.Link>
               <Nav.Link as={ Link } to="/Plants">Plants</Nav.Link>
               <Nav.Link as={ Link } to="/Animals">Animals</Nav.Link>
+              <Nav.Link as={ Link } to="/OurVisualizations">Our Visualizations</Nav.Link>
+              <Nav.Link as={ Link } to="/ProviderVisualizations">Provider Visualizations</Nav.Link>
               <Nav.Link as={ Link } to="/About">About</Nav.Link>
             </Nav>
             <Form inline>
@@ -76,7 +78,8 @@ class App extends Component {
             <Route path="/Parks/:code" component={ParkInstance} />
             <Route exact path="/Animals" component={Animals} />
             <Route path="/Plants" component={Plants} />
-            <Route path="/Charts" component={Charts} />
+            <Route path="/OurVisualizations" component={OurCharts} />
+            <Route path="/ProviderVisualizations" component={ProviderCharts} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>

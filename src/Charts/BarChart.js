@@ -3,12 +3,6 @@ import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import {withFauxDOM} from 'react-faux-dom';
 
-
-//const Div = styled('div')`
-const Chart = styled('div')``
-const d3 = require("d3");
-
-
 class BarChart extends React.Component
 {
 
@@ -19,24 +13,45 @@ class BarChart extends React.Component
     this.createBarChart  = this.createBarChart.bind(this)
 
   }
-  componentDidMount()
+  async componentDidMount()
   {
       // faux DOM
-      const faux = this.props.connectFauxDOM('BarChart', 'bar_chart'); // args are HTML tags A and B
       // data
       //var data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
+      const d3 = require("d3");
 
-      this.createBarChart(faux, this.props.bar_data);
-  }
-  createBarChart(faux, data){
+      let url = "https://api.90mininone.me/Leagues";
+        const response = await fetch(url);
+        const data_obj = await response.json();
+        const data_array = data_obj.leagues;
 
-    var margin = ({top: 30, right: 0, bottom: 30, left: 40});
+        //var pie_data = [{name: "Reptiles", value: 5}, {name: "Birds", value: 10}];
+        var pie_data = new Map();
+
+        for(var whatever in data_array){
+            const thing  = data_array[whatever];
+            if(!pie_data.has(thing.country)){
+                pie_data.set(thing.country, 1);
+            }
+            else{
+                pie_data.set(thing.country, pie_data.get(thing.country) + 1);
+            }
+        }
+
+        var data = [];
+        console.log(pie_data.keys());
+        for (const [key, value] of pie_data.entries()) {
+            const obj = { name : key, value: value};
+            data.push(obj);
+        }
+
+      var margin = ({top: 10, right: 0, bottom: 110, left: 40});
 
     var height = 300;
     var width = 500;
 
     var yAxis = g => g.attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y).ticks(null, data.format))
+    .call(d3.axisLeft(y).ticks(d3.max(data, d => d.value)).tickFormat(d3.format(".0f")))
     .call(g => g.select(".domain").remove())
     .call(g => g.append("text")
         .attr("x", -margin.left)
@@ -55,6 +70,7 @@ class BarChart extends React.Component
         .range([margin.left, width - margin.right])
         .padding(0.1);
 
+    const faux = this.props.connectFauxDOM('div', 'bar_chart'); // args are HTML tags A and B
 
     // replace creation of svg with selection and appending to faux
     const svg = d3.select(faux)
@@ -72,16 +88,30 @@ class BarChart extends React.Component
         .attr("width", x.bandwidth());
 
       svg.append("g")
-          .call(xAxis);
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", "-.55em")
+      .attr("transform", "rotate(-90)" );
 
       svg.append("g")
           .call(yAxis);
   }
+  createBarChart(faux, data){
+
+    
+  }
 
   render() {
       return (
-      	<Container>
-      	 <Chart className="bar-container" >{this.props.bar_chart}</Chart>
+        <Container>
+          <h1>Number of Leagues per Country</h1>
+          <br />
+          <div className="bar-container" >{this.props.bar_chart}</div>
+          <br />
         </Container>
       );
     }
