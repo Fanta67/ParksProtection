@@ -27,7 +27,8 @@
     "deploy": "aws s3 sync build/ s3://park-protection2",
     "test": "react-scripts test",
     "mochatest": "mocha",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stop": "taskkill -F -IM node.exe"
   },
   "eslintConfig": {
     "extends": "react-app"
