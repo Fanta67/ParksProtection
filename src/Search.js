@@ -1,21 +1,11 @@
 import React, {Component} from 'react';
-import logo from './logo.png';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Pagination from 'react-bootstrap/Pagination';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Select from 'react-select';
 import { Nav } from 'react-bootstrap';
-import FormControl from 'react-bootstrap/FormControl';
 import ParksSearch from './ParksSearch'
 import PlantsSearch from './PlantsSearch'
 import AnimalsSearch from './AnimalsSearch'

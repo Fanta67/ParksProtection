@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import logo from './logo.png';
+import logo from './Assets/logo/logo.png';
 import './App.css';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Form, FormControl, Button } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import About from './Pages/About';
 import Home from './Pages/Home';
 import Parks from './Parks';
-import ParkInstance from './ParkInstance';
+import ParkInstance from './Pages/ParkInstance';
 import ParksSearch from './ParksSearch';
 import Animals from './Animals';
 import AnimalPage from './AnimalInstancePages/AnimalPage';
@@ -15,7 +15,7 @@ import Plants from './Plants';
 import PlantInstance from './Pages/PlantInstance';
 import PlantsSearch from './PlantsSearch';
 import Search from './Search';
-import NotFoundPage from './NotFoundPage'
+import NotFoundPage from './Pages/NotFoundPage'
 import { Link } from 'react-router-dom';
 import OurCharts from './Charts/OurCharts';
 import ProviderCharts from './Charts/ProviderCharts';
