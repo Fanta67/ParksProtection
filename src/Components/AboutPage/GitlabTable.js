@@ -6,12 +6,12 @@ import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import roman from '../Assets/img/headshots/roman.jpeg'
-import dylan from '../Assets/img/headshots/dylan.jpg'
-import ameya from '../Assets/img/headshots/ameya.jpeg'
-import skylore from '../Assets/img/headshots/skylore.jpeg'
-import jordan from '../Assets/img/headshots/jordan.jpg'
-import pedro from '../Assets/img/headshots/pedro.jpeg'
+import roman from   '../../Assets/img/headshots/roman.jpeg'
+import dylan from   '../../Assets/img/headshots/dylan.jpg'
+import ameya from   '../../Assets/img/headshots/ameya.jpeg'
+import skylore from '../../Assets/img/headshots/skylore.jpeg'
+import jordan from  '../../Assets/img/headshots/jordan.jpg'
+import pedro from   '../../Assets/img/headshots/pedro.jpeg'
 
 
 
