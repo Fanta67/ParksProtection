@@ -5,16 +5,16 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Form, FormControl, Button 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import About from './Pages/About';
 import Home from './Pages/Home';
-import Parks from './Parks';
+import Parks from './Pages/Parks';
 import ParkInstance from './Pages/ParkInstance';
-import ParksSearch from './ParksSearch';
-import Animals from './Animals';
+import ParksSearch from './Components/Search/ParksSearch';
+import Animals from './Pages/Animals';
 import AnimalPage from './AnimalInstancePages/AnimalPage';
-import AnimalsSearch from './AnimalsSearch';
-import Plants from './Plants';
+import AnimalsSearch from './Components/Search/AnimalsSearch';
+import Plants from './Pages/Plants';
 import PlantInstance from './Pages/PlantInstance';
-import PlantsSearch from './PlantsSearch';
-import Search from './Search';
+import PlantsSearch from './Components/Search/PlantsSearch';
+import Search from './Pages/Search';
 import NotFoundPage from './Pages/NotFoundPage'
 import { Link } from 'react-router-dom';
 import OurCharts from './Charts/OurCharts';
