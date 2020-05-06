@@ -2,16 +2,16 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import {withFauxDOM} from 'react-faux-dom';
-import ScatterPlot from './ScatterPlot';
-import LineChart from './LineChart';
-import BarChart from './BarChart';
-import PieChart from './PieChart';
-import ParksPerStateBubble from './ParksPerStateBubble';
-import TeamsPerCountryBubble from './TeamsPerCountryBubble';
-import APTGPie from './AnimalsPTaxgroup'
+import ScatterPlot from '../Components/Charts/ScatterPlot';
+import LineChart from '../Components/Charts/LineChart';
+import BarChart from '../Components/Charts/BarChart';
+import PieChart from '../Components/Charts/PieChart';
+import ParksPerStateBubble from '../Components/Charts/ParksPerStateBubble';
+import TeamsPerCountryBubble from '../Components/Charts/TeamsPerCountryBubble';
+import APTGPie from '../Components/Charts/AnimalsPTaxgroup'
 
 
-class ProviderCharts extends React.Component
+class OurCharts extends React.Component
 {
 
   constructor(props)
@@ -38,7 +38,7 @@ class ProviderCharts extends React.Component
     // dict: {name: "group", number: val}
 
     // # of players vs age # - line chart - Roman - api/Players - RomanLineChart.js and roman_chart.js
-    var line_data = this.getLineChartData();
+    var line_data = [];
 
     //var scatter_data = this.getScatteplotData();
     // # of plants vs # of animals (per state) - scatterplot - Roman - api/animals AND api/plants - Scatterplot.js OR RomanScatterPlot.js and roman_chart.js
@@ -180,13 +180,13 @@ class ProviderCharts extends React.Component
       return (
         <Container>
           <br />
-          <BarChart />
-          <TeamsPerCountryBubble />
-          <LineChart />
+          <ParksPerStateBubble />
+          <ScatterPlot scatter_data={this.state.line_data} />
+          <APTGPie />
         </Container>
       );
     }
   }
 
   // wrap in withFauxDom
-  export default withFauxDOM(ProviderCharts);
+  export default withFauxDOM(OurCharts);

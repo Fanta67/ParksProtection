@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 import {withFauxDOM} from 'react-faux-dom';
 import * as d3 from "d3";
-import './chart_styles.css';
+import '../../Assets/css/chart_styles.css';
 
 
 const line = styled('div')`

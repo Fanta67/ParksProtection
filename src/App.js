@@ -9,7 +9,7 @@ import Parks from './Pages/Parks';
 import ParkInstance from './Pages/ParkInstance';
 import ParksSearch from './Components/Search/ParksSearch';
 import Animals from './Pages/Animals';
-import AnimalPage from './AnimalInstancePages/AnimalPage';
+import AnimalPage from './Pages/AnimalInstance';
 import AnimalsSearch from './Components/Search/AnimalsSearch';
 import Plants from './Pages/Plants';
 import PlantInstance from './Pages/PlantInstance';
@@ -17,8 +17,8 @@ import PlantsSearch from './Components/Search/PlantsSearch';
 import Search from './Pages/Search';
 import NotFoundPage from './Pages/NotFoundPage'
 import { Link } from 'react-router-dom';
-import OurCharts from './Charts/OurCharts';
-import ProviderCharts from './Charts/ProviderCharts';
+import OurCharts from './Pages/OurCharts';
+import ProviderCharts from './Pages/ProviderCharts';
 
 require('dotenv').config({path: ':../.env' })
 
