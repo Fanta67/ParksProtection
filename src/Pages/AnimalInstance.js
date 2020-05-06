@@ -1,6 +1,5 @@
 
 import React, {Component} from 'react';
-import map from '../Assets/Maps/BlankMap.png';
 import '../App.css';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron'
@@ -13,7 +12,7 @@ import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
-import MapWrapper from '../Assets/Maps/MapWrapper';
+import MapWrapper from '../Components/Maps/MapWrapper';
 
 const CommonName = styled('h1')`
   color: #444444;

@@ -21,7 +21,7 @@ class RomanScatterPlot extends React.Component
   componentDidMount()
   {
       // faux DOM
-
+      
       // data
       //var data = [{name: "A", value: 10}, {name: "B", value: 13}, {name: "C", value: 7}];
 
@@ -208,7 +208,7 @@ class RomanScatterPlot extends React.Component
                    .duration(200)
                    .style("opacity", .9);
               tooltip.html(d["state"] + "<br/> (" + xValue(d)
-    	        + ", " + yValue(d) + ")")
+              + ", " + yValue(d) + ")")
                    .style("left", (d3.event.pageX + 5) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
           })
@@ -217,46 +217,6 @@ class RomanScatterPlot extends React.Component
                    .duration(500)
                    .style("opacity", 0);
           });
-
-          // Add Text Labels
-          svg.selectAll("text")
-              .data(data)
-              .enter()
-              .append("text")
-              .text(function(d) {
-                  return d['state'];
-              })
-              .attr("x", function(d) {
-                  return xScale(d['x']);  // Returns scaled location of x
-              })
-              .attr("y", function(d) {
-                  return yScale(d['y']);  // Returns scaled circle y
-              })
-              .attr("font_family", "sans-serif")  // Font type
-              .attr("font-size", "11px")  // Font size
-              .attr("fill", "darkgreen");   // Font color
-
-      // draw legend
-      var legend = svg.selectAll(".legend")
-          .data(color.domain())
-        .enter().append("g")
-          .attr("class", "legend")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-      // draw legend colored rectangles
-      legend.append("rect")
-          .attr("x", width - 18)
-          .attr("width", 18)
-          .attr("height", 18)
-          .style("fill", color);
-
-      // draw legend text
-      legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9)
-          .attr("dy", ".35em")
-          .style("text-anchor", "end")
-          .text(function(d) { return d;})
     });
   });
 

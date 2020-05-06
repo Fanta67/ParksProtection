@@ -8,9 +8,8 @@ import Alert from 'react-bootstrap/Alert';
 import styled from 'styled-components';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import map from '../Assets/Maps/GrandCanyon.png';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
-import GCMapWrapper from '../Assets/Maps/GCMapWrapper';
+import GCMapWrapper from '../Components/Maps/GCMapWrapper';
 import { Nav } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';

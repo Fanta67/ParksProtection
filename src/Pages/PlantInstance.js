@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import map from '../Assets/Maps/CaliforniaNevada.png';
 import '../App.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +8,7 @@ import * as Constants from '../Components/InstancePages/Constants.js';
 import InstanceHeader from '../Components/InstancePages/InstanceHeader.js'
 import InformationTable from '../Components/InstancePages/InformationTablePlant.js'
 import RelatedEntities from '../Components/InstancePages/RelatedEntities.js'
-import MapWrapper from '../Assets/Maps/MapWrapper';
+import MapWrapper from '../Components/Maps/MapWrapper';
 
 // TODO: CONSTRUCTOR AND STUFF
 class PlantInstance extends React.Component {
