@@ -6,7 +6,7 @@ Flask-Restless==0.17.0
 Flask-SQLAlchemy==2.4.1
 idna==2.9
 itsdangerous==1.1.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 mimerender==0.6.0
 psycopg2-binary==2.8.4
